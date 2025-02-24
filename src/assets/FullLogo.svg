@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 40">
+  <!-- Black rectangle for "UX" in center -->
+  <rect x="12" y="5" width="30" height="30" fill="black" stroke="black" stroke-width="1"/>
+  
+  <!-- "UX" text in white, thinner weight -->
+  <text x="26.5" y="22"
+        font-family="Calibri, sans-serif"
+        font-size="22"
+        font-weight="300"
+        fill="white"
+        text-anchor="middle"
+        dominant-baseline="middle">UX</text>
+  
+  <!-- "PERT" text in black, bold -->
+  <text x="42" y="22"
+        font-family="Calibri, sans-serif"
+        font-size="22"
+        font-weight="900"
+        fill="black"
+        text-anchor="start"
+        dominant-baseline="middle">PERT</text>
+        
+  <!-- Outer frame centered around content -->
+  <rect x="10" y="3" width="92" height="34" 
+        fill="none" 
+        stroke="black" 
+        stroke-width="1"/>
+
+</svg>

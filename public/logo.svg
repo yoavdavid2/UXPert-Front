@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Black background square for "UX" -->
+  <rect x="2" y="2" width="28" height="28" fill="black" stroke="black" stroke-width="1"/>
+  
+  <!-- "UX" text in white -->
+  <text x="16" y="19"
+        font-family="Arial, sans-serif"
+        font-size="16"
+        font-weight="bold"
+        fill="white"
+        text-anchor="middle"
+        dominant-baseline="middle">UX</text>
+</svg>
