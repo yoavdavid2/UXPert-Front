@@ -18,7 +18,6 @@ const IconChip: React.FC<IconChipProps> = ({ onProfileClick }) => {
   };
 
   const handleProfileAction = (event: React.MouseEvent<HTMLDivElement>) => {
-    // Stop propagation to prevent menu from opening
     event.stopPropagation();
     if (onProfileClick) {
       onProfileClick();
@@ -69,7 +68,7 @@ const IconChip: React.FC<IconChipProps> = ({ onProfileClick }) => {
               }}
             />
             <Box
-              onClick={handleProfileAction}
+              // onClick={handleProfileAction}
               sx={{
                 display: "flex",
                 alignItems: "center",

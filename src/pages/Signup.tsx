@@ -2,7 +2,7 @@ import "./pages.css";
 
 const Signup = () => {
   return (
-    <div className="signup-page">
+    <div className="page-layout">
       <h1>Signup</h1>
     </div>
   );
