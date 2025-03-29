@@ -1,13 +1,11 @@
 import React from "react";
 import { Box, Chip, Menu, MenuItem } from "@mui/material";
 import { AccountCircle, Menu as MenuIcon } from "@mui/icons-material";
+import { useNavigate } from "react-router";
 
-interface IconChipProps {
-  onProfileClick?: () => void;
-}
-
-const IconChip: React.FC<IconChipProps> = ({ onProfileClick }) => {
+const IconChip = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -17,10 +15,21 @@ const IconChip: React.FC<IconChipProps> = ({ onProfileClick }) => {
     setAnchorEl(null);
   };
 
-  const handleProfileAction = (event: React.MouseEvent<HTMLDivElement>) => {
-    event.stopPropagation();
-    if (onProfileClick) {
-      onProfileClick();
+  const handleProfileAction = (title: string) => {
+    handleMenuClose();
+
+    switch (title) {
+      case "Sign up":
+        navigate("/signup");
+        break;
+      case "Log in":
+        navigate("/login");
+        break;
+      case "Plans & Pricing":
+        navigate("/pricing");
+        break;
+      default:
+        break;
     }
   };
 
@@ -104,9 +113,11 @@ const IconChip: React.FC<IconChipProps> = ({ onProfileClick }) => {
           },
         }}
       >
-        <MenuItem onClick={handleMenuClose}>Sign up</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Log in</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Plans & Pricing</MenuItem>
+        {["Sign up", "Log in", "Plans & Pricing"].map((item) => (
+          <MenuItem key={item} onClick={() => handleProfileAction(item)}>
+            {item}
+          </MenuItem>
+        ))}
       </Menu>
     </Box>
   );

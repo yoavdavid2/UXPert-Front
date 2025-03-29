@@ -3,79 +3,21 @@ import {
   Box,
   Button,
   Container,
-  Grid2 as Grid,
-  Paper,
+  Grid,
   Typography,
+  useTheme,
+  useMediaQuery,
 } from "@mui/material";
 import { IFeatureCardProps } from "../utils/types";
 import FeatureCard from "../components/FeatureCard";
-
-const EnhanceIcon = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <rect
-      x="2"
-      y="4"
-      width="20"
-      height="16"
-      rx="2"
-      stroke="currentColor"
-      strokeWidth="2"
-    />
-    <path
-      d="M8 12H16"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-    />
-    <path
-      d="M12 8V16"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-    />
-  </svg>
-);
-
-const StreamlineIcon = () => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <rect
-      x="2"
-      y="4"
-      width="20"
-      height="16"
-      rx="2"
-      stroke="currentColor"
-      strokeWidth="2"
-    />
-    <path
-      d="M8 10H16"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-    />
-    <path
-      d="M8 14H16"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-    />
-  </svg>
-);
+import { EnhanceIcon, StreamlineIcon } from "../components/Icons";
 
 const HomePage: React.FC = () => {
-  const features: IFeatureCardProps[] = [
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const isTablet = useMediaQuery(theme.breakpoints.between("sm", "lg"));
+
+  const features: Partial<IFeatureCardProps>[] = [
     {
       icon: <EnhanceIcon />,
       title: "Enhance User Experiences with AI-Powered Insights",
@@ -90,18 +32,23 @@ const HomePage: React.FC = () => {
     },
   ];
 
+  console.log(`Mobile ${isMobile}`);
+  console.log(`Tablet ${isTablet}`);
+
   return (
     <Box
       sx={{
+        display: "flex",
         flexDirection: "column",
+        minHeight: "92vh",
       }}
       className="page-layout"
     >
       <Container
         disableGutters
         sx={{
-          py: { xs: 4, md: 6 },
-          px: { xs: 2, sm: 3, md: 4 },
+          py: { xs: 3, sm: 4, md: 6 },
+          px: { xs: 2, sm: 3, md: 4, lg: 6 },
           flexGrow: 1,
           display: "flex",
           flexDirection: "column",
@@ -109,67 +56,112 @@ const HomePage: React.FC = () => {
           width: "100%",
         }}
       >
-        <Grid container spacing={4}>
+        <Grid container spacing={{ xs: 2, sm: 3, md: 5 }}>
           <Grid
-            size={{
-              xs: 12,
-              md: 6,
+            item
+            xs={12}
+            md={6}
+            lg={5}
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: isTablet ? "center" : "flex-start",
+              textAlign: isTablet ? "center" : "left",
             }}
           >
             <Box
               sx={{
-                position: "absolute",
-                left: "2%",
-                right: "45%",
-                top: "12.7%",
-                bottom: "59.82%",
+                py: { xs: 1, sm: 2 },
+                px: { xs: 2, sm: "6%", md: "8%" },
+                maxWidth: { md: "95%" },
               }}
             >
               <Typography
-                variant="h3"
+                variant={isMobile ? "h4" : isTablet ? "h4" : "h2"}
                 component="h1"
                 gutterBottom
                 sx={{
                   fontWeight: "bold",
                   color: "#1a237e",
+                  fontSize: {
+                    xs: "1.75rem",
+                    sm: "2.25rem",
+                    md: "2.5rem",
+                    lg: "3rem",
+                    [theme.breakpoints.between("sm", "lg")]: "2.25rem",
+                  },
+                  lineHeight: 1.2,
                 }}
               >
                 Maximizing your website development projects with UXpert
               </Typography>
+
               <Typography
                 variant="subtitle1"
-                paragraph
+                component="p"
                 sx={{
                   color: "#3949ab",
-                  mb: 4,
+                  mb: { xs: 3, sm: 4 },
+                  fontSize: {
+                    xs: "0.9rem",
+                    sm: "1rem",
+                    md: "1.15rem",
+                  },
+                  [theme.breakpoints.between("sm", "lg")]: {
+                    fontSize: "1rem",
+                    marginBottom: "2rem",
+                  },
                 }}
               >
                 Use our advanced AI-Module to run comprehensive and advanced
                 tests on the user experiences of your website & more.
               </Typography>
 
-              <Grid container spacing={3} sx={{ mt: 3, flexWrap: "nowrap" }}>
-                {features.map((feature, index) => (
-                  <Grid size={{ xs: 12, sm: 6 }} key={index}>
-                    <FeatureCard
-                      icon={feature.icon}
-                      title={feature.title}
-                      description={feature.description}
-                    />
-                  </Grid>
-                ))}
-              </Grid>
+              <Box
+                sx={{
+                  mt: { xs: 3, sm: 4, md: 5 },
+                  mb: { xs: 3, sm: 4 },
+                }}
+              >
+                <Grid container spacing={{ xs: 2, sm: 3 }}>
+                  {features.map((feature, index) => (
+                    <Grid
+                      item
+                      xs={12}
+                      sm={isTablet ? 12 : 6}
+                      key={index}
+                      sx={{
+                        textAlign: isTablet ? "center" : "left",
+                        [theme.breakpoints.between("sm", "lg")]: {
+                          paddingLeft: "10px",
+                          paddingRight: "10px",
+                        },
+                      }}
+                    >
+                      <FeatureCard
+                        icon={feature.icon}
+                        title={feature.title || ""}
+                        description={feature.description || ""}
+                        isLargeScreen={!isTablet && !isMobile}
+                      />
+                    </Grid>
+                  ))}
+                </Grid>
+              </Box>
 
               <Button
                 variant="contained"
+                size={isMobile ? "medium" : "large"}
                 sx={{
-                  mt: 4,
+                  mt: { xs: 2, sm: 4 },
                   bgcolor: "#1a237e",
                   color: "white",
                   borderRadius: 8,
-                  px: 4,
-                  py: 1.5,
+                  px: { xs: 3, sm: 4, md: 5 },
+                  py: { xs: 1, sm: 1.5, md: 2 },
                   textTransform: "none",
+                  fontSize: { xs: "0.9rem", sm: "1rem", md: "1.1rem" },
                   "&:hover": {
                     bgcolor: "#0d1642",
                   },
@@ -178,30 +170,6 @@ const HomePage: React.FC = () => {
                 Get started
               </Button>
             </Box>
-          </Grid>
-
-          <Grid
-            sx={{ display: { xs: "none", md: "block" } }}
-            size={{
-              xs: 12,
-              md: 6,
-              lg: 3,
-            }}
-          >
-            <Box
-              sx={{
-                position: "absolute",
-                bottom: "10%",
-                right: "3%",
-                width: "30%",
-                height: "85%",
-                backgroundImage: "url('src/assets/images/homepage.svg')",
-                backgroundSize: "contain",
-                backgroundPosition: "bottom right",
-                backgroundRepeat: "no-repeat",
-                zIndex: 1,
-              }}
-            />
           </Grid>
         </Grid>
       </Container>
