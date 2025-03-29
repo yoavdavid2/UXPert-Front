@@ -1,0 +1,20 @@
+.app-container {
+  min-height: 100vh;
+  width: 100%;
+  transition: background-image 0.3s ease;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.default-background {
+  background-color: #f5f5f5;
+}
+
+.home-background {
+  background-image: url("src/assets/backgrounds/HomepageBack.svg") !important;
+}
+
+.signup-background {
+  background-image: url("src/assets/backgrounds/SignUp v2.svg");
+}

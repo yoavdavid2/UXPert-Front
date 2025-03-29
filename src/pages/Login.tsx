@@ -1,11 +1,11 @@
 import "./pages.css";
 
-const Signup = () => {
+const Login = () => {
   return (
     <div className="page-layout">
-      <h1>Signup</h1>
+      <h1>Login</h1>
     </div>
   );
 };
 
-export default Signup;
+export default Login;
