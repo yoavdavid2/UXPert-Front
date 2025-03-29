@@ -130,6 +130,7 @@ const HomePage: React.FC = () => {
                       item
                       xs={12}
                       sm={isTablet ? 12 : 6}
+                      md={5.5}
                       key={index}
                       sx={{
                         textAlign: isTablet ? "center" : "left",

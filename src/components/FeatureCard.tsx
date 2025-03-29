@@ -16,7 +16,7 @@ const FeatureCard = ({
         background: "rgba(255, 255, 255, 0.34)",
         borderRadius: 2,
         height: isLargeScreen ? "90%" : "70%",
-        width: isLargeScreen ? "85%" : "66.5%",
+        width: isLargeScreen ? "100%" : "66.5%",
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
