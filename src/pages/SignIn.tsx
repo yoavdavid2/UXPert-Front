@@ -12,7 +12,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { AuthPagesProps, emailRegex, passwordLogInRegex } from "./Auth";
 import { BACKEND_URL, TOKEN_LS, USER_PROFILE_LS } from "../config";
-import api from "../Api";
+import api from "../services/Api";
 import "./pages.css";
 import graphicSign from "../assets/backgrounds/graphicSign.svg";
 
@@ -34,7 +34,7 @@ const SignIn: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
 
     try {
         const response = await api.post(
-          `${BACKEND_URL}/api/user/signin`,
+          `${BACKEND_URL}/api/auth/login`,
           {
             email,
             password,
@@ -70,7 +70,7 @@ const SignIn: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
     };
 
   const handleGoogleSignIn = () => {
-    window.location.href = `${BACKEND_URL}/api/user/google`;
+    window.location.href = `${BACKEND_URL}/api/auth/google`;
   };
 
   return (

@@ -1,102 +1,107 @@
 import React, { useState, useEffect } from 'react';
-import { Typography, Avatar, Box, Container, Paper, Grid, Button } from '@mui/material';
+import { Typography, Avatar, Container, Grid, Button, CircularProgress, Pagination } from '@mui/material';
 import { getUserProfile, getFullName, UserProfile } from '../types/UserProfile';
 import './pages.css';
+import { Project, mockProjects } from '../types/Project';
+import ProjectCard from '../components/ProjectCard';
+import { projectService } from '../services/projectService';
+//import { reportService, reportToProject, ReportHistoryQuery } from '../services/reportService';
 
-// Mocked project data - replace with actual API call
-interface Project {
-  id: string;
-  title: string;
-  description: string;
-  image?: string;
-  createdAt: string;
-}
-
-const mockProjects: Project[] = [
-  {
-    id: '1',
-    title: 'UX Research Project',
-    description: 'User research and usability testing for e-commerce application',
-    createdAt: '2023-06-15'
-  },
-  {
-    id: '2',
-    title: 'Website Redesign',
-    description: 'Complete overhaul of company website with focus on accessibility',
-    createdAt: '2023-08-22'
-  },
-  {
-    id: '3',
-    title: 'Mobile App Design',
-    description: 'UI/UX design for iOS and Android fitness application',
-    createdAt: '2023-10-05'
-  },
-  {
-    id: '4',
-    title: 'Design System Creation',
-    description: 'Building a comprehensive design system for enterprise applications',
-    createdAt: '2024-01-10'
-  }
-];
-
-// Project card component
-const ProjectCard: React.FC<{ project: Project }> = ({ project }) => {
-  return (
-    <Paper className="project-card">
-      <Typography variant="h6" gutterBottom component="div">
-        {project.title}
-      </Typography>
-      <Typography variant="body2" color="text.secondary" className="project-description">
-        {project.description}
-      </Typography>
-      <Box className="project-footer">
-        <Typography variant="caption" color="text.secondary">
-          Created: {new Date(project.createdAt).toLocaleDateString()}
-        </Typography>
-        <Button size="small" variant="outlined">View Details</Button>
-      </Box>
-    </Paper>
-  );
-};
 
 const ProfilePage: React.FC = () => {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [projects, setProjects] = useState<Project[]>(mockProjects);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  
+  //pagination state
+  const [page, setPage] = useState<number>(1);
+  const [totalPages, setTotalPages] = useState<number>(1);
+  const [totalProjects, setTotalProjects] = useState<number>(0);
+  const limit = 10; // number of projects per page
 
   useEffect(() => {
     // Load user profile data
     const profile = getUserProfile();
     setUserProfile(profile);
     
-    // fetch projects from an API here
-    // For now we're using mock data
-  }, []);
-
-  useEffect(() => {
-    // If no profile exists, create a mock one for testing
-    if (!getUserProfile()) {
-      const mockProfile = {
-        id: '1',
-        firstName: 'Ron',
-        lastName: 'Israeli',
-        email: 'ron@example.com',
-        profileImage: null,
-        createdAt: new Date().toISOString()
-      };
-      localStorage.setItem('userProfile', JSON.stringify(mockProfile));
-      setUserProfile(mockProfile);
-    }
-  }, []);
+    if (!profile) {
+        const mockProfile = {
+          id: '1',
+          firstName: 'Ron',
+          lastName: 'Israeli',
+          email: 'ron@example.com',
+          profileImage: null,
+          createdAt: new Date().toISOString()
+        };
+        localStorage.setItem('userProfile', JSON.stringify(mockProfile));
+        setUserProfile(mockProfile);
+      }
   
-  if (!userProfile) {
-    return (
-      <div className="profile-page">
-        <Container className="loading-container">
-          <Typography variant="h5" sx={{ color: 'white' }}>Loading profile...</Typography>
-        </Container>
-      </div>
-    );
-  }
+      // Fetch projects
+      fetchProjects();
+    }, []);
+
+    // Fetch projects when page changes
+    useEffect(() => {
+        if (userProfile) {
+          fetchProjects();
+        }
+      }, [page]);
+
+
+    const fetchProjects = async () => {
+        try {
+          setLoading(true);
+          setError(null);
+          
+          // Fetch projects from API with pagination parameters
+          const result = await projectService.getProjects({
+            page: page,
+            limit: limit,
+            sort: 'desc' // newest first
+          });
+          
+          setProjects(result.projects);
+          setTotalProjects(result.total);
+          setTotalPages(Math.ceil(result.total / limit));
+          
+        } catch (err) {
+          console.error('Failed to fetch projects:', err);
+          setError('Failed to load projects. Please try again later.');
+          // Fall back to mock data if API call fails
+          setProjects(mockProjects);
+        } finally {
+          setLoading(false);
+        }
+    };
+
+
+    const handleDeleteProject = async (projectId: string) => {
+        try {
+          await projectService.deleteProject(projectId);
+          // Refresh the list after deletion
+          fetchProjects();
+        } catch (err) {
+          console.error('Failed to delete project:', err);
+          setError('Failed to delete the project. Please try again.');
+        }
+    };
+    
+    const handleCreateProject = () => {
+        // This would typically open a dialog to create a new project
+        console.log('Create new project clicked');
+    };
+  
+    if (!userProfile) {
+      return (
+        <div className="profile-page">
+          <Container className="loading-container">
+            <Typography variant="h5" sx={{ color: 'white' }}>Loading profile...</Typography>
+          </Container>
+        </div>
+      );
+    }
 
   return (
     <div className="profile-page">
@@ -134,20 +139,68 @@ const ProfilePage: React.FC = () => {
             <Typography variant="h5" component="h2" className="section-title">
               My Projects
             </Typography>
-            <Button variant="contained" color="primary" className="new-project-button">
+            <Button 
+              variant="contained" 
+              color="primary" 
+              className="new-project-button"
+              onClick={handleCreateProject}
+            >
               New Project
             </Button>
           </div>
           
-          <Grid container spacing={6} className="projects-grid" >
-            {projects.map((project) => (
-              <Grid item xs={12} sm={6} key={project.id}>
-                <ProjectCard project={project} />
-              </Grid>
-            ))}
-          </Grid>
+          {/* Show loading indicator */}
+          {loading && (
+            <div className="loading-projects">
+              <CircularProgress />
+              <Typography variant="body1" sx={{ mt: 2 }}>
+                Loading projects...
+              </Typography>
+            </div>
+          )}
           
-          {projects.length === 0 && (
+          {/* Show error message if any */}
+          {error && (
+            <div className="error-message">
+              <Typography variant="body1" color="error">
+                {error}
+              </Typography>
+            </div>
+          )}
+          
+        {/* Project grid */}
+        {!loading && projects.length > 0 && (
+        <>
+            <Grid container spacing={6} className="projects-grid">
+            {projects.map((project) => (
+                <Grid item xs={12} sm={6} key={project.id}>
+                <ProjectCard 
+                    project={project} 
+                    onDelete={() => handleDeleteProject(project.id)}
+                />
+                </Grid>
+            ))}
+            </Grid>
+            
+            {/* Pagination */}
+            {totalPages > 1 && (
+            <div className="pagination-container" style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                <Pagination 
+                count={totalPages} 
+                page={page} 
+                onChange={(event, newPage) => setPage(newPage)} 
+                color="primary" 
+                />
+                <Typography variant="body2" sx={{ mt: 1 }}>
+                Showing {projects.length} of {totalProjects} projects
+                </Typography>
+            </div>
+            )}
+        </>
+        )}
+          
+          {/* Empty state */}
+          {!loading && projects.length === 0 && (
             <div className="empty-projects">
               <Typography variant="body1">
                 You don't have any projects yet. Create your first project!

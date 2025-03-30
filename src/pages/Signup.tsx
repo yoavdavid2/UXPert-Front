@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { AuthPagesProps, emailRegex, passwordSignUpRegex } from "./Auth";
 import { BACKEND_URL } from "../config";
-import api from "../Api";
+import api from "../services/Api";
 import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import "./pages.css";
 import graphicSign from "../assets/backgrounds/graphicSign.svg";
@@ -93,7 +93,7 @@ const SignUp: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
         formData.append("profileImage", profileImage);
       }
 
-      await api.post(`${BACKEND_URL}/api/user/register`, formData, {
+      await api.post(`${BACKEND_URL}/api/auth/register`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

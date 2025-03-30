@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BACKEND_URL, TOKEN_LS } from "./config";
+import { BACKEND_URL, TOKEN_LS } from "../config";
 
 // Create an Axios instance
 const api = axios.create({
