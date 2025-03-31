@@ -14,6 +14,22 @@ export interface Project {
     }
 }
 
+export interface CreateProjectRequest {
+    name: string;
+    description?: string;
+    tags?: string[];
+}
+  
+  export interface ProjectResponse {
+    _id: string;
+    name: string;
+    description?: string;
+    tags?: string[];
+    userId: string;
+    createdAt: string;
+    updatedAt?: string;
+}  
+
 export const mockProjects: Project[] = [
     {
       id: '1',
@@ -39,4 +55,4 @@ export const mockProjects: Project[] = [
       description: 'Building a comprehensive design system for enterprise applications',
       createdAt: '2024-01-10'
     }
-  ];
+];

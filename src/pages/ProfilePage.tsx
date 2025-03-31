@@ -173,12 +173,12 @@ const ProfilePage: React.FC = () => {
         <>
             <Grid container spacing={6} className="projects-grid">
             {projects.map((project) => (
-                <Grid item xs={12} sm={6} key={project.id}>
+              <Grid item xs={12} sm={6} key={project.id}>
                 <ProjectCard 
                     project={project} 
                     onDelete={() => handleDeleteProject(project.id)}
                 />
-                </Grid>
+              </Grid>
             ))}
             </Grid>
             
