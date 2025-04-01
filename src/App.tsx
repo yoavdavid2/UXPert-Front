@@ -8,7 +8,7 @@ import {
 
 import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
-import AuthPages from "./pages/Auth";
+import Auth from "./pages/Auth";
 import ProfilePage from "./pages/ProfilePage";
 import Appbar from "./components/Appbar";
 import BackgroundWrapper from "./components/BackgroundWrapper";
@@ -32,7 +32,7 @@ const AppRouter = () => {
         <Route path="/" element={<HomePage />} />
         <Route
           path="/auth"
-          element={isAuthenticated ? <Navigate to="/" /> : <AuthPages />}
+          element={isAuthenticated ? <Navigate to="/" /> : <Auth />}
         />
         <Route
           path="/profile"

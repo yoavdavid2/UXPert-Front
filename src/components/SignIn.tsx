@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Typography,
   TextField,
@@ -9,13 +10,14 @@ import {
   Link,
   CircularProgress,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+
 import { AuthPagesProps, emailRegex, passwordLogInRegex } from "./Auth";
 import { BACKEND_URL } from "../config";
 import { useAuth } from "../utils/AuthContext";
 import api from "../services/Api";
 import "./pages.css";
-const SignIn: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
+
+const SignIn = ({ onSwitchPage }: AuthPagesProps) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
