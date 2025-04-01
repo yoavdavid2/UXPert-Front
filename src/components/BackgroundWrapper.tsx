@@ -35,7 +35,7 @@ const BACKGROUND_CONFIG = {
       width: "30%",
       height: "45%",
       bottom: "0%",
-      right: "-1%",
+      right: "0%",
     },
   },
 
