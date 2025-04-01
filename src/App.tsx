@@ -1,30 +1,62 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 
 import HomePage from "./pages/HomePage";
-import Signup from "./pages/Signup";
+import NotFoundPage from "./pages/NotFoundPage";
+import AuthPages from "./pages/Auth";
+import ProfilePage from "./pages/ProfilePage";
 import Appbar from "./components/Appbar";
 import BackgroundWrapper from "./components/BackgroundWrapper";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+import { AuthProvider, useAuth } from "./utils/AuthContext";
 
 import "./App.css";
-import Login from "./pages/Login";
-import NotFoundPage from "./pages/NotFoundPage";
 import ResultsPage from "./pages/Results";
+
+const AppRouter = () => {
+  const { isAuthenticated, isLoading } = useAuth();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  return (
+    <BackgroundWrapper>
+      <Appbar />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route
+          path="/auth"
+          element={isAuthenticated ? <Navigate to="/" /> : <AuthPages />}
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/results" element={<ResultsPage />} />
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </BackgroundWrapper>
+  );
+};
 
 const App = () => {
   return (
-    <Router>
-      <BackgroundWrapper>
-        <Appbar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="*" element={<NotFoundPage />} />
-          <Route path="/results" element={<ResultsPage />} />
-        </Routes>
-      </BackgroundWrapper>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <AppRouter />
+      </Router>
+    </AuthProvider>
   );
 };
 

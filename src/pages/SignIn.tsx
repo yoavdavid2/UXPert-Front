@@ -7,81 +7,87 @@ import {
   Box,
   Paper,
   Link,
-  CircularProgress
+  CircularProgress,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { AuthPagesProps, emailRegex, passwordLogInRegex } from "./Auth";
 import { BACKEND_URL } from "../config";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../utils/AuthContext";
 import api from "../services/Api";
 import "./pages.css";
-import graphicSign from "../assets/backgrounds/graphicSign.svg";
-
 const SignIn: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
-  const {login} = useAuth();
+  const { login } = useAuth();
 
-
-  const isDisabled = !emailRegex.test(email) || !passwordLogInRegex.test(password) || isLoading;
+  const isDisabled =
+    !emailRegex.test(email) || !passwordLogInRegex.test(password) || isLoading;
 
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isDisabled) return;
-    
     setIsLoading(true);
     setError(null);
 
     try {
-        const response = await api.post(
-          `${BACKEND_URL}/auth/login`,
-          {
-            email: email,
-            password,
-          },
-          {
-            withCredentials: true,
-          }
-        );
-  
-        const { token, user } = response.data;
-
-        login(token, user);
-
-        navigate("/");
-      } catch (error) {
-        interface ApiError {
-          response?: {
-            data?: {
-              message?: string;
-            };
-          };
+      const response = await api.post(
+        `${BACKEND_URL}/auth/login`,
+        {
+          email: email,
+          password,
+        },
+        {
+          withCredentials: true,
         }
-        const apiError = error as ApiError;
-        setError(apiError.response?.data?.message || "Invalid email or password");
-      } finally {
-        setIsLoading(false);
+      );
+
+      const { token, user } = response.data;
+
+      login(token, user);
+
+      navigate("/");
+    } catch (error) {
+      interface ApiError {
+        response?: {
+          data?: {
+            message?: string;
+          };
+        };
       }
-    };
+      const apiError = error as ApiError;
+      setError(apiError.response?.data?.message || "Invalid email or password");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleGoogleSignIn = () => {
     window.location.href = `${BACKEND_URL}/auth/google`;
   };
 
   return (
-    <div className="signin-page">
-     <img src={graphicSign} alt="Decorative graphic" className="corner-graphic" />
+    <div className="page-layout">
       <Container maxWidth="sm">
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           <Paper elevation={3} className="auth-form-container">
             <Box component="form" onSubmit={handleSignIn}>
-              <Typography variant="h4" className="auth-title" sx={{ marginBottom: 2 }}>
+              <Typography
+                variant="h4"
+                className="auth-title"
+                sx={{ marginBottom: 2 }}
+              >
                 Welcome Back
               </Typography>
-              
+
               <TextField
                 className="auth-input"
                 required
@@ -100,7 +106,6 @@ const SignIn: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
                     : ""
                 }
               />
-              
               <TextField
                 className="auth-input"
                 required
@@ -119,13 +124,13 @@ const SignIn: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
                     : ""
                 }
               />
-              
+
               {error && (
-                <Typography color="error" align="center" >
+                <Typography color="error" align="center">
                   {error}
                 </Typography>
               )}
-              
+
               <Button
                 type="submit"
                 fullWidth
@@ -133,19 +138,27 @@ const SignIn: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
                 disabled={isDisabled}
                 className="auth-button"
               >
-                {isLoading ? <CircularProgress size={24} color="inherit" /> : "Sign In"}
+                {isLoading ? (
+                  <CircularProgress size={24} color="inherit" />
+                ) : (
+                  "Sign In"
+                )}
               </Button>
-              
+
               <div className="auth-switch-text">
-                <Link component="button" className="auth-switch-link" onClick={onSwitchPage}>
+                <Link
+                  component="button"
+                  className="auth-switch-link"
+                  onClick={onSwitchPage}
+                >
                   Don't have an account? Sign up
                 </Link>
               </div>
-              
-              <div className="auth-divider" style={{ margin: '24px 0' }}>
+
+              <div className="auth-divider" style={{ margin: "24px 0" }}>
                 <span className="auth-divider-text">OR</span>
               </div>
-              
+
               <Button
                 fullWidth
                 variant="outlined"
