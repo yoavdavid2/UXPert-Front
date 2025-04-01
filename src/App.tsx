@@ -52,7 +52,7 @@ const App = () => {
   return (
     <AuthProvider>
       <Router>
-        <AppRouter />ß
+        <AppRouter />
       </Router>
     </AuthProvider>
   );
