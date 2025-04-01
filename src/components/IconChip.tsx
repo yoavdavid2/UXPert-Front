@@ -20,10 +20,18 @@ const IconChip = () => {
 
     switch (title) {
       case "Sign up":
-        navigate("/signup");
+        if (location.pathname === "/auth") {
+          navigate("/auth", { state: "signup", replace: true });
+        } else {
+          navigate("/auth", { state: "signup" });
+        }
         break;
       case "Log in":
-        navigate("/login");
+        if (location.pathname === "/auth") {
+          navigate("/auth", { state: "login", replace: true });
+        } else {
+          navigate("/auth", { state: "login" });
+        }
         break;
       case "Plans & Pricing":
         navigate("/pricing");

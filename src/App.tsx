@@ -14,7 +14,7 @@ import Appbar from "./components/Appbar";
 import BackgroundWrapper from "./components/BackgroundWrapper";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-import { AuthProvider, useAuth } from "./context/AuthContext";
+import { AuthProvider, useAuth } from "./utils/AuthContext";
 
 import "./App.css";
 
