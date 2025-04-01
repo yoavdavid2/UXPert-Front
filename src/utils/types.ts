@@ -37,3 +37,29 @@ export interface BackgroundWrapperProps extends PropsWithChildren {
   configMap?: IBackgroundConfigMap;
   transitionDuration?: number;
 }
+
+export interface IChipItem {
+  name: string;
+  icon: React.ReactNode;
+}
+
+export interface IChipGroupProps {
+  items: IChipItem[];
+  selectedItems: string[];
+  toggleItem: (item: string) => void;
+  readonly?: boolean;
+  marginBottom?: number;
+}
+
+export interface IStepperCardProps {
+  onClose: () => void;
+  onSubmit?: (formData: FormData) => void;
+}
+
+export interface IFormData {
+  categories: string[];
+  audience: string[];
+  emotions: string[];
+  websitePurpose: string;
+  websiteUrl: string;
+}

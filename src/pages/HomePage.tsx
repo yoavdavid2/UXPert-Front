@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Box,
   Button,
@@ -7,15 +7,29 @@ import {
   Typography,
   useTheme,
   useMediaQuery,
+  Dialog,
+  Slide,
 } from "@mui/material";
 import { IFeatureCardProps } from "../utils/types";
 import FeatureCard from "../components/FeatureCard";
 import { EnhanceIcon, StreamlineIcon } from "../components/Icons";
+import StepperCard from "../components/stepper/StepperCard";
+import { TransitionProps } from "@mui/material/transitions";
+
+const Transition = React.forwardRef(function Transition(
+  props: TransitionProps & {
+    children: React.ReactElement;
+  },
+  ref: React.Ref<unknown>
+) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const HomePage: React.FC = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isTablet = useMediaQuery(theme.breakpoints.between("sm", "lg"));
+  const [openCard, setOpenCard] = useState(false);
 
   const features: Partial<IFeatureCardProps>[] = [
     {
@@ -32,15 +46,18 @@ const HomePage: React.FC = () => {
     },
   ];
 
-  console.log(`Mobile ${isMobile}`);
-  console.log(`Tablet ${isTablet}`);
+  const handleOpenCard = () => {
+    setOpenCard(true);
+  };
+
+  const handleCloseCard = () => {
+    setOpenCard(false);
+  };
 
   return (
     <Box
       sx={{
         display: "flex",
-        flexDirection: "column",
-        minHeight: "92vh",
       }}
       className="page-layout"
     >
@@ -75,6 +92,9 @@ const HomePage: React.FC = () => {
                 py: { xs: 1, sm: 2 },
                 px: { xs: 2, sm: "6%", md: "8%" },
                 maxWidth: { md: "95%" },
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
               }}
             >
               <Typography
@@ -130,7 +150,7 @@ const HomePage: React.FC = () => {
                       item
                       xs={12}
                       sm={isTablet ? 12 : 6}
-                      md={5.5}
+                      md={6}
                       key={index}
                       sx={{
                         textAlign: isTablet ? "center" : "left",
@@ -166,7 +186,9 @@ const HomePage: React.FC = () => {
                   "&:hover": {
                     bgcolor: "#0d1642",
                   },
+                  alignSelf: "center",
                 }}
+                onClick={handleOpenCard}
               >
                 Get started
               </Button>
@@ -174,6 +196,26 @@ const HomePage: React.FC = () => {
           </Grid>
         </Grid>
       </Container>
+
+      <Dialog
+        open={openCard}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={handleCloseCard}
+        aria-describedby="uxpert-card-dialog"
+        maxWidth="lg"
+        fullWidth
+        PaperProps={{
+          sx: {
+            borderRadius: 4,
+            m: 2,
+            maxHeight: "calc(100% - 64px)",
+            overflow: "hidden",
+          },
+        }}
+      >
+        <StepperCard onClose={handleCloseCard} />
+      </Dialog>
     </Box>
   );
 };
