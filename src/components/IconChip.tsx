@@ -2,10 +2,12 @@ import React from "react";
 import { Box, Chip, Menu, MenuItem } from "@mui/material";
 import { AccountCircle, Menu as MenuIcon } from "@mui/icons-material";
 import { useNavigate } from "react-router";
+import { useAuth } from "../utils/AuthContext";
 
 const IconChip = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -20,16 +22,32 @@ const IconChip = () => {
 
     switch (title) {
       case "Sign up":
-        navigate("/signup");
+        if (location.pathname === "/auth") {
+          navigate("/auth", { state: "signup", replace: true });
+        } else {
+          navigate("/auth", { state: "signup" });
+        }
         break;
       case "Log in":
-        navigate("/login");
+        if (location.pathname === "/auth") {
+          navigate("/auth", { state: "login", replace: true });
+        } else {
+          navigate("/auth", { state: "login" });
+        }
         break;
       case "Plans & Pricing":
         navigate("/pricing");
         break;
       default:
         break;
+    }
+  };
+
+  const getMenuItems = () => {
+    if (isAuthenticated) {
+      return ["Profile & History", "Logout"];
+    } else {
+      return ["Sign up", "Log in", "Plans & Pricing"];
     }
   };
 
@@ -77,7 +95,6 @@ const IconChip = () => {
               }}
             />
             <Box
-              // onClick={handleProfileAction}
               sx={{
                 display: "flex",
                 alignItems: "center",
@@ -113,7 +130,7 @@ const IconChip = () => {
           },
         }}
       >
-        {["Sign up", "Log in", "Plans & Pricing"].map((item) => (
+        {getMenuItems().map((item) => (
           <MenuItem key={item} onClick={() => handleProfileAction(item)}>
             {item}
           </MenuItem>

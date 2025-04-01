@@ -21,7 +21,7 @@ const BACKGROUND_CONFIG = {
     },
   },
 
-  "/signup": {
+  "/auth": {
     primaryPath:
       "M0,488.045C114.558,486.619,233.922,575.177,335.084,521.4C435.955,467.778,459.516,334.488,493.835,225.527C524.716,127.482,547.867,24.543,522.994,-75.195C499.334,-170.071,409.472,-227.552,359.835,-311.799C295.509,-420.976,309.513,-604.418,188.685,-642.603C68.756,-680.503,-22.197,-518.772,-137.722,-469.039C-234.506,-427.374,-364.199,-455.006,-432.824,-375.045C-501.437,-295.098,-462.5,-172.875,-480.924,-69.146C-500.171,39.214,-568.65,141.07,-543.527,248.22C-516.565,363.212,-448.548,482.131,-340.489,529.811C-233.71,576.926,-116.702,489.498,0,488.045",
     secondaryPath:
@@ -35,25 +35,7 @@ const BACKGROUND_CONFIG = {
       width: "30%",
       height: "45%",
       bottom: "0%",
-      right: "-1%",
-    },
-  },
-
-  "/login": {
-    primaryPath:
-      "M0,488.045C114.558,486.619,233.922,575.177,335.084,521.4C435.955,467.778,459.516,334.488,493.835,225.527C524.716,127.482,547.867,24.543,522.994,-75.195C499.334,-170.071,409.472,-227.552,359.835,-311.799C295.509,-420.976,309.513,-604.418,188.685,-642.603C68.756,-680.503,-22.197,-518.772,-137.722,-469.039C-234.506,-427.374,-364.199,-455.006,-432.824,-375.045C-501.437,-295.098,-462.5,-172.875,-480.924,-69.146C-500.171,39.214,-568.65,141.07,-543.527,248.22C-516.565,363.212,-448.548,482.131,-340.489,529.811C-233.71,576.926,-116.702,489.498,0,488.045",
-    secondaryPath:
-      "M1920,1708.692C2038.991,1703.076,2158.862,1670.674,2251.372,1595.626C2339.271,1524.318,2396.168,1417.905,2415.84,1306.442C2433.31,1207.459,2374.695,1115.915,2353.373,1017.69C2333.911,928.037,2349.169,828.961,2295.966,754.223C2240.785,676.707,2144.968,646.716,2059.508,604.879C1956.661,554.537,1859.28,475.037,1745.168,484.578C1623.971,494.711,1487.804,549.158,1432.21,657.328C1376.141,766.421,1460.785,893.499,1472.236,1015.621C1480.534,1104.121,1476.523,1188.439,1490.245,1276.262C1509.157,1397.305,1481.537,1540.987,1567.897,1627.884C1654.536,1715.062,1797.229,1714.486,1920,1708.692",
-    primaryColor: "#a7b2c8",
-    secondaryColor: "#f7f8fa",
-    bgColor: "rgba(207, 213, 225, 1)",
-    cornerImage: "src/assets/images/signup.svg",
-    hasCornerImage: true,
-    cornerStyles: {
-      width: "30%",
-      height: "45%",
-      bottom: "0%",
-      right: "-1%",
+      right: "0%",
     },
   },
 
@@ -104,15 +86,12 @@ const BackgroundWrapper: React.FC<PropsWithChildren> = ({ children }) => {
 
   // Determine route info
   const isHomePage = normalizePath(currentPath) === "/";
-  const isSignupPage = normalizePath(currentPath) === "/signup";
+  const isAuthPage = normalizePath(currentPath) === "/auth";
   const isGoingToHomePage = normalizePath(location.pathname) === "/";
-  const isGoingToSignupPage = normalizePath(location.pathname) === "/signup";
+  const isGoingToAuthPage = normalizePath(location.pathname) === "/auth";
 
   return (
-    <div
-      className="app-container"
-      style={{ position: "relative", overflow: "hidden", minHeight: "100vh" }}
-    >
+    <div className="app-container">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         style={{
@@ -183,23 +162,17 @@ const BackgroundWrapper: React.FC<PropsWithChildren> = ({ children }) => {
         key="signup-corner"
         style={{
           position: "absolute",
-          ...BACKGROUND_CONFIG["/signup"].cornerStyles,
-          backgroundImage: `url(${BACKGROUND_CONFIG["/signup"].cornerImage})`,
+          ...BACKGROUND_CONFIG["/auth"].cornerStyles,
+          backgroundImage: `url(${BACKGROUND_CONFIG["/auth"].cornerImage})`,
           backgroundSize: "contain",
           backgroundPosition: "bottom right",
           backgroundRepeat: "no-repeat",
           zIndex: 0,
           pointerEvents: "none",
         }}
-        initial={{ opacity: isSignupPage ? 1 : 0 }}
+        initial={{ opacity: isAuthPage ? 1 : 0 }}
         animate={{
-          opacity: morphing
-            ? isGoingToSignupPage
-              ? 1
-              : 0
-            : isSignupPage
-            ? 1
-            : 0,
+          opacity: morphing ? (isGoingToAuthPage ? 1 : 0) : isAuthPage ? 1 : 0,
         }}
         transition={{
           opacity: {

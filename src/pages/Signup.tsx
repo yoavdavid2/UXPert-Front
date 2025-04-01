@@ -8,14 +8,13 @@ import {
   Grid,
   Paper,
   Link,
-  CircularProgress
+  CircularProgress,
 } from "@mui/material";
 import { AuthPagesProps, emailRegex, passwordSignUpRegex } from "./Auth";
 import { BACKEND_URL } from "../config";
 import api from "../services/Api";
-import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
+import PhotoCameraIcon from "@mui/icons-material/PhotoCamera";
 import "./pages.css";
-import graphicSign from "../assets/backgrounds/graphicSign.svg";
 
 const SignUp: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
   const [firstName, setFirstName] = useState<string>("");
@@ -28,11 +27,11 @@ const SignUp: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
-  
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const isPasswordMatch = password === confirmPassword;
-  
+
   const isDisabled =
     firstName === "" ||
     lastName === "" ||
@@ -42,18 +41,16 @@ const SignUp: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
     !isPasswordMatch ||
     isUploading;
 
-
-
   const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if(event.target.files && event.target.files[0]) {
+    if (event.target.files && event.target.files[0]) {
       const file = event.target.files[0];
 
-      if(!file.type.match("image.*")) {
+      if (!file.type.match("image.*")) {
         setError("Please select an image file");
         return;
       }
 
-      if(file.size > 5 * 1024 * 1024) {
+      if (file.size > 5 * 1024 * 1024) {
         setError("Please select an image file smaller than 5MB");
         return;
       }
@@ -62,7 +59,7 @@ const SignUp: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
 
       const reader = new FileReader();
       reader.onload = (e) => {
-        if(e.target && typeof e.target.result === "string") {
+        if (e.target && typeof e.target.result === "string") {
           setImagePreview(e.target.result);
         }
       };
@@ -73,7 +70,7 @@ const SignUp: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
   };
 
   const triggerFileInput = () => {
-    if(fileInputRef.current) {
+    if (fileInputRef.current) {
       fileInputRef.current.click();
     }
   };
@@ -92,7 +89,7 @@ const SignUp: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
       formData.append("username", username);
       formData.append("email", email);
       formData.append("password", password);
-      if(profileImage) {
+      if (profileImage) {
         formData.append("profileImage", profileImage);
       }
 
@@ -102,7 +99,6 @@ const SignUp: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
         },
       });
 
-      
       // On successful signup, switch to sign in page
       onSwitchPage();
     } catch (error) {
@@ -114,59 +110,66 @@ const SignUp: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
         };
       }
       const apiError = error as ApiError;
-      setError(apiError.response?.data?.message || "Signup failed. Please try again.");
-    }finally {
+      setError(
+        apiError.response?.data?.message || "Signup failed. Please try again."
+      );
+    } finally {
       setIsUploading(false);
     }
   };
 
   return (
-    <div className="signup-page">
-      <img src={graphicSign} alt="Decorative graphic" className="corner-graphic" />
+    <div className="page-layout">
       <Container maxWidth="sm">
-        <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           <Paper elevation={3} className="auth-form-container">
             <Box component="form" onSubmit={handleSignUp}>
               <Typography variant="h4" className="auth-title">
                 Create your account
               </Typography>
-              
+
               <div className="profile-image-container">
                 <input
                   type="file"
                   accept="image/*"
-                  style={{ display: 'none' }}
+                  style={{ display: "none" }}
                   onChange={handleImageSelect}
                   ref={fileInputRef}
                 />
-                
+
                 {imagePreview ? (
-                  <img 
-                    src={imagePreview} 
-                    alt="Profile Preview" 
-                    className="profile-image profile-image-preview" 
+                  <img
+                    src={imagePreview}
+                    alt="Profile Preview"
+                    className="profile-image profile-image-preview"
                   />
                 ) : (
                   <div className="profile-image-placeholder">
                     <span>?</span>
                   </div>
                 )}
-                
-                <button 
+
+                <button
                   type="button"
                   className="profile-image-upload-button"
                   onClick={triggerFileInput}
                 >
                   <PhotoCameraIcon fontSize="small" />
                 </button>
-                
+
                 {profileImage && (
                   <div className="profile-image-filename">
                     {profileImage.name}
                   </div>
                 )}
               </div>
-              
+
               <Grid container spacing={2} sx={{ mb: 1 }}>
                 <Grid item xs={12} sm={6}>
                   <TextField
@@ -181,7 +184,7 @@ const SignUp: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
                     onChange={(e) => setFirstName(e.target.value)}
                   />
                 </Grid>
-                
+
                 <Grid item xs={12} sm={6}>
                   <TextField
                     className="auth-input"
@@ -209,7 +212,7 @@ const SignUp: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
                 onChange={(e) => setUsername(e.target.value)}
                 sx={{ mb: 1 }}
               />
-              
+
               <TextField
                 className="auth-input"
                 required
@@ -226,9 +229,9 @@ const SignUp: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
                     ? "Please enter a valid email address"
                     : ""
                 }
-                sx = {{mb: 1}}
+                sx={{ mb: 1 }}
               />
-              
+
               <TextField
                 className="auth-input"
                 required
@@ -246,9 +249,9 @@ const SignUp: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
                     ? "Password must be at least 8 characters and include both letters and numbers"
                     : ""
                 }
-                sx = {{mb: 1}}
+                sx={{ mb: 1 }}
               />
-              
+
               <TextField
                 className="auth-input"
                 required
@@ -265,15 +268,15 @@ const SignUp: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
                     ? "Passwords do not match"
                     : ""
                 }
-                sx = {{mb: 1}}
+                sx={{ mb: 1 }}
               />
-              
+
               {error && (
-                <Typography color="error" align="center" sx={{ mt: 1, mb: 1}}>
+                <Typography color="error" align="center" sx={{ mt: 1, mb: 1 }}>
                   {error}
                 </Typography>
               )}
-              
+
               <Button
                 type="submit"
                 fullWidth
@@ -282,11 +285,19 @@ const SignUp: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
                 className="auth-button"
                 sx={{ mt: 1, mb: 1 }}
               >
-                {isUploading ? <CircularProgress size={24} color="inherit" /> : "Sign Up"}
+                {isUploading ? (
+                  <CircularProgress size={24} color="inherit" />
+                ) : (
+                  "Sign Up"
+                )}
               </Button>
-              
+
               <div className="auth-switch-text">
-                <Link component="button" className="auth-switch-link" onClick={onSwitchPage}>
+                <Link
+                  component="button"
+                  className="auth-switch-link"
+                  onClick={onSwitchPage}
+                >
                   Already have an account? Sign in
                 </Link>
               </div>
