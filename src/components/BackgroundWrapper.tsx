@@ -109,10 +109,7 @@ const BackgroundWrapper: React.FC<PropsWithChildren> = ({ children }) => {
   const isGoingToSignupPage = normalizePath(location.pathname) === "/signup";
 
   return (
-    <div
-      className="app-container"
-      style={{ position: "relative", overflow: "hidden", minHeight: "100vh" }}
-    >
+    <div className="app-container">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         style={{

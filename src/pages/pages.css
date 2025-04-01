@@ -1,33 +1,3 @@
-/* ========== HOMEPAGE STYLES ========== */
-/* Homepage background and layout */
-.home-page {
-  background-image: url("src/assets/backgrounds/Homepage v2.svg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* ========== AUTHENTICATION PAGES (SIGNUP/SIGNIN) ========== */
-/* Signup page background and layout */
-.signup-page {
-  background-image: url("src/assets/backgrounds/SignUp v2.svg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  position: relative;
-}
-  
 .page-layout {
   height: 92vh;
   width: 100vw;
@@ -36,30 +6,15 @@
   align-items: center;
 }
 
-/* Signin page background and layout */
-.signin-page {
-  background-image: url("src/assets/backgrounds/SignUp v2.svg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 100vh;
-  width: 100vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  position: relative;
-}
-
 /* Decorative corner graphic for auth pages */
 .corner-graphic {
   position: absolute;
   bottom: 20px;
   right: 20px;
-  width:600px;
+  width: 600px;
   height: auto;
-  z-index: 1; 
-  pointer-events: none; 
+  z-index: 1;
+  pointer-events: none;
 }
 
 /* ========== AUTH FORM COMPONENTS ========== */
@@ -112,7 +67,7 @@
 
 .auth-divider::before,
 .auth-divider::after {
-  content: '';
+  content: "";
   flex: 1;
   border-bottom: 1px solid #eaeaea;
 }
@@ -167,7 +122,7 @@
 }
 
 /* Profile image upload in signup form */
-.profile-image-container{
+.profile-image-container {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -175,13 +130,13 @@
   position: relative;
 }
 
-.profile-image{
+.profile-image {
   width: 100px;
   height: 100px;
   border-radius: 50%;
   object-fit: cover;
-  background-color:#e0e0e0;
-  box-shadow:0 2px 10px rgba(0, 0, 0, 0.1);
+  background-color: #e0e0e0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
 
@@ -238,11 +193,11 @@
 
 /* Material UI form component adjustments */
 .MuiTextField-root {
-  margin-bottom: 12px !important; 
+  margin-bottom: 12px !important;
 }
 
 .MuiGrid-container {
-  margin-bottom: 8px !important; 
+  margin-bottom: 8px !important;
 }
 
 /* ========== PROFILE PAGE ========== */
@@ -278,7 +233,6 @@
   height: 100vh;
   text-align: center;
 }
-
 
 /* ========== PROFILE HEADER SECTION ========== */
 /* Profile header card with avatar and user info */
@@ -333,19 +287,16 @@
   gap: 12px;
 }
 
-/* Edit and Share profile buttons */
-.profile-edit-button, .profile-share-button {
+.profile-edit-button,
+.profile-share-button {
   padding: 8px 16px !important;
 }
 
-
 /* ========== PROJECTS SECTION ========== */
-/* Projects section container */
 .projects-section {
   margin-top: 20px;
 }
 
-/* Projects header with title and add button */
 .projects-header {
   display: flex;
   justify-content: space-between;
@@ -353,16 +304,14 @@
   margin-bottom: 20px;
 }
 
-/* Section title styling */
 .section-title {
   position: relative;
   padding-bottom: 10px;
   font-weight: 600 !important;
 }
 
-/* Underline for section title */
 .section-title::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: 0;
   left: 0;
@@ -371,7 +320,6 @@
   background-color: #92a0bb;
 }
 
-/* New project button */
 .new-project-button {
   background: linear-gradient(45deg, #92a0bb 30%, #aab4ca 90%) !important;
   color: white !important;
@@ -384,7 +332,6 @@
   box-shadow: 0 4px 10px rgba(146, 160, 187, 0.3) !important;
 }
 
-/* Projects grid container */
 .projects-grid {
   width: 100%;
   margin-bottom: 20px !important;
@@ -392,9 +339,8 @@
 
 .MuiGrid-item {
   margin-bottom: 24px;
-} 
+}
 
-/* Project card styling */
 .project-card {
   padding: 16px;
   height: 100%;
@@ -402,7 +348,6 @@
   flex-direction: column;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   margin-bottom: 16px;
-  
 }
 
 .project-card:hover {
@@ -422,7 +367,6 @@
   margin-top: 8px;
 }
 
-/* Empty projects state */
 .empty-projects {
   padding: 40px;
   text-align: center;
@@ -439,26 +383,26 @@
     bottom: auto;
     top: 20px;
   }
-  
+
   .profile-header-content {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .profile-info {
     margin-left: 0;
     margin-top: 16px;
   }
-  
+
   .profile-actions {
     justify-content: center;
   }
-  
+
   .projects-header {
     flex-direction: column;
     gap: 16px;
   }
-  
+
   .section-title::after {
     left: 50%;
     transform: translateX(-50%);
@@ -471,40 +415,39 @@
     right: 10px;
     top: 10px;
   }
-  
+
   .signup-page,
   .signin-page,
   .profile-page {
     padding: 16px;
   }
-  
+
   .auth-form-container,
   .profile-header {
     padding: 20px;
   }
-  
+
   .profile-avatar {
     width: 80px !important;
     height: 80px !important;
   }
-  
+
   .profile-image,
   .profile-image-placeholder {
     width: 80px;
     height: 80px;
   }
-  
+
   .profile-image-upload-button {
     width: 30px;
     height: 30px;
   }
-  
+
   .projects-grid {
     margin-bottom: 0 !important;
   }
 }
 
-/* Loading state */
 .loading-projects {
   display: flex;
   flex-direction: column;
@@ -516,7 +459,6 @@
   margin-top: 20px;
 }
 
-/* Error message */
 .error-message {
   padding: 16px;
   background-color: #ffebee;
