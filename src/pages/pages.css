@@ -1,4 +1,3 @@
-
 /* ========== HOMEPAGE STYLES ========== */
 /* Homepage background and layout */
 .home-page {
@@ -27,6 +26,14 @@
   align-items: center;
   padding: 20px;
   position: relative;
+}
+  
+.page-layout {
+  height: 92vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Signin page background and layout */

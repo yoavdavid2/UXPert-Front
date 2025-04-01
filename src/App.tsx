@@ -1,20 +1,21 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
 import HomePage from "./pages/HomePage";
+import Signup from "./pages/Signup";
+import Login from "./pages/Login";
+import NotFoundPage from "./pages/NotFoundPage";
 import AuthPages from "./pages/Auth";
 import ProfilePage from "./pages/ProfilePage";
+import Appbar from "./components/Appbar";
+import BackgroundWrapper from "./components/BackgroundWrapper";
 import ProtectedRoute from "./components/ProtectedRoute";
+        
 import { AuthProvider, useAuth } from "./context/AuthContext";
 
-const App = () => {
-  return (
-    <AuthProvider>
-      <AppRoutes />
-    </AuthProvider>
-  );
-};
+import "./App.css";
 
-const AppRoutes = () => {
+const App = () => {
   const { isAuthenticated, isLoading } = useAuth();
   
   if (isLoading) {
@@ -22,27 +23,27 @@ const AppRoutes = () => {
   }
   
   return (
-    <Router>
-      <Routes>
-        <Route 
-          path="/auth" 
-          element={isAuthenticated ? <Navigate to="/" /> : <AuthPages />} 
-        />
-        
-        <Route path="/" element={<HomePage />} />
-      
-        <Route 
-          path="/profile" 
-          element={
-            <ProtectedRoute>
-              <ProfilePage />
-            </ProtectedRoute>
-          } 
-        />
-       
-        <Route path="*" element={<Navigate to="/auth" />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <BackgroundWrapper>
+          <Appbar />
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/auth" element={isAuthenticated ? <Navigate to="/" /> : <AuthPages />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/profile" 
+              element = {
+                <ProtectedRoute>
+                  <ProfilePage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </BackgroundWrapper>
+      </Router>
+    </AuthProvider>
   );
 };
 
