@@ -54,7 +54,7 @@ export interface IChipGroupProps {
 }
 
 export interface IStepperCardProps {
-  onClose: () => void;
+  onClose: (summery: userRequirmentsSummeryDto) => void;
   onSubmit?: (formData: FormData) => void;
 }
 
@@ -104,4 +104,56 @@ export interface IProfileProjectsSectionProps {
 export interface IProjectCardProps {
   project: Project;
   onDelete: () => void;
+}
+
+export interface ILoginFormProps {
+  email: string;
+  setEmail: (email: string) => void;
+  password: string;
+  setPassword: (password: string) => void;
+  error: string | null;
+  setError: (error: string | null) => void;
+  isLoading: boolean;
+  setIsLoading: (isLoading: boolean) => void;
+  onSwitchToSignUp: () => void;
+}
+
+export interface ISignupFormProps {
+  email: string;
+  setEmail: (email: string) => void;
+  password: string;
+  setPassword: (password: string) => void;
+  error: string | null;
+  setError: (error: string | null) => void;
+  isLoading: boolean;
+  setIsLoading: (isLoading: boolean) => void;
+  onSignUpSuccess: () => void;
+  onSwitchToSignIn: () => void;
+}
+
+export interface IProfileHeaderProps {
+  userProfile: UserProfile;
+  onEditProfile: () => void;
+}
+
+export interface IProfileProjectsSectionProps {
+  userId: string;
+  setGlobalError: (error: string | null) => void;
+}
+
+export interface IProjectCardProps {
+  project: Project;
+  onDelete: () => void;
+}
+
+export type userRequirmentsSummeryDto = {
+  categories: string[];
+  audience: string[];
+  emotions: string[];
+  purpose: string;
+  url: string;
+};
+
+export interface IAnimatedModal {
+  currentText: string;
 }

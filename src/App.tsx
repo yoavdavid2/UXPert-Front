@@ -17,6 +17,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import { AuthProvider, useAuth } from "./utils/AuthContext";
 
 import "./App.css";
+import ResultsPage from "./pages/Results";
 
 const AppRouter = () => {
   const { isAuthenticated, isLoading } = useAuth();
@@ -42,6 +43,7 @@ const AppRouter = () => {
             </ProtectedRoute>
           }
         />
+        <Route path="/results" element={<ResultsPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BackgroundWrapper>
