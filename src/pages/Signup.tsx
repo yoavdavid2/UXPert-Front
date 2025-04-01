@@ -96,7 +96,7 @@ const SignUp: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
         formData.append("profileImage", profileImage);
       }
 
-      await api.post(`${BACKEND_URL}/api/auth/register`, formData, {
+      await api.post(`${BACKEND_URL}/auth/register`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
