@@ -10,21 +10,12 @@ import {
   Dialog,
   Slide,
 } from "@mui/material";
-<<<<<<< HEAD
-import { TransitionProps } from "@mui/material/transitions";
-
-import { IFeatureCardProps } from "../utils/types";
-import FeatureCard from "../components/FeatureCard";
-import { EnhanceIcon, StreamlineIcon } from "../components/Icons";
-import StepperCard from "../components/stepper/StepperCard";
-=======
 import { IFeatureCardProps, userRequirmentsSummeryDto } from "../utils/types";
 import FeatureCard from "../components/FeatureCard";
 import { EnhanceIcon, StreamlineIcon } from "../components/Icons";
 import StepperCard from "../components/stepper/StepperCard";
 import { TransitionProps } from "@mui/material/transitions";
 import { useNavigate } from "react-router";
->>>>>>> c3a64378f5f6c8a39966a725259280771a3dc7d0
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -63,7 +54,7 @@ const HomePage: React.FC = () => {
 
   const handleCloseCard = (summery: userRequirmentsSummeryDto) => {
     setOpenCard(false);
-    navigate(`/results?link=${summery.url}`, { state: {summery},  })
+    navigate(`/results?link=${summery.url}`, { state: { summery } });
   };
 
   return (
