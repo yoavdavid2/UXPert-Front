@@ -319,4 +319,5 @@ const SignUp = ({ onSwitchPage }: AuthPagesProps) => {
   );
 };
 
+
 export default SignUp;
