@@ -10,11 +10,12 @@ import {
   Dialog,
   Slide,
 } from "@mui/material";
-import { IFeatureCardProps } from "../utils/types";
+import { IFeatureCardProps, userRequirmentsSummeryDto } from "../utils/types";
 import FeatureCard from "../components/FeatureCard";
 import { EnhanceIcon, StreamlineIcon } from "../components/Icons";
 import StepperCard from "../components/stepper/StepperCard";
 import { TransitionProps } from "@mui/material/transitions";
+import { useNavigate } from "react-router";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -30,6 +31,7 @@ const HomePage: React.FC = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isTablet = useMediaQuery(theme.breakpoints.between("sm", "lg"));
   const [openCard, setOpenCard] = useState(false);
+  const navigate = useNavigate();
 
   const features: Partial<IFeatureCardProps>[] = [
     {
@@ -50,8 +52,9 @@ const HomePage: React.FC = () => {
     setOpenCard(true);
   };
 
-  const handleCloseCard = () => {
+  const handleCloseCard = (summery: userRequirmentsSummeryDto) => {
     setOpenCard(false);
+    navigate(`/results?link=${summery.url}`, { state: {summery},  })
   };
 
   return (

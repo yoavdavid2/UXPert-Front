@@ -11,7 +11,7 @@ import TargetsStep from "./TargetsStep";
 import EmotionsStep from "./EmotionsStep";
 import FinalDataStep from "./FinalDataStep";
 
-import { IStepperCardProps } from "../../utils/types";
+import { IStepperCardProps, userRequirmentsSummeryDto } from "../../utils/types";
 
 const StepperCard = ({ onClose }: IStepperCardProps) => {
   const [activeStep, setActiveStep] = useState(0);
@@ -73,6 +73,18 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
       setActiveStep(page);
     }
   };
+
+  const buildSummery = (): userRequirmentsSummeryDto => {
+    const result: userRequirmentsSummeryDto = {
+      audience: selectedAudience,
+      categories: selectedCategories,
+      emotions: selectedEmotions,
+      purpose: websiteUrl,
+      url: websiteUrl
+    }
+
+    return result
+  }
 
   return (
     <Card
@@ -254,9 +266,9 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
               variant="contained"
               color="secondary"
               onClick={
-                activeStep < 2
+                activeStep < 3
                   ? () => handlePageChange(activeStep + 1)
-                  : onClose
+                  : onClose(buildSummery())
               }
               sx={{ borderRadius: 28, px: 3 }}
             >

@@ -52,7 +52,7 @@ export interface IChipGroupProps {
 }
 
 export interface IStepperCardProps {
-  onClose: () => void;
+  onClose: (summery: userRequirmentsSummeryDto) => void;
   onSubmit?: (formData: FormData) => void;
 }
 
@@ -62,4 +62,19 @@ export interface IFormData {
   emotions: string[];
   websitePurpose: string;
   websiteUrl: string;
+}
+
+
+
+export type userRequirmentsSummeryDto = {
+  categories: string[]
+  audience: string[]
+  emotions: string[]
+  purpose: string
+  url: string
+}
+
+
+export interface IAnimatedModal {
+  currentText: string
 }

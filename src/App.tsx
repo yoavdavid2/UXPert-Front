@@ -9,6 +9,7 @@ import BackgroundWrapper from "./components/BackgroundWrapper";
 import "./App.css";
 import Login from "./pages/Login";
 import NotFoundPage from "./pages/NotFoundPage";
+import ResultsPage from "./pages/Results";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login />} />
           <Route path="*" element={<NotFoundPage />} />
+          <Route path="/results" element={<ResultsPage />} />
         </Routes>
       </BackgroundWrapper>
     </Router>
