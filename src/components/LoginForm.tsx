@@ -15,6 +15,8 @@ import { emailRegex, passwordLogInRegex } from "../utils/validations";
 import { BACKEND_URL } from "../config";
 import api from "../services/Api";
 
+import "./components.css";
+
 const LoginForm = ({
   email,
   setEmail,

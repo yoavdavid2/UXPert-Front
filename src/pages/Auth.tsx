@@ -32,7 +32,6 @@ const Auth = () => {
     setError(null);
   };
 
-  // Toggle to sign up mode
   const switchToSignUp = () => {
     setIsSignedIn(false);
     setError(null);

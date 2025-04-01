@@ -10,11 +10,12 @@ import {
   Dialog,
   Slide,
 } from "@mui/material";
+import { TransitionProps } from "@mui/material/transitions";
+
 import { IFeatureCardProps } from "../utils/types";
 import FeatureCard from "../components/FeatureCard";
 import { EnhanceIcon, StreamlineIcon } from "../components/Icons";
 import StepperCard from "../components/stepper/StepperCard";
-import { TransitionProps } from "@mui/material/transitions";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {

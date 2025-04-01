@@ -1,4 +1,6 @@
 import { PropsWithChildren } from "react";
+import { UserProfile } from "../types/UserProfile";
+import { Project } from "../types/Project";
 
 export interface IAppbarProps {
   handleProfileClick: () => void;
@@ -87,4 +89,19 @@ export interface ISignupFormProps {
   setIsLoading: (isLoading: boolean) => void;
   onSignUpSuccess: () => void;
   onSwitchToSignIn: () => void;
+}
+
+export interface IProfileHeaderProps {
+  userProfile: UserProfile;
+  onEditProfile: () => void;
+}
+
+export interface IProfileProjectsSectionProps {
+  userId: string;
+  setGlobalError: (error: string | null) => void;
+}
+
+export interface IProjectCardProps {
+  project: Project;
+  onDelete: () => void;
 }
