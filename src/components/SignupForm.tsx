@@ -117,13 +117,14 @@ const SignupForm = ({
       interface ApiError {
         response?: {
           data?: {
-            message?: string;
+            message: string[];
           };
         };
       }
       const apiError = error as ApiError;
       setError(
-        apiError.response?.data?.message || "Signup failed. Please try again."
+        apiError.response?.data?.message.join(".\n") ||
+          "Signup failed. Please try again."
       );
     } finally {
       setIsLoading(false);
@@ -270,7 +271,11 @@ const SignupForm = ({
       />
 
       {error && (
-        <Typography color="error" align="center" sx={{ mb: 2 }}>
+        <Typography
+          color="error"
+          align="center"
+          sx={{ mb: 2, whiteSpace: "pre-line" }}
+        >
           {error}
         </Typography>
       )}
