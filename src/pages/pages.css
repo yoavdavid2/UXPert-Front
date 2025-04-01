@@ -6,24 +6,7 @@
   align-items: center;
 }
 
-/* Decorative corner graphic for auth pages */
-.corner-graphic {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  width: 600px;
-  height: auto;
-  z-index: 1;
-  pointer-events: none;
-}
-
 /* ========== AUTH FORM COMPONENTS ========== */
-/* Logo at the top of auth forms */
-.auth-logo {
-  max-width: 150px;
-  margin-bottom: 20px;
-}
-
 /* Container for authentication forms */
 .auth-form-container {
   background-color: rgba(255, 255, 255, 0.95);
@@ -191,34 +174,7 @@
   border: 2px solid #1976d2;
 }
 
-/* Material UI form component adjustments */
-.MuiTextField-root {
-  margin-bottom: 12px !important;
-}
-
-.MuiGrid-container {
-  margin-bottom: 8px !important;
-}
-
 /* ========== PROFILE PAGE ========== */
-/* Main profile page background and layout */
-.profile-page {
-  background-image: url("src/assets/backgrounds/Homepage v2.svg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  min-height: 100vh;
-  width: 100vw;
-  display: flex;
-  box-sizing: border-box;
-  justify-content: center;
-  padding: 40px 20px;
-  align-items: flex-start;
-  flex-direction: column;
-  margin: 0;
-  overflow-x: hidden;
-}
-
 .profile-container {
   max-width: 1000px;
   margin: 0 auto;
@@ -337,10 +293,6 @@
   margin-bottom: 20px !important;
 }
 
-.MuiGrid-item {
-  margin-bottom: 24px;
-}
-
 .project-card {
   padding: 16px;
   height: 100%;
@@ -378,12 +330,6 @@
 /* ========== RESPONSIVE ADJUSTMENTS ========== */
 /* Responsive adjustments for corner graphic */
 @media (max-width: 768px) {
-  .corner-graphic {
-    width: 100px;
-    bottom: auto;
-    top: 20px;
-  }
-
   .profile-header-content {
     flex-direction: column;
     text-align: center;
@@ -410,12 +356,6 @@
 }
 
 @media (max-width: 480px) {
-  .corner-graphic {
-    width: 80px;
-    right: 10px;
-    top: 10px;
-  }
-
   .signup-page,
   .signin-page,
   .profile-page {
