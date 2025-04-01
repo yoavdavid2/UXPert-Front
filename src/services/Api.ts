@@ -3,7 +3,8 @@ import { BACKEND_URL, TOKEN_LS } from "../config";
 
 // Create an Axios instance
 const api = axios.create({
-  baseURL: BACKEND_URL
+  baseURL: BACKEND_URL,
+  withCredentials: true,
 });
 
 // Request Interceptor: Adds Token from Local Storage

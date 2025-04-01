@@ -20,6 +20,7 @@ import graphicSign from "../assets/backgrounds/graphicSign.svg";
 const SignUp: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
+  const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
@@ -35,6 +36,7 @@ const SignUp: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
   const isDisabled =
     firstName === "" ||
     lastName === "" ||
+    username === "" ||
     !emailRegex.test(email) ||
     !passwordSignUpRegex.test(password) ||
     !isPasswordMatch ||
@@ -87,6 +89,7 @@ const SignUp: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
       const formData = new FormData();
       formData.append("firstName", firstName);
       formData.append("lastName", lastName);
+      formData.append("username", username);
       formData.append("email", email);
       formData.append("password", password);
       if(profileImage) {
@@ -193,6 +196,19 @@ const SignUp: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
                   />
                 </Grid>
               </Grid>
+
+              <TextField
+                className="auth-input"
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                sx={{ mb: 1 }}
+              />
               
               <TextField
                 className="auth-input"

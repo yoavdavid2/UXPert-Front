@@ -2,42 +2,35 @@ import React from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router";
 import HomePage from "./pages/HomePage";
 import AuthPages from "./pages/Auth";
-import { TOKEN_LS } from "./config";
 import ProfilePage from "./pages/ProfilePage";
-
-const ProtectedRoute = ({children}: {children: React.ReactNode}) => {
-  //const isAuthenticated = localStorage.getItem(TOKEN_LS) !== null;
-
-  //if (!isAuthenticated) {
-  //  return <Navigate to="/Auth" />; 
- // }
-
-  return <>{children}</>;
-};
+import ProtectedRoute from "./components/ProtectedRoute";
+import { AuthProvider, useAuth } from "./context/AuthContext";
 
 const App = () => {
   return (
+    <AuthProvider>
+      <AppRoutes />
+    </AuthProvider>
+  );
+};
+
+const AppRoutes = () => {
+  const { isAuthenticated, isLoading } = useAuth();
+  
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  
+  return (
     <Router>
       <Routes>
-        <Route path="/auth" element={<AuthPages />} />
         <Route 
-          path="/" 
-          element={
-            <ProtectedRoute>
-              <HomePage />
-            </ProtectedRoute>
-          } 
+          path="/auth" 
+          element={isAuthenticated ? <Navigate to="/" /> : <AuthPages />} 
         />
-        {/* Make sure route matches exactly how it's being accessed */}
-        <Route 
-          path="/ProfilePage" 
-          element={
-            <ProtectedRoute>
-              <ProfilePage />
-            </ProtectedRoute>
-          } 
-        />
-        {/* Also provide lowercase version for consistency */}
+        
+        <Route path="/" element={<HomePage />} />
+      
         <Route 
           path="/profile" 
           element={
@@ -46,8 +39,8 @@ const App = () => {
             </ProtectedRoute>
           } 
         />
-        {/* Fallback redirects to auth page 
-       <Route path="*" element={<Navigate to="/auth" />} />*/}
+       
+        <Route path="*" element={<Navigate to="/auth" />} />
       </Routes>
     </Router>
   );

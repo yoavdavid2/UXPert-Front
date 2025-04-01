@@ -11,7 +11,8 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { AuthPagesProps, emailRegex, passwordLogInRegex } from "./Auth";
-import { BACKEND_URL, TOKEN_LS, USER_PROFILE_LS } from "../config";
+import { BACKEND_URL } from "../config";
+import { useAuth } from "../context/AuthContext";
 import api from "../services/Api";
 import "./pages.css";
 import graphicSign from "../assets/backgrounds/graphicSign.svg";
@@ -22,6 +23,8 @@ const SignIn: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
+  const {login} = useAuth();
+
 
   const isDisabled = !emailRegex.test(email) || !passwordLogInRegex.test(password) || isLoading;
 
@@ -34,9 +37,9 @@ const SignIn: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
 
     try {
         const response = await api.post(
-          `${BACKEND_URL}/api/auth/login`,
+          `${BACKEND_URL}/auth/login`,
           {
-            email,
+            email: email,
             password,
           },
           {
@@ -46,12 +49,7 @@ const SignIn: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
   
         const { token, user } = response.data;
 
-        localStorage.setItem(TOKEN_LS, token);
-
-        if (user) {
-          localStorage.setItem(USER_PROFILE_LS, JSON.stringify(user));
-        }
-
+        login(token, user);
 
         navigate("/");
       } catch (error) {
@@ -70,7 +68,7 @@ const SignIn: React.FC<AuthPagesProps> = ({ onSwitchPage }) => {
     };
 
   const handleGoogleSignIn = () => {
-    window.location.href = `${BACKEND_URL}/api/auth/google`;
+    window.location.href = `${BACKEND_URL}/auth/google`;
   };
 
   return (
