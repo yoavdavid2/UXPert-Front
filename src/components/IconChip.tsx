@@ -7,7 +7,7 @@ import { useAuth } from "../utils/AuthContext";
 const IconChip = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, logout } = useAuth();
 
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -37,6 +37,9 @@ const IconChip = () => {
         break;
       case "Plans & Pricing":
         navigate("/pricing");
+        break;
+      case "Logout":
+        logout()
         break;
       default:
         break;
