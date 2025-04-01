@@ -54,7 +54,7 @@ const HomePage: React.FC = () => {
 
   const handleCloseCard = (summery: userRequirmentsSummeryDto) => {
     setOpenCard(false);
-    navigate(`/results?link=${summery.url}`, { state: {summery},  })
+    navigate(`/results?link=${summery.url}`, { state: { summery } });
   };
 
   return (

@@ -8,7 +8,6 @@
 }
 
 /* ========== AUTH FORM COMPONENTS ========== */
-/* Container for authentication forms */
 .auth-form-container {
   background-color: rgba(255, 255, 255, 0.95);
   border-radius: 8px;
@@ -20,92 +19,6 @@
   z-index: 2;
 }
 
-/* Title of auth forms (Sign in, Sign up, etc.) */
-.auth-title {
-  color: #333;
-  margin-bottom: 24px;
-  text-align: center;
-  font-weight: 600;
-}
-
-/* Form input fields in auth forms */
-.auth-input {
-  margin-bottom: 4px !important;
-}
-
-/* Submit buttons in auth forms */
-.auth-button {
-  margin-top: 2px !important;
-  margin-bottom: 2px !important;
-  padding: 12px 0;
-  font-weight: 500;
-}
-
-/* OR divider in auth forms */
-.auth-divider {
-  margin: 24px 0;
-  display: flex;
-  align-items: center;
-  text-align: center;
-}
-
-.auth-divider::before,
-.auth-divider::after {
-  content: "";
-  flex: 1;
-  border-bottom: 1px solid #eaeaea;
-}
-
-.auth-divider-text {
-  padding: 0 10px;
-  color: #757575;
-  font-size: 14px;
-}
-
-/* Social login buttons */
-.auth-social-button {
-  width: 100%;
-  padding: 10px 0;
-  margin-bottom: 4px;
-  border: 1px solid #dadce0;
-  border-radius: 4px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #3c4043;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.auth-social-button:hover {
-  background-color: #f1f3f4;
-}
-
-.auth-social-icon {
-  margin-right: 10px;
-  width: 20px;
-  height: 20px;
-}
-
-/* Switch between sign in and sign up links */
-.auth-switch-text {
-  text-align: center;
-  margin-top: 10px;
-  color: #757575;
-}
-
-.auth-switch-link {
-  color: #1976d2;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.auth-switch-link:hover {
-  text-decoration: underline;
-}
-
-/* Profile image upload in signup form */
 .profile-image-container {
   display: flex;
   flex-direction: column;
@@ -177,38 +90,42 @@
 
 /* ========== PROFILE PAGE ========== */
 .profile-container {
-  max-width: 1000px;
-  margin: 0 auto;
-  width: 100%;
+  width: 90vw;
+  margin: 0 5vw;
+  max-width: 100%;
+  padding: 24px 0;
 }
 
 /* Loading state for profile page */
 .loading-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  justify-content: space-evenly;
   align-items: center;
-  height: 100vh;
+  height: 15vh;
   text-align: center;
 }
 
 /* ========== PROFILE HEADER SECTION ========== */
 /* Profile header card with avatar and user info */
 .profile-header {
-  background-color: rgba(255, 255, 255, 0.95);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 32px;
+  padding: 24px;
+  background-color: white;
   border-radius: 8px;
-  padding: 30px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  margin-bottom: 30px;
-  position: relative;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .profile-header-content {
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 1%;
+  width: 30%;
 }
 
-/* User avatar in profile */
 .profile-avatar {
   width: 120px !important;
   height: 120px !important;
@@ -216,29 +133,24 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
 }
 
-/* User information container */
 .profile-info {
-  margin-left: 24px;
+  margin-left: 10%;
 }
 
-/* User name display */
 .profile-name {
   margin-bottom: 8px !important;
   font-weight: 600 !important;
 }
 
-/* User email display */
 .profile-email {
   color: #555 !important;
   margin-bottom: 4px !important;
 }
 
-/* Member since text */
 .profile-member-since {
   color: #777 !important;
 }
 
-/* Profile action buttons container */
 .profile-actions {
   display: flex;
   gap: 12px;
@@ -251,20 +163,50 @@
 
 /* ========== PROJECTS SECTION ========== */
 .projects-section {
-  margin-top: 20px;
+  width: 97%;
+  background-color: hsla(0, 0%, 100%, 0.245);
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 24px;
+  max-height: 70vh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.projects-section::-webkit-scrollbar {
+  width: 8px;
+}
+
+.projects-section::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.projects-section::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.projects-section::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
 }
 
 .projects-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .section-title {
   position: relative;
   padding-bottom: 10px;
   font-weight: 600 !important;
+  color: black;
 }
 
 .section-title::after {
@@ -287,11 +229,6 @@
 .new-project-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 10px rgba(146, 160, 187, 0.3) !important;
-}
-
-.projects-grid {
-  width: 100%;
-  margin-bottom: 20px !important;
 }
 
 .project-card {
@@ -329,30 +266,37 @@
 }
 
 /* ========== RESPONSIVE ADJUSTMENTS ========== */
-/* Responsive adjustments for corner graphic */
 @media (max-width: 768px) {
+  .profile-container {
+    width: 95vw;
+    margin: 0 2.5vw;
+    padding: 16px 0;
+  }
+
+  .profile-header {
+    flex-direction: column;
+    align-items: center;
+  }
+
   .profile-header-content {
     flex-direction: column;
-    text-align: center;
+    align-items: center;
+    margin-bottom: 24px;
+  }
+
+  .profile-avatar {
+    margin-right: 0;
+    margin-bottom: 16px;
   }
 
   .profile-info {
-    margin-left: 0;
-    margin-top: 16px;
+    align-items: center;
+    text-align: center;
   }
 
-  .profile-actions {
-    justify-content: center;
-  }
-
-  .projects-header {
-    flex-direction: column;
-    gap: 16px;
-  }
-
-  .section-title::after {
-    left: 50%;
-    transform: translateX(-50%);
+  .projects-section {
+    padding: 16px;
+    max-height: 65vh;
   }
 }
 
@@ -382,10 +326,6 @@
   .profile-image-upload-button {
     width: 30px;
     height: 30px;
-  }
-
-  .projects-grid {
-    margin-bottom: 0 !important;
   }
 }
 

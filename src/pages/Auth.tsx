@@ -1,25 +1,96 @@
-import React, { useState } from 'react';
-import SignIn from './SignIn';
-import SignUp from './Signup';
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router";
+import { Box, Container, Paper } from "@mui/material";
+
+import LoginForm from "../components/LoginForm";
+import SignupForm from "../components/SignupForm";
 
 export interface AuthPagesProps {
   onSwitchPage: () => void;
 }
 
-// Validation patterns
-export const emailRegex = /^[\w.-]+@[\w.-]+\.[A-Za-z]{2,}$/;
-export const passwordSignUpRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-export const passwordLogInRegex = /^.{8,}$/;
+const Auth = () => {
+  const location = useLocation();
 
-const AuthPages: React.FC = () => {
-  const [isSignIn, setIsSignIn] = useState(true);
-  const togglePage = () => setIsSignIn(!isSignIn);
-  
-  return isSignIn ? (
-    <SignIn onSwitchPage={togglePage} /> 
-  ) : (
-    <SignUp onSwitchPage={togglePage} />
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [isSignedIn, setIsSignedIn] = useState(
+    location?.state ? location.state == "login" : true
+  );
+
+  useEffect(() => {
+    if (location?.state) {
+      setIsSignedIn(location.state === "login");
+    }
+  }, [location.state]);
+
+  const switchToSignIn = () => {
+    setIsSignedIn(true);
+    setError(null);
+  };
+
+  const switchToSignUp = () => {
+    setIsSignedIn(false);
+    setError(null);
+  };
+
+  const resetForm = () => {
+    setEmail("");
+    setPassword("");
+    setError(null);
+    setIsLoading(false);
+  };
+
+  const handleSignUpSuccess = () => {
+    resetForm();
+    setIsSignedIn(true);
+  };
+
+  return (
+    <div className="page-layout">
+      <Container maxWidth="sm">
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <Paper elevation={3} className="auth-form-container">
+            {isSignedIn ? (
+              <LoginForm
+                email={email}
+                setEmail={setEmail}
+                password={password}
+                setPassword={setPassword}
+                error={error}
+                setError={setError}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+                onSwitchToSignUp={switchToSignUp}
+              />
+            ) : (
+              <SignupForm
+                email={email}
+                setEmail={setEmail}
+                password={password}
+                setPassword={setPassword}
+                error={error}
+                setError={setError}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
+                onSignUpSuccess={handleSignUpSuccess}
+                onSwitchToSignIn={switchToSignIn}
+              />
+            )}
+          </Paper>
+        </Box>
+      </Container>
+    </div>
   );
 };
 
-export default AuthPages;
+export default Auth;
