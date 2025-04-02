@@ -8,6 +8,7 @@ import AnimatedModal from "../components/animatedModal";
 import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { OverallEvaluation } from "../types/Report";
+import DynamicIframeModal from "../components/DynamicIframeModal";
 
 const ResultsPage: React.FC = () => {
   const location = useLocation();
@@ -61,7 +62,7 @@ const ResultsPage: React.FC = () => {
   return isLoaded && analystResult != undefined ? (
     <Box
       className="page-layout"
-      sx={{ display: "flex", flexDirection: "column" }}
+      sx={{ display: "flex", flexDirection: "column", gap: '30px' }}
     >
       <Typography
         variant="h4"
@@ -89,6 +90,7 @@ const ResultsPage: React.FC = () => {
           {decodedCustomerUrl}
         </Link>
       </Typography>
+      <DynamicIframeModal code={analystResult.suggested_mew_html} />
       <Paper
         elevation={3}
         sx={{
