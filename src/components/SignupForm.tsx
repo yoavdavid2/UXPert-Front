@@ -13,7 +13,7 @@ import { PhotoCamera } from "@mui/icons-material";
 import { ISignupFormProps } from "../utils/types";
 import { emailRegex, passwordSignUpRegex } from "../utils/validations";
 import { BACKEND_URL } from "../config";
-import api from "../services/Api";
+import api from "../services/requestsWrapper";
 
 const SignupForm = ({
   email,

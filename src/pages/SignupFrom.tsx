@@ -14,7 +14,7 @@ import { PhotoCamera } from "@mui/icons-material";
 
 import { AuthPagesProps, emailRegex, passwordSignUpRegex } from "./Auth";
 import { BACKEND_URL } from "../config";
-import api from "../services/Api";
+import api from "../services/requestsWrapper";
 import "./pages.css";
 
 const SignUp = ({ onSwitchPage }: AuthPagesProps) => {
@@ -79,13 +79,13 @@ const SignUp = ({ onSwitchPage }: AuthPagesProps) => {
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isDisabled) return;
-  
+
     setIsUploading(true);
     setError(null);
-  
+
     try {
       let base64Image: string | null = null;
-  
+
       if (profileImage) {
         base64Image = await new Promise<string>((resolve, reject) => {
           const reader = new FileReader();
@@ -100,7 +100,7 @@ const SignUp = ({ onSwitchPage }: AuthPagesProps) => {
           reader.readAsDataURL(profileImage);
         });
       }
-  
+
       const payload = {
         firstName,
         lastName,
@@ -109,13 +109,13 @@ const SignUp = ({ onSwitchPage }: AuthPagesProps) => {
         password,
         picture: base64Image, // null if no image
       };
-  
+
       await api.post("/auth/register", payload, {
         headers: {
           "Content-Type": "application/json",
         },
       });
-  
+
       onSwitchPage(); // switch to login
     } catch (error: any) {
       const message =
@@ -125,7 +125,6 @@ const SignUp = ({ onSwitchPage }: AuthPagesProps) => {
       setIsUploading(false);
     }
   };
-  
 
   return (
     <div className="page-layout">
@@ -318,6 +317,5 @@ const SignUp = ({ onSwitchPage }: AuthPagesProps) => {
     </div>
   );
 };
-
 
 export default SignUp;

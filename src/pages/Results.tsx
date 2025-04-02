@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Box, Grid, Link, Paper, Typography, useTheme } from "@mui/material";
 import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
+
 import ResultsCard from "../components/ResultsCard";
 import { userRequirmentsSummeryDto } from "../utils/types";
 import AnimatedModal from "../components/animatedModal";
-import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { OverallEvaluation } from "../types/Report";
+import api from "../services/requestsWrapper";
 import DynamicIframeModal from "../components/DynamicIframeModal";
-import api from "../services/Api";
 
-const ResultsPage: React.FC = () => {
+const ResultsPage = () => {
   const location = useLocation();
   const theme = useTheme();
-  const [isLoaded, setIsLoaded] = useState<boolean>(true);
-  const [currentLoadingText, setCurrentLoadingText] =
-    useState<string>("Loading...");
+  const [isLoaded, setIsLoaded] = useState(true);
+  const [currentLoadingText, setCurrentLoadingText] = useState("Loading...");
   const [analystResult, setAnalystResult] = useState<
     OverallEvaluation | undefined
   >(undefined);
@@ -54,8 +54,40 @@ const ResultsPage: React.FC = () => {
             deepAnalysis: false,
           })
           .then((response) => {
-            console.log(response.data);
-            setAnalystResult(response.data);
+            console.log(typeof response.data);
+            if (
+              response.data == undefined ||
+              response.data == null ||
+              response.data == ""
+            ) {
+              Swal.fire({
+                icon: "error",
+                title: "An error occured",
+                text: "Error at parsing response",
+                timer: 3000,
+                timerProgressBar: true,
+                showConfirmButton: false,
+              });
+              setTimeout(() => {
+                navigate("/", { replace: true });
+              }, 3000);
+            } else {
+              setAnalystResult(response.data);
+            }
+          })
+          .catch((e) => {
+            console.log(e);
+            Swal.fire({
+              icon: "error",
+              title: "Unable to analyze",
+              text: "An error occurred while analyzing your website. Redirecting to homepage...",
+              timer: 3000,
+              timerProgressBar: true,
+              showConfirmButton: false,
+            });
+            setTimeout(() => {
+              navigate("/", { replace: true });
+            }, 3000);
           })
           .finally(() => {
             setIsLoaded(true);

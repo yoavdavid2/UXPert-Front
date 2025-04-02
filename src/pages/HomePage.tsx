@@ -54,9 +54,10 @@ const HomePage = () => {
     setOpenCard(true);
   };
 
-  const handleCloseCard = (summery: userRequirmentsSummeryDto) => {
+  const handleCloseCard = (summary: userRequirmentsSummeryDto) => {
     setOpenCard(false);
-    navigate(`/results?link=${summery.url}`, { state: { summery } });
+    console.log(summary);
+    navigate(`/results?link=${summary.url}`, { state: { summery: summary } });
   };
 
   return (

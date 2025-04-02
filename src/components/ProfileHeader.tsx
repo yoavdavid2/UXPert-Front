@@ -24,18 +24,18 @@ const ProfileHeader = ({ userProfile, onEditProfile }: IProfileHeaderProps) => {
             Member since
             {userProfile.createdAt
               ? new Date(userProfile.createdAt).toLocaleDateString()
-              : "Unknown date"}
+              : " Unknown date"}
           </Typography>
         </div>
       </div>
       <div className="profile-actions">
-        <Button
+        {/* <Button
           variant="contained"
           className="profile-edit-button"
           onClick={onEditProfile}
         >
           Edit Profile
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
