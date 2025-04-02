@@ -16,6 +16,7 @@ import { EnhanceIcon, StreamlineIcon } from "../components/Icons";
 import StepperCard from "../components/stepper/StepperCard";
 import { TransitionProps } from "@mui/material/transitions";
 import { useNavigate } from "react-router";
+import { useAuth } from "../utils/AuthContext";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -32,6 +33,7 @@ const HomePage = () => {
   const isTablet = useMediaQuery(theme.breakpoints.between("sm", "lg"));
   const [openCard, setOpenCard] = useState(false);
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
 
   const features: Partial<IFeatureCardProps>[] = [
     {
@@ -186,9 +188,11 @@ const HomePage = () => {
                   },
                   alignSelf: "center",
                 }}
-                onClick={handleOpenCard}
+                onClick={
+                  isAuthenticated ? handleOpenCard : () => navigate("/auth")
+                }
               >
-                Get started
+                {isAuthenticated ? "New Analysis" : "Get started"}
               </Button>
             </Box>
           </Grid>
