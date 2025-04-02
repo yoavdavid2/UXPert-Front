@@ -1,8 +1,6 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import api from '../services/Api';
-import { TOKEN_LS, USER_PROFILE_LS } from '../config';
-import { UserProfile } from '../types/UserProfile';
-
+import React, { createContext, useContext, useState, ReactNode } from "react";
+import { TOKEN_LS, USER_PROFILE_LS } from "../config";
+import { UserProfile } from "../types/UserProfile";
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -12,7 +10,6 @@ interface AuthContextType {
   logout: () => void;
 }
 
-
 const AuthContext = createContext<AuthContextType>({
   isAuthenticated: false,
   isLoading: true,
@@ -21,28 +18,25 @@ const AuthContext = createContext<AuthContextType>({
   logout: () => {},
 });
 
-
 export const useAuth = () => useContext(AuthContext);
 
-
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+export const AuthProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<UserProfile | null>(null);
 
-  
   // useEffect(() => {
   //   const verifyAuth = async () => {
   //     const token = localStorage.getItem(TOKEN_LS);
   //     const savedUserData = localStorage.getItem(USER_PROFILE_LS);
-      
-      
+
   //     if (!token) {
   //       setIsLoading(false);
   //       return;
   //     }
-      
-      
+
   //     if (savedUserData) {
   //       try {
   //         const userData = JSON.parse(savedUserData);
@@ -51,12 +45,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   //         console.error('Failed to parse saved user data', error);
   //       }
   //     }
-      
+
   //     try {
   //       // const response = await api.get('/api/auth/verify');
   //       setIsAuthenticated(true);
-        
-        
+
   //       // if (response.data?.user) {
   //       //   setUser(response.data.user);
   //       //   localStorage.setItem(USER_PROFILE_LS, JSON.stringify(response.data.user));
@@ -69,31 +62,32 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   //     //   setIsLoading(false);
   //     // }
   //   };
-    
+
   //   verifyAuth();
   // }, []);
-  
-  
+
   const login = (token: string, userData: UserProfile) => {
     localStorage.setItem(TOKEN_LS, token);
     localStorage.setItem(USER_PROFILE_LS, JSON.stringify(userData));
     setUser(userData);
     setIsAuthenticated(true);
+    setIsLoading(false);
   };
-  
-  
+
   const logout = () => {
     localStorage.removeItem(TOKEN_LS);
     localStorage.removeItem(USER_PROFILE_LS);
-    deleteCookie(TOKEN_LS)
-    deleteCookie("user")
+    deleteCookie(TOKEN_LS);
+    deleteCookie("user");
     setUser(null);
     setIsAuthenticated(false);
-    window.location.reload()
+    window.location.reload();
   };
-  
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, isLoading, user, login, logout }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, isLoading, user, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );
@@ -116,14 +110,14 @@ export const decodeUserCookie = (): Record<string, any> | null => {
   }
 };
 
-export const deleteCookie = (name: string): void  => {
+export const deleteCookie = (name: string): void => {
   document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
-}
+};
 
 export const getCookie = (name: string): string | null => {
   const cookie = document.cookie
     .split("; ")
-    .find(row => row.startsWith(`${name}=`));
+    .find((row) => row.startsWith(`${name}=`));
 
   return cookie ? decodeURIComponent(cookie.split("=")[1]) : null;
 };

@@ -38,8 +38,11 @@ const IconChip = () => {
       case "Plans & Pricing":
         navigate("/pricing");
         break;
+      case "Profile & History":
+        navigate("/profile");
+        break;
       case "Logout":
-        logout()
+        logout();
         break;
       default:
         break;
