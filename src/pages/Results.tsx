@@ -9,11 +9,10 @@ import axios from "axios";
 import { BACKEND_URL } from "../config";
 import { OverallEvaluation } from "../types/Report";
 import DynamicIframeModal from "../components/DynamicIframeModal";
+import api from "../services/Api";
 
 const ResultsPage: React.FC = () => {
   const location = useLocation();
-  const state =
-    (location.state as { summery?: userRequirmentsSummeryDto }) || {};
   const theme = useTheme();
   const [isLoaded, setIsLoaded] = useState<boolean>(true);
   const [currentLoadingText, setCurrentLoadingText] =
@@ -23,6 +22,8 @@ const ResultsPage: React.FC = () => {
   >(undefined);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const state =
+    (location.state as { summery?: userRequirmentsSummeryDto }) || {};
   const decodedCustomerUrl = searchParams.get("link") || "";
 
   useEffect(() => {
@@ -41,10 +42,14 @@ const ResultsPage: React.FC = () => {
       }, 3000);
     } else {
       setTimeout(() => {
-        axios
+        api
           .post(BACKEND_URL + "/api/website/analyze", {
             url: decodedCustomerUrl,
-            name: "College of Management",
+            name: decodedCustomerUrl.split("/")[2],
+            categories: state.summery?.categories,
+            audience: state.summery?.audience,
+            emotions: state.summery?.emotions,
+            purpose: state.summery?.purpose,
             includeScreenshots: false,
             deepAnalysis: false,
           })
