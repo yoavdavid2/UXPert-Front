@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { CircularProgress, Container, Typography } from "@mui/material";
-import { UserProfile, getUserProfile } from "../types/UserProfile";
-import { projectService } from "../services/projectService";
+
 import ProfileHeader from "../components/ProfileHeader";
 import ProfileProjects from "../components/ProfileProjects";
+import { UserProfile, getUserProfile } from "../types/UserProfile";
 
 import "./pages.css";
 
 const ProfilePage = () => {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
-  const [isProfileLoading, setIsProfileLoading] = useState<boolean>(true);
+  const [isProfileLoading, setIsProfileLoading] = useState(true);
 
   const [error, setError] = useState<string | null>(null);
 

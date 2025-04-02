@@ -31,7 +31,7 @@ const AnimatedCard = styled(Card)(({ theme }) => ({
 const ProjectCard = ({ project, onDelete }: IProjectCardProps) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState<boolean>(false);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);

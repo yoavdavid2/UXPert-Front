@@ -21,7 +21,7 @@ const ProfileHeader = ({ userProfile, onEditProfile }: IProfileHeaderProps) => {
             {userProfile.email}
           </Typography>
           <Typography variant="body2" className="profile-member-since">
-            Member since{" "}
+            Member since
             {userProfile.createdAt
               ? new Date(userProfile.createdAt).toLocaleDateString()
               : "Unknown date"}

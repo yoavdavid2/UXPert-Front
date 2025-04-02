@@ -19,11 +19,11 @@ const ProfileProjects = ({
   setGlobalError,
 }: IProfileProjectsSectionProps) => {
   const [projects, setProjects] = useState<Project[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [page, setPage] = useState<number>(1);
-  const [totalPages, setTotalPages] = useState<number>(1);
-  const [totalProjects, setTotalProjects] = useState<number>(0);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalProjects, setTotalProjects] = useState(0);
   const limit = 10;
 
   useEffect(() => {
