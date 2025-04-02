@@ -198,3 +198,69 @@
 .auth-switch-link:hover {
   text-decoration: underline;
 }
+
+/* Animation classes for StepperCard */
+.step-content {
+  width: 100%;
+  position: relative;
+}
+
+.slide-out-left {
+  animation: slideOutLeft 400ms forwards;
+}
+
+.slide-out-right {
+  animation: slideOutRight 400ms forwards;
+}
+
+.slide-in-left {
+  animation: slideInLeft 400ms forwards;
+}
+
+.slide-in-right {
+  animation: slideInRight 400ms forwards;
+}
+
+@keyframes slideOutLeft {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+}
+
+@keyframes slideOutRight {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes slideInLeft {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

@@ -26,7 +26,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const HomePage: React.FC = () => {
+const HomePage = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const isTablet = useMediaQuery(theme.breakpoints.between("sm", "lg"));
@@ -58,12 +58,7 @@ const HomePage: React.FC = () => {
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-      }}
-      className="page-layout"
-    >
+    <Box className="page-layout">
       <Container
         disableGutters
         sx={{

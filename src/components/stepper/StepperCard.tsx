@@ -11,13 +11,17 @@ import TargetsStep from "./TargetsStep";
 import EmotionsStep from "./EmotionsStep";
 import FinalDataStep from "./FinalDataStep";
 
-import { IStepperCardProps, userRequirmentsSummeryDto } from "../../utils/types";
+import {
+  IStepperCardProps,
+  userRequirmentsSummeryDto,
+} from "../../utils/types";
+
+import "../components.css";
 
 const StepperCard = ({ onClose }: IStepperCardProps) => {
   const [activeStep, setActiveStep] = useState(0);
-  const [previousStep, setPreviousStep] = useState(0);
-  const [animationDirection, setAnimationDirection] = useState("");
-  const [isAnimating, setIsAnimating] = useState(false);
+  const [animationClass, setAnimationClass] = useState("");
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
   // State for step 1
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -29,15 +33,6 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
   // State for step 3
   const [websitePurpose, setWebsitePurpose] = useState("");
   const [websiteUrl, setWebsiteUrl] = useState("");
-
-  useEffect(() => {
-    if (isAnimating) {
-      const timer = setTimeout(() => {
-        setIsAnimating(false);
-      }, 500);
-      return () => clearTimeout(timer);
-    }
-  }, [isAnimating]);
 
   const toggleCategory = (category: string) => {
     if (selectedCategories.includes(category)) {
@@ -65,12 +60,63 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
     }
   };
 
-  const handlePageChange = (page: number) => {
-    if (page !== activeStep && !isAnimating) {
-      setPreviousStep(activeStep);
-      setAnimationDirection(page > activeStep ? "forward" : "backward");
-      setIsAnimating(true);
-      setActiveStep(page);
+  const handlePageChange = (newPage: number) => {
+    if (newPage === activeStep || isTransitioning) return;
+
+    // Determine direction and set animation classes
+    const isGoingForward = newPage > activeStep;
+    setAnimationClass(isGoingForward ? "slide-out-left" : "slide-out-right");
+    setIsTransitioning(true);
+
+    // Wait for slide-out to complete, then change page and apply slide-in
+    setTimeout(() => {
+      setActiveStep(newPage);
+      setAnimationClass(isGoingForward ? "slide-in-right" : "slide-in-left");
+    }, 400); // Match the slide-out duration
+  };
+
+  // Reset after the slide-in is complete
+  useEffect(() => {
+    if (isTransitioning) {
+      const resetTimer = setTimeout(() => {
+        setAnimationClass("");
+        setIsTransitioning(false);
+      }, 400); // Match the slide-in duration
+
+      return () => clearTimeout(resetTimer);
+    }
+  }, [isTransitioning, animationClass]);
+
+  // Get current step component
+  const getCurrentStep = () => {
+    switch (activeStep) {
+      case 0:
+        return (
+          <TargetsStep
+            selectedCategories={selectedCategories}
+            toggleCategory={toggleCategory}
+            selectedAudience={selectedAudience}
+            toggleAudience={toggleAudience}
+          />
+        );
+      case 1:
+        return (
+          <EmotionsStep
+            selectedEmotions={selectedEmotions}
+            toggleEmotion={toggleEmotion}
+          />
+        );
+      case 2:
+        return (
+          <FinalDataStep
+            websitePurpose={websitePurpose}
+            setWebsitePurpose={setWebsitePurpose}
+            websiteUrl={websiteUrl}
+            setWebsiteUrl={setWebsiteUrl}
+          />
+        );
+      default:
+        return null;
     }
   };
 
@@ -80,11 +126,11 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
       categories: selectedCategories,
       emotions: selectedEmotions,
       purpose: websiteUrl,
-      url: websiteUrl
-    }
+      url: websiteUrl,
+    };
 
-    return result
-  }
+    return result;
+  };
 
   return (
     <Card
@@ -108,120 +154,9 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
             minHeight: "400px",
           }}
         >
-          <Box
-            sx={{
-              position: "absolute",
-              width: "100%",
-              opacity: activeStep === 0 ? 1 : 0,
-              transform: (() => {
-                if (activeStep === 0) return "translateX(0)";
-                if (previousStep === 0 && isAnimating) {
-                  return animationDirection === "forward"
-                    ? "translateX(-100%)"
-                    : "translateX(100%)";
-                }
-                return "translateX(0)";
-              })(),
-              zIndex: activeStep === 0 ? 10 : 0,
-              display:
-                activeStep === 0 || (previousStep === 0 && isAnimating)
-                  ? "block"
-                  : "none",
-              transition:
-                "transform 500ms ease-in-out, opacity 500ms ease-in-out",
-            }}
-          >
-            <TargetsStep
-              selectedCategories={selectedCategories}
-              toggleCategory={toggleCategory}
-              selectedAudience={selectedAudience}
-              toggleAudience={toggleAudience}
-            />
-          </Box>
-          <Box
-            sx={{
-              position: "absolute",
-              width: "100%",
-              opacity: activeStep === 1 ? 1 : 0,
-              transform: (() => {
-                if (activeStep === 1) return "translateX(0)";
-                if (previousStep === 1 && isAnimating) {
-                  return animationDirection === "forward"
-                    ? "translateX(-100%)"
-                    : "translateX(100%)";
-                }
-                if (
-                  isAnimating &&
-                  ((previousStep === 0 &&
-                    activeStep === 1 &&
-                    animationDirection === "forward") ||
-                    (previousStep === 2 &&
-                      activeStep === 1 &&
-                      animationDirection === "backward"))
-                ) {
-                  return animationDirection === "forward"
-                    ? "translateX(100%)"
-                    : "translateX(-100%)";
-                }
-                return "translateX(0)";
-              })(),
-              zIndex: activeStep === 1 ? 10 : 0,
-              display:
-                activeStep === 1 ||
-                previousStep === 1 ||
-                (isAnimating &&
-                  ((previousStep === 0 && activeStep === 1) ||
-                    (previousStep === 2 && activeStep === 1)))
-                  ? "block"
-                  : "none",
-              transition:
-                "transform 500ms ease-in-out, opacity 500ms ease-in-out",
-            }}
-          >
-            <EmotionsStep
-              selectedEmotions={selectedEmotions}
-              toggleEmotion={toggleEmotion}
-            />
-          </Box>
-          <Box
-            sx={{
-              position: "absolute",
-              width: "100%",
-              opacity: activeStep === 2 ? 1 : 0,
-              transform: (() => {
-                if (activeStep === 2) return "translateX(0)";
-                if (previousStep === 2 && isAnimating) {
-                  return animationDirection === "forward"
-                    ? "translateX(-100%)"
-                    : "translateX(100%)";
-                }
-                if (
-                  isAnimating &&
-                  previousStep === 1 &&
-                  activeStep === 2 &&
-                  animationDirection === "forward"
-                ) {
-                  return "translateX(100%)";
-                }
-                return "translateX(0)";
-              })(),
-              zIndex: activeStep === 2 ? 10 : 0,
-              display:
-                activeStep === 2 ||
-                previousStep === 2 ||
-                (isAnimating && previousStep === 1 && activeStep === 2)
-                  ? "block"
-                  : "none",
-              transition:
-                "transform 500ms ease-in-out, opacity 500ms ease-in-out",
-            }}
-          >
-            <FinalDataStep
-              websitePurpose={websitePurpose}
-              setWebsitePurpose={setWebsitePurpose}
-              websiteUrl={websiteUrl}
-              setWebsiteUrl={setWebsiteUrl}
-            />
+          {/* Content with animation classes */}
+          <Box className={`step-content ${animationClass}`}>
+            {getCurrentStep()}
           </Box>
         </Box>
 
@@ -239,7 +174,7 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
                 <Button
                   key={i}
                   onClick={() => handlePageChange(i)}
-                  disabled={i === activeStep}
+                  disabled={i === activeStep || isTransitioning}
                   sx={{
                     fontWeight: i === activeStep ? "bold" : "normal",
                     color: i === activeStep ? "primary.main" : "text.secondary",
@@ -257,6 +192,7 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
                 variant="outlined"
                 color="secondary"
                 onClick={() => handlePageChange(activeStep - 1)}
+                disabled={isTransitioning}
                 sx={{ borderRadius: 28, px: 3 }}
               >
                 BACK
@@ -266,10 +202,11 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
               variant="contained"
               color="secondary"
               onClick={
-                activeStep < 3
+                activeStep < 2
                   ? () => handlePageChange(activeStep + 1)
-                  : onClose(buildSummery())
+                  : () => onClose(buildSummery())
               }
+              disabled={isTransitioning}
               sx={{ borderRadius: 28, px: 3 }}
             >
               {activeStep < 2 ? "NEXT" : "FINISH"}
