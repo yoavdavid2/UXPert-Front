@@ -10,11 +10,10 @@ import AnimatedModal from "../components/animatedModal";
 import { BACKEND_URL } from "../config";
 import { OverallEvaluation } from "../types/Report";
 import api from "../services/requestsWrapper";
+import DynamicIframeModal from "../components/DynamicIframeModal";
 
 const ResultsPage = () => {
   const location = useLocation();
-  const state =
-    (location.state as { summery?: userRequirmentsSummeryDto }) || {};
   const theme = useTheme();
   const [isLoaded, setIsLoaded] = useState(true);
   const [currentLoadingText, setCurrentLoadingText] = useState("Loading...");
@@ -23,6 +22,8 @@ const ResultsPage = () => {
   >(undefined);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
+  const state =
+    (location.state as { summery?: userRequirmentsSummeryDto }) || {};
   const decodedCustomerUrl = searchParams.get("link") || "";
 
   useEffect(() => {
@@ -42,9 +43,13 @@ const ResultsPage = () => {
     } else {
       setTimeout(() => {
         api
-          .post(`${BACKEND_URL}/api/website/analyze`, {
-            url: "https://" + decodedCustomerUrl,
-            name: "College of Management",
+          .post(BACKEND_URL + "/api/website/analyze", {
+            url: decodedCustomerUrl,
+            name: decodedCustomerUrl.split("/")[2],
+            categories: state.summery?.categories,
+            audience: state.summery?.audience,
+            emotions: state.summery?.emotions,
+            purpose: state.summery?.purpose,
             includeScreenshots: false,
             deepAnalysis: false,
           })
@@ -94,7 +99,7 @@ const ResultsPage = () => {
   return isLoaded && analystResult != undefined ? (
     <Box
       className="page-layout"
-      sx={{ display: "flex", flexDirection: "column" }}
+      sx={{ display: "flex", flexDirection: "column", gap: '30px' }}
     >
       <Typography
         variant="h4"
@@ -122,6 +127,7 @@ const ResultsPage = () => {
           {decodedCustomerUrl}
         </Link>
       </Typography>
+      <DynamicIframeModal code={analystResult.suggested_mew_html} />
       <Paper
         elevation={3}
         sx={{
