@@ -85,9 +85,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const logout = () => {
     localStorage.removeItem(TOKEN_LS);
     localStorage.removeItem(USER_PROFILE_LS);
+    deleteCookie(TOKEN_LS)
+    deleteCookie("user")
     setUser(null);
-    window.location.reload()
     setIsAuthenticated(false);
+    window.location.reload()
   };
   
   return (
@@ -113,6 +115,10 @@ export const decodeUserCookie = (): Record<string, any> | null => {
     return null;
   }
 };
+
+export const deleteCookie = (name: string): void  => {
+  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+}
 
 export const getCookie = (name: string): string | null => {
   const cookie = document.cookie
