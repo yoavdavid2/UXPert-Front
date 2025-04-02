@@ -117,7 +117,7 @@ const HomePage: React.FC = () => {
                   lineHeight: 1.2,
                 }}
               >
-                Maximizing your website development projects with UXpert
+                Maximize your website development projects with UXpert
               </Typography>
 
               <Typography
