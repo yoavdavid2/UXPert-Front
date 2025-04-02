@@ -31,46 +31,47 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
   const [user, setUser] = useState<UserProfile | null>(null);
 
   
-  useEffect(() => {
-    const verifyAuth = async () => {
-      const token = localStorage.getItem(TOKEN_LS);
-      const savedUserData = localStorage.getItem(USER_PROFILE_LS);
+  // useEffect(() => {
+  //   const verifyAuth = async () => {
+  //     const token = localStorage.getItem(TOKEN_LS);
+  //     const savedUserData = localStorage.getItem(USER_PROFILE_LS);
       
       
-      if (!token) {
-        setIsLoading(false);
-        return;
-      }
+  //     if (!token) {
+  //       setIsLoading(false);
+  //       return;
+  //     }
       
       
-      if (savedUserData) {
-        try {
-          const userData = JSON.parse(savedUserData);
-          setUser(userData);
-        } catch (error) {
-          console.error('Failed to parse saved user data', error);
-        }
-      }
+  //     if (savedUserData) {
+  //       try {
+  //         const userData = JSON.parse(savedUserData);
+  //         setUser(userData);
+  //       } catch (error) {
+  //         console.error('Failed to parse saved user data', error);
+  //       }
+  //     }
       
-      try {
-        const response = await api.get('/api/auth/verify');
-        setIsAuthenticated(true);
+  //     try {
+  //       // const response = await api.get('/api/auth/verify');
+  //       setIsAuthenticated(true);
         
         
-        if (response.data?.user) {
-          setUser(response.data.user);
-          localStorage.setItem(USER_PROFILE_LS, JSON.stringify(response.data.user));
-        }
-      } catch (err) {
-        console.error('Token verification failed:', err);
-        logout();
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  //       // if (response.data?.user) {
+  //       //   setUser(response.data.user);
+  //       //   localStorage.setItem(USER_PROFILE_LS, JSON.stringify(response.data.user));
+  //     //   }
+  //     } catch (err) {
+  //       console.error('Token verification failed:', err);
+  //       logout();
+  //     }
+  //     // } finally {
+  //     //   setIsLoading(false);
+  //     // }
+  //   };
     
-    verifyAuth();
-  }, []);
+  //   verifyAuth();
+  // }, []);
   
   
   const login = (token: string, userData: UserProfile) => {
@@ -94,6 +95,42 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       {children}
     </AuthContext.Provider>
   );
+};
+
+export const decodeUserCookie = (): Record<string, any> | null => {
+  const cookie = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("user="));
+
+  if (!cookie) return null;
+
+  try {
+    const encodedValue = cookie.split("=")[1];
+    const jsonString = decodeURIComponent(encodedValue);
+    return JSON.parse(jsonString);
+  } catch (error) {
+    console.error("Failed to decode user cookie:", error);
+    return null;
+  }
+};
+
+export const getCookie = (name: string): string | null => {
+  const cookie = document.cookie
+    .split("; ")
+    .find(row => row.startsWith(`${name}=`));
+
+  return cookie ? decodeURIComponent(cookie.split("=")[1]) : null;
+};
+
+export const mapToUserProfile = (raw: any): UserProfile => {
+  return {
+    id: raw.id || raw._id || "",
+    firstName: raw.firstName || "",
+    lastName: raw.lastName || "",
+    email: raw.email || "",
+    profileImage: raw.picture || raw.profileImage || null,
+    createdAt: raw.createdAt || undefined,
+  };
 };
 
 export default AuthContext;
