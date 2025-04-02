@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -14,17 +14,27 @@ import Appbar from "./components/Appbar";
 import BackgroundWrapper from "./components/BackgroundWrapper";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-import { AuthProvider, useAuth } from "./utils/AuthContext";
+import { AuthProvider, decodeUserCookie, getCookie, mapToUserProfile, useAuth } from "./utils/AuthContext";
 
 import "./App.css";
 import ResultsPage from "./pages/Results";
 
 const AppRouter = () => {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, login } = useAuth();
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
+
+  useEffect(() => {
+    try {
+      const decoded = decodeUserCookie()
+      login(getCookie("access_token") as string, mapToUserProfile(decoded))
+    } catch (exception) {
+      console.log("local user")
+    }
+  }, [])
+
+  // if (isLoading) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <BackgroundWrapper>
@@ -51,6 +61,7 @@ const AppRouter = () => {
 };
 
 const App = () => {
+
   return (
     <AuthProvider>
       <Router>
