@@ -5,13 +5,21 @@ import Swal from "sweetalert2";
 import ResultsCard from "../components/ResultsCard";
 import { userRequirmentsSummeryDto } from "../utils/types";
 import AnimatedModal from "../components/animatedModal";
+import axios from "axios";
+import { BACKEND_URL } from "../config";
+import { OverallEvaluation } from "../types/Report";
 
 const ResultsPage: React.FC = () => {
-const location = useLocation()
-const state = location.state as { summery?: userRequirmentsSummeryDto } || {};
+  const location = useLocation();
+  const state =
+    (location.state as { summery?: userRequirmentsSummeryDto }) || {};
   const theme = useTheme();
-  const [isLoaded, setIsLoaded] = useState<boolean>(false)
-  const [currentLoadingText, setCurrentLoadingText] = useState<string>("test")
+  const [isLoaded, setIsLoaded] = useState<boolean>(true);
+  const [currentLoadingText, setCurrentLoadingText] =
+    useState<string>("Loading...");
+  const [analystResult, setAnalystResult] = useState<
+    OverallEvaluation | undefined
+  >(undefined);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const decodedCustomerUrl = searchParams.get("link") || "";
@@ -24,18 +32,37 @@ const state = location.state as { summery?: userRequirmentsSummeryDto } || {};
         text: "No customer URL provided. Redirecting to homepage...",
         timer: 3000,
         timerProgressBar: true,
-        showConfirmButton: false, 
+        showConfirmButton: false,
       });
 
       setTimeout(() => {
         navigate("/", { replace: true });
       }, 3000);
+    } else {
+      setTimeout(() => {
+        axios
+          .post(BACKEND_URL + "/api/website/analyze", {
+            url: decodedCustomerUrl,
+            name: "College of Management",
+            includeScreenshots: false,
+            deepAnalysis: false,
+          })
+          .then((response) => {
+            console.log(response.data);
+            setAnalystResult(response.data);
+          })
+          .finally(() => {
+            setIsLoaded(true);
+          });
+      }, 3000);
     }
-  }, [decodedCustomerUrl, navigate]); 
+  }, [decodedCustomerUrl, navigate]);
 
-  return (
-    isLoaded ? 
-    <Box className="page-layout" sx={{ display: "flex", flexDirection: "column" }}>
+  return isLoaded && analystResult != undefined ? (
+    <Box
+      className="page-layout"
+      sx={{ display: "flex", flexDirection: "column" }}
+    >
       <Typography
         variant="h4"
         sx={{
@@ -72,55 +99,41 @@ const state = location.state as { summery?: userRequirmentsSummeryDto } || {};
           display: "flex",
           borderRadius: "10px",
           padding: "20px",
-          justifyContent: "center", 
+          justifyContent: "center",
           alignItems: "center",
         }}
       >
         <Grid
           sx={{ width: "100%", height: "100%" }}
           container
-          spacing={3} 
-          justifyContent="center" 
-          alignItems="center" 
+          spacing={3}
+          justifyContent="center"
+          alignItems="center"
         >
-          <Grid item xs={2.4} sx={{ display: "flex", justifyContent: "center" }}>
-            <ResultsCard score={8.5} category="Test" />
-          </Grid>
-          <Grid item xs={2.4} sx={{ display: "flex", justifyContent: "center" }}>
-            <ResultsCard score={7.5} category="Test" />
-          </Grid>
-          <Grid item xs={2.4} sx={{ display: "flex", justifyContent: "center" }}>
-            <ResultsCard score={9.0} category="Test" />
-          </Grid>
-          <Grid item xs={2.4} sx={{ display: "flex", justifyContent: "center" }}>
-            <ResultsCard score={9.0} category="Test" />
-          </Grid>
-
-          <Grid item xs={2.4} sx={{ display: "flex", justifyContent: "center" }}>
-            <ResultsCard score={8.5} category="Test" />
-          </Grid>
-          <Grid item xs={2.4} sx={{ display: "flex", justifyContent: "center" }}>
-            <ResultsCard score={7.5} category="Test" />
-          </Grid>
-          <Grid item xs={2.4} sx={{ display: "flex", justifyContent: "center" }}>
-            <ResultsCard score={9.0} category="Test" />
-          </Grid>
-          <Grid item xs={2.4} sx={{ display: "flex", justifyContent: "center" }}>
-            <ResultsCard score={9.0} category="Test" />
-          </Grid>
-          <Grid item xs={2.4} sx={{ display: "flex", justifyContent: "center" }}>
-            <ResultsCard score={9.0} category="Test" />
-          </Grid>
-          <Grid item xs={2.4} sx={{ display: "flex", justifyContent: "center" }}>
-            <ResultsCard score={9.0} category="Test" />
-          </Grid>
+          {analystResult.category_ratings.map((category) => (
+            <Grid
+              item
+              xs={2.4}
+              sx={{ display: "flex", justifyContent: "center" }}
+            >
+              <ResultsCard
+                numeric_rating={category.numeric_rating}
+                category={category.category}
+                text_rating={category.text_rating}
+                improvement_suggestions={category.improvement_suggestions}
+              />
+            </Grid>
+          ))}
         </Grid>
       </Paper>
-    </Box> : 
-    <Box className='page-layout' sx={{ display: "flex", justifyContent: 'center', alignContent: 'center'}}>
-         <AnimatedModal currentText={currentLoadingText}></AnimatedModal>
     </Box>
-   
+  ) : (
+    <Box
+      className="page-layout"
+      sx={{ display: "flex", justifyContent: "center", alignContent: "center" }}
+    >
+      <AnimatedModal currentText={currentLoadingText}></AnimatedModal>
+    </Box>
   );
 };
 

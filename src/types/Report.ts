@@ -79,3 +79,38 @@ export interface ReportResults {
       status: report.status
     };
   };
+
+
+//// New Interfaces
+type WebsiteEvaluationCategory =
+  "Is the color scheme match the website genre?"
+  | "Usability"
+  | "Visual Design"
+  | "Performance & Speed"
+  | "Accessibility"
+  | "Content Quality & Readability"
+  | "Navigation & Information Architecture"
+  | "Mobile-Friendliness (Responsiveness)"
+  | "User Engagement"
+  | "Consistency";
+
+export interface ImprovementSuggestions {
+    improvement: string;
+    importance: number; // Assuming a scale of 1-10
+    expected_improvement: number; // Assuming a scale of 1-10
+  }
+
+export interface WebsiteEvaluation {
+    category: WebsiteEvaluationCategory;
+    text_rating: string;
+    numeric_rating: number; // Assuming a scale of 1-10
+    improvement_suggestions: ImprovementSuggestions[]; 
+  }
+
+export interface OverallEvaluation {
+    category_ratings: WebsiteEvaluation[];
+    final_score: number;
+    best_thing: string;
+    worst_thing: string;
+    suggested_mew_html: string;
+  }
