@@ -1,32 +1,43 @@
 // src/services/reportService.ts
-import api from './Api';
-import { Report, ReportHistoryQuery, mapApiReportToReport } from '../types/Report';
+import api from "./requestsWrapper";
+import {
+  Report,
+  ReportHistoryQuery,
+  mapApiReportToReport,
+} from "../types/Report";
 
 export const reportService = {
   // Get reports history
-  async getReportsHistory(query: ReportHistoryQuery = {}): Promise<{ reports: Report[], total: number }> {
+  async getReportsHistory(
+    query: ReportHistoryQuery = {}
+  ): Promise<{ reports: Report[]; total: number }> {
     try {
-      const response = await api.get('/reports', { params: query });
+      const response = await api.get("/reports", { params: query });
       return {
         reports: response.data.reports.map(mapApiReportToReport),
-        total: response.data.total
+        total: response.data.total,
       };
     } catch (error) {
-      console.error('Error fetching reports history:', error);
+      console.error("Error fetching reports history:", error);
       throw error;
     }
   },
 
   // Get reports by project
-  async getReportsByProject(projectId: string, query: ReportHistoryQuery = {}): Promise<{ reports: Report[], total: number }> {
+  async getReportsByProject(
+    projectId: string,
+    query: ReportHistoryQuery = {}
+  ): Promise<{ reports: Report[]; total: number }> {
     try {
-      const response = await api.get(`/reports/project/${projectId}`, { params: query });
+      const response = await api.get(`/reports/project/${projectId}`, {
+        params: query,
+      });
       return {
         reports: response.data.reports.map(mapApiReportToReport),
-        total: response.data.total
+        total: response.data.total,
       };
     } catch (error) {
-      console.error('Error fetching reports by project:', error);
+      console.error("Error fetching reports by project:", error);
       throw error;
     }
   },
@@ -53,12 +64,17 @@ export const reportService = {
   },
 
   // Assign a report to a project
-  async assignReportToProject(reportId: string, projectId: string): Promise<Report> {
+  async assignReportToProject(
+    reportId: string,
+    projectId: string
+  ): Promise<Report> {
     try {
-      const response = await api.patch(`/reports/${reportId}/project/${projectId}`);
+      const response = await api.patch(
+        `/reports/${reportId}/project/${projectId}`
+      );
       return mapApiReportToReport(response.data);
     } catch (error) {
-      console.error('Error assigning report to project:', error);
+      console.error("Error assigning report to project:", error);
       throw error;
     }
   },
@@ -66,16 +82,16 @@ export const reportService = {
   // Compare two reports
   async compareReports(report1Id: string, report2Id: string): Promise<any> {
     try {
-      const response = await api.get('/reports/compare', { 
-        params: { 
-          report1: report1Id, 
-          report2: report2Id 
-        } 
+      const response = await api.get("/reports/compare", {
+        params: {
+          report1: report1Id,
+          report2: report2Id,
+        },
       });
       return response.data;
     } catch (error) {
-      console.error('Error comparing reports:', error);
+      console.error("Error comparing reports:", error);
       throw error;
     }
-  }
+  },
 };

@@ -13,7 +13,7 @@ import { useAuth } from "../utils/AuthContext";
 import { emailRegex, passwordLogInRegex } from "../utils/validations";
 
 import { BACKEND_URL } from "../config";
-import api from "../services/Api";
+import api from "../services/requestsWrapper";
 
 import "./components.css";
 
@@ -31,11 +31,9 @@ const LoginForm = ({
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  // Form validation
   const isDisabled =
     !emailRegex.test(email) || !passwordLogInRegex.test(password) || isLoading;
 
-  // Handle sign in submission
   const handleSignIn = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isDisabled) return;
@@ -73,7 +71,6 @@ const LoginForm = ({
     }
   };
 
-  // Handle Google sign in
   const handleGoogleSignIn = () => {
     window.location.href = `${BACKEND_URL}/auth/google`;
   };

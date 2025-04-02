@@ -63,31 +63,27 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
   const handlePageChange = (newPage: number) => {
     if (newPage === activeStep || isTransitioning) return;
 
-    // Determine direction and set animation classes
     const isGoingForward = newPage > activeStep;
     setAnimationClass(isGoingForward ? "slide-out-left" : "slide-out-right");
     setIsTransitioning(true);
 
-    // Wait for slide-out to complete, then change page and apply slide-in
     setTimeout(() => {
       setActiveStep(newPage);
       setAnimationClass(isGoingForward ? "slide-in-right" : "slide-in-left");
-    }, 400); // Match the slide-out duration
+    }, 400);
   };
 
-  // Reset after the slide-in is complete
   useEffect(() => {
     if (isTransitioning) {
       const resetTimer = setTimeout(() => {
         setAnimationClass("");
         setIsTransitioning(false);
-      }, 400); // Match the slide-in duration
+      }, 400);
 
       return () => clearTimeout(resetTimer);
     }
   }, [isTransitioning, animationClass]);
 
-  // Get current step component
   const getCurrentStep = () => {
     switch (activeStep) {
       case 0:
@@ -154,7 +150,6 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
             minHeight: "400px",
           }}
         >
-          {/* Content with animation classes */}
           <Box className={`step-content ${animationClass}`}>
             {getCurrentStep()}
           </Box>

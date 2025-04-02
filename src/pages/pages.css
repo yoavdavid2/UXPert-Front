@@ -138,6 +138,7 @@
 }
 
 .profile-name {
+  color: black;
   margin-bottom: 8px !important;
   font-weight: 600 !important;
 }

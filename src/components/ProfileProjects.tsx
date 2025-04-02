@@ -36,11 +36,14 @@ const ProfileProjects = ({
       setLoading(true);
       setError(null);
 
-      const result = await projectService.getProjects({
-        page,
-        limit,
-        sort: "desc",
-      });
+      // const result = await projectService.getProjects({
+      //   page,
+      //   limit,
+      //   sort: "desc",
+      // });
+
+      const result = await projectService.getProjects();
+      console.log(result);
 
       setProjects(result.projects);
       setTotalProjects(result.total);
@@ -88,14 +91,14 @@ const ProfileProjects = ({
         <Typography variant="h5" component="h2" className="section-title">
           My Projects
         </Typography>
-        <Button
+        {/* <Button
           variant="contained"
           color="primary"
           className="new-project-button"
           onClick={handleCreateProject}
         >
           New Project
-        </Button>
+        </Button> */}
       </div>
 
       {loading && (
