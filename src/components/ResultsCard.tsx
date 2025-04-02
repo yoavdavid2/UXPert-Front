@@ -119,11 +119,12 @@ const ResultsCard: React.FC<WebsiteEvaluation> = ({
               <Typography variant="h6" sx={{ color: "#7E69AC" }}>
                 Importance: {suggestion.importance}{" "}
                 {suggestion.importance < 5
-                  ? "⭐"
-                  : "⭐".repeat(suggestion.importance / 2)}
+                  ? "📛"
+                  : "📛".repeat(suggestion.importance / 2)}
               </Typography>
               <Typography variant="h6" sx={{ color: "#7E69AC" }}>
-                Expected Improvement: {suggestion.expected_improvement}
+                Expected Improvement: {suggestion.expected_improvement}{" "}
+                {"⭐".repeat(suggestion.importance)}
               </Typography>
             </Box>
           ))}
