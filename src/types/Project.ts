@@ -30,6 +30,12 @@ export interface CreateProjectRequest {
     updatedAt?: string;
 }  
 
+export interface IReportCardProps {
+  report: any; // Replace with proper Report type
+  onViewClick: (reportId: string) => void;
+  onDeleteClick: (reportId: string) => void;
+}
+
 export const mockProjects: Project[] = [
     {
       id: '1',

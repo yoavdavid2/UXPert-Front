@@ -4,6 +4,7 @@ import {
   CreateProjectRequest,
   ProjectResponse,
 } from "../types/Project";
+import { Report, ReportHistoryQuery, mapApiReportToReport } from "../types/Report";
 
 // Convert backend response to frontend Project format
 const convertToProject = (projectData: ProjectResponse): Project => {
@@ -30,6 +31,19 @@ export const projectService = {
       };
     } catch (error) {
       console.error("Error fetching projects:", error);
+      throw error;
+    }
+  },
+
+  // Get project/report history for a specific website
+  async getProjectHistory(websiteName: string): Promise<Project[]> {
+    try {
+      const response = await api.get(`/api/reports/history/${websiteName}`);
+      return Array.isArray(response.data) 
+        ? response.data.map(convertToProject)
+        : [];
+    } catch (error) {
+      console.error(`Error fetching history for ${websiteName}:`, error);
       throw error;
     }
   },
@@ -79,4 +93,21 @@ export const projectService = {
       throw error;
     }
   },
+
+// Get reports history
+async getReportsHistory(
+  query: ReportHistoryQuery = {}
+): Promise<{ reports: Report[]; total: number }> {
+  try {
+    const response = await api.get("/api/reports", { params: query });
+    return {
+      reports: response.data.reports.map(mapApiReportToReport),
+      total: response.data.total,
+    };
+  } catch (error) {
+    console.error("Error fetching reports history:", error);
+    throw error;
+  }
+},
+
 };

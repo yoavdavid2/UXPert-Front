@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
   Typography,
-  Button,
   Grid,
   CircularProgress,
   Pagination,
@@ -11,6 +10,7 @@ import ProjectCard from "../components/ProjectCard";
 import { IProfileProjectsSectionProps } from "../utils/types";
 import { Project, mockProjects } from "../types/Project";
 import { projectService } from "../services/projectService";
+
 
 import "./components.css";
 
@@ -74,9 +74,9 @@ const ProfileProjects = ({
     }
   };
 
-  const handleCreateProject = () => {
+  /*const handleCreateProject = () => {
     console.log("Create new project clicked");
-  };
+  };*/
 
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,

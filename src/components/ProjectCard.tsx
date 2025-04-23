@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Card,
   CardContent,
@@ -29,6 +30,7 @@ const AnimatedCard = styled(Card)(({ theme }) => ({
 }));
 
 const ProjectCard = ({ project, onDelete }: IProjectCardProps) => {
+  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -61,12 +63,16 @@ const ProjectCard = ({ project, onDelete }: IProjectCardProps) => {
   };
 
   const handleViewDetails = () => {
-    console.log("View project details", project.id);
+    navigate(`/results?reportId=${project.id}&link=${encodeURIComponent(project.title)}`);
+  };
+
+  const handleCardClick = () => {
+    handleViewDetails();
   };
 
   return (
     <>
-      <AnimatedCard className="project-card">
+      <AnimatedCard className="project-card" onClick={handleCardClick} sx={{cursor: 'pointer'}}>
         <CardContent>
           <div className="project-card-header">
             <Typography variant="h6" component="h3" className="project-title">
@@ -76,7 +82,10 @@ const ProjectCard = ({ project, onDelete }: IProjectCardProps) => {
               aria-label="Project options"
               aria-controls="project-menu"
               aria-haspopup="true"
-              onClick={handleMenuClick}
+              onClick={(e) => {
+                e.stopPropagation(); // Prevent card click when clicking menu
+                handleMenuClick(e);
+              }}
               size="small"
             >
               <MoreVert />
@@ -111,7 +120,10 @@ const ProjectCard = ({ project, onDelete }: IProjectCardProps) => {
         </CardContent>
 
         <CardActions className="project-card-actions">
-          <Button size="small" color="primary" onClick={handleViewDetails}>
+          <Button size="small" color="primary" onClick={(e) => {
+              e.stopPropagation(); // Prevent card click
+              handleViewDetails();
+            }}>
             View Details
           </Button>
         </CardActions>
