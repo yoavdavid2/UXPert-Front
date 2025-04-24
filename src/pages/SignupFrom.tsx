@@ -13,7 +13,6 @@ import {
 import { PhotoCamera } from "@mui/icons-material";
 
 import { AuthPagesProps, emailRegex, passwordSignUpRegex } from "./Auth";
-import { BACKEND_URL } from "../config";
 import api from "../services/requestsWrapper";
 import "./pages.css";
 

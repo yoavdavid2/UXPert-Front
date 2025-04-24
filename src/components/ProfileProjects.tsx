@@ -1,17 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {
-  Typography,
-  Grid,
-  CircularProgress,
-  Pagination,
-} from "@mui/material";
+import { Typography, Grid, CircularProgress, Pagination} from "@mui/material";
 import ProjectCard from "../components/ProjectCard";
-
 import { IProfileProjectsSectionProps } from "../utils/types";
 import { Project, mockProjects } from "../types/Project";
 import { projectService } from "../services/projectService";
-
-
 import "./components.css";
 
 const ProfileProjects = ({

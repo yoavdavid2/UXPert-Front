@@ -1,38 +1,23 @@
 import React, { useState } from "react";
-import { 
-  Modal, 
-  Box, 
-  Button, 
-  IconButton,
-  Typography,
-  Tabs,
-  Tab,
-  Paper
-} from "@mui/material";
-import { 
-  Close, 
-  Refresh,
-  Code,
-  Visibility
-} from "@mui/icons-material";
+import { Modal, Box, Button, IconButton, Typography, Tabs, Tab, Paper} from "@mui/material";
+import { Close, Refresh, Code, Visibility} from "@mui/icons-material";
 import { SandpackProvider, SandpackPreview, SandpackCodeEditor } from "@codesandbox/sandpack-react";
 
 interface DynamicIframeModalProps {
   code: string;
-  open?: boolean;
-  onClose?: () => void;
+  open: boolean;
+  onClose: () => void;
 }
 
 const DynamicIframeModal: React.FC<DynamicIframeModalProps> = ({ 
   code,
-  open: propOpen = true,
-  onClose = () => {}
+  open,
+  onClose
 }) => {
-  const [open, setOpen] = useState(propOpen);
   const [tabValue, setTabValue] = useState(0);
   const [iframeKey, setIframeKey] = useState(0);
 
-  const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+  const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
 
@@ -52,23 +37,10 @@ const DynamicIframeModal: React.FC<DynamicIframeModalProps> = ({
     URL.revokeObjectURL(url);
   };
 
-  const handleClose = () => {
-    setOpen(false);
-    onClose();
-  };
-
-  // Control local state from props
-  React.useEffect(() => {
-    if (propOpen) {
-      setIframeKey((k) => k + 1);
-    };
-    setOpen(propOpen);
-  }, [propOpen]);
-
   return (
     <Modal 
       open={open} 
-      onClose={handleClose}
+      onClose={onClose}
       aria-labelledby="website-preview-modal"
     >
       <Box
@@ -100,7 +72,7 @@ const DynamicIframeModal: React.FC<DynamicIframeModalProps> = ({
           <Typography variant="h6" component="h2" id="website-preview-modal">
             Website Improvement Preview
           </Typography>
-          <IconButton onClick={handleClose} aria-label="close">
+          <IconButton onClick={onClose} aria-label="close">
             <Close />
           </IconButton>
         </Box>
@@ -255,7 +227,7 @@ const DynamicIframeModal: React.FC<DynamicIframeModalProps> = ({
           <Typography variant="body2" color="text.secondary">
             This HTML has been enhanced using AI based on UX best practices
           </Typography>
-          <Button variant="contained" onClick={handleClose}>
+          <Button variant="contained" onClick={onClose}>
             Close
           </Button>
         </Box>
