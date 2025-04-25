@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from "react";
-import {Box, Link, useTheme, Button, IconButton} from "@mui/material";
 import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
-import Swal from "sweetalert2";
+import { Box, Link, useTheme, Button, IconButton } from "@mui/material";
+import { ArrowBack, OpenInNew } from "@mui/icons-material";
 import { motion } from "framer-motion";
-import { ArrowBack, OpenInNew} from "@mui/icons-material";
-import { userRequirmentsSummeryDto } from "../utils/types";
-import AnimatedModal from "../components/animatedModal";
+import Swal from "sweetalert2";
+
 import { BACKEND_URL } from "../config";
+import { userRequirmentsSummeryDto } from "../utils/types";
 import { OverallEvaluation } from "../types/Report";
+import AnimatedModal from "../components/animatedModal";
+import DynamicIframeModal from "../components/DynamicIframeModal";
+import AnalysisSection from "../components/AnalysisSection";
 import api from "../services/requestsWrapper";
 import { reportService } from "../services/reportService";
-import DynamicIframeModal from "../components/DynamicIframeModal";
-import {loadingTexts} from "../constants/loadingTexts";
-import AnalysisSection from "../components/AnalysisSection";
+import { loadingTexts } from "../constants/loadingTexts";
 
 const ResultsPage = () => {
-  const location = useLocation();
   const theme = useTheme();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
   const [isLoading, setIsLoading] = useState(true);
   const [currentLoadingText, setCurrentLoadingText] = useState("Analyzing your website...");
   const [analystResult, setAnalystResult] = useState<OverallEvaluation | undefined>(undefined);
-  const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
   const [tabValue, setTabValue] = useState(0);
   const [showPreviewDialog, setShowPreviewDialog] = useState(false);
-  
+
   const state = (location.state as { summery?: userRequirmentsSummeryDto }) || {};
   const decodedCustomerUrl = searchParams.get("link") || "";
   const reportId = searchParams.get("reportId");
@@ -47,7 +49,7 @@ const ResultsPage = () => {
     // Case 1: Loading from an existing report ID
     if (reportId) {
       setCurrentLoadingText("Loading report data...");
-  
+
       reportService
         .getReportById(reportId)
         .then((report) => {
@@ -66,10 +68,10 @@ const ResultsPage = () => {
         .finally(() => {
           setIsLoading(false);
         });
-  
+
       return;
     }
-  
+
     // Case 2: Creating a new analysis
     if (!decodedCustomerUrl) {
       showErrorAndRedirect(
@@ -78,8 +80,7 @@ const ResultsPage = () => {
       );
       return;
     }
-  
-    // Cycle through loading messages
+
     let currentTextIndex = 0;
     const loadingTextInterval = setInterval(() => {
       setCurrentLoadingText(
@@ -87,8 +88,7 @@ const ResultsPage = () => {
       );
       currentTextIndex++;
     }, 3000);
-  
-    // Run new analysis
+
     const timeoutId = setTimeout(() => {
       api
         .post(BACKEND_URL + "/api/website/analyze", {
@@ -122,8 +122,7 @@ const ResultsPage = () => {
           clearInterval(loadingTextInterval);
         });
     }, 2000);
-  
-    // cleanup
+
     return () => {
       clearInterval(loadingTextInterval);
       clearTimeout(timeoutId);
@@ -133,7 +132,7 @@ const ResultsPage = () => {
   const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
-  
+
   // Implementation for downloading results as PDF - still in progress***
   const handleDownloadReport = () => {
     Swal.fire({
@@ -144,7 +143,7 @@ const ResultsPage = () => {
       showConfirmButton: false
     });
   };
-  
+
   const handlePreviewSuggestions = () => {
     setShowPreviewDialog(true);
   };
@@ -153,9 +152,9 @@ const ResultsPage = () => {
     return (
       <Box
         className="page-layout"
-        sx={{ 
-          display: "flex", 
-          justifyContent: "center", 
+        sx={{
+          display: "flex",
+          justifyContent: "center",
           alignItems: "center",
           height: "100vh",
           width: "100%"
@@ -166,12 +165,11 @@ const ResultsPage = () => {
     );
   }
 
-  // Calculate average score 
   const averageScore = analystResult.category_ratings.reduce(
     (sum, item) => sum + item.numeric_rating, 0
   ) / analystResult.category_ratings.length;
 
-  
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -185,17 +183,16 @@ const ResultsPage = () => {
       }}
     >
       <Box
-        sx={{ 
-          width: "100%", 
+        sx={{
+          width: "100%",
           minHeight: "100vh",
           bgcolor: "#f7f9fc",
           pb: 6,
           overflowY: "auto",
         }}
       >
-        {/* Header with navigation */}
-        <Box 
-          sx={{ 
+        <Box
+          sx={{
             py: 1.5,
             px: 3,
             bgcolor: "white",
@@ -205,20 +202,20 @@ const ResultsPage = () => {
             alignItems: "center"
           }}
         >
-          <IconButton 
-            onClick={() => navigate("/")} 
+          <IconButton
+            onClick={() => navigate("/")}
             sx={{ mr: 2, color: theme.palette.primary.main }}
           >
             <ArrowBack />
           </IconButton>
-          
+
           <Box
             component="img"
             src="/logo.svg"
             alt="UXpert Logo"
             sx={{ height: 40 }}
           />
-          
+
           <Box sx={{ ml: "auto", display: "flex", alignItems: "center" }}>
             <Button
               component={Link}
@@ -244,11 +241,10 @@ const ResultsPage = () => {
           handleTabChange={handleTabChange}
         />
       </Box>
-      
-      {/* Modal for HTML preview */}
-      {analystResult.suggested_mew_html && (
-        <DynamicIframeModal 
-          code={analystResult.suggested_mew_html} 
+
+      { analystResult.suggested_mew_html && (
+        <DynamicIframeModal
+          code={analystResult.suggested_mew_html}
           open={showPreviewDialog}
           onClose={() => setShowPreviewDialog(false)}
         />
