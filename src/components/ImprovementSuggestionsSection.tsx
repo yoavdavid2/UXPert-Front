@@ -1,4 +1,5 @@
 // src/components/ImprovementSuggestionsSection.tsx
+// This component is responsible for rendering the improvement
 import React from "react";
 import { Box, Button, Chip, Divider, Grid, Paper, Typography, useTheme,} from "@mui/material";
 import { motion } from "framer-motion";
