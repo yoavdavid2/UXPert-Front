@@ -1,8 +1,8 @@
-// This component is responsible for rendering the improvement 
+// src/components/ImprovementSuggestionsSection.tsx
 import React from "react";
 import { Box, Button, Chip, Divider, Grid, Paper, Typography, useTheme,} from "@mui/material";
 import { motion } from "framer-motion";
-import CodeIcon from "@mui/icons-material/Code";
+import Code from "@mui/icons-material/Code";
 import { OverallEvaluation } from "../types/Report";
 
 interface ImprovementSuggestionsSectionProps {
@@ -15,12 +15,12 @@ const ImprovementSuggestionsSection: React.FC<ImprovementSuggestionsSectionProps
   onPreview,
 }) => {
   const theme = useTheme();
-
-  const allSuggestions = categoryRatings
-    .flatMap((cat) =>
-      cat.improvement_suggestions.map((s) => ({
-        ...s,
-        category: cat.category,
+  
+  const suggestions = categoryRatings
+    .flatMap((category) =>
+      category.improvement_suggestions.map((improvement) => ({
+        ...improvement,
+        category: category.category,
       }))
     )
     .sort(
@@ -46,7 +46,7 @@ const ImprovementSuggestionsSection: React.FC<ImprovementSuggestionsSectionProps
           <Typography variant="h6" fontWeight={600}>
             HTML Preview and Suggestions
           </Typography>
-          <Button variant="contained" startIcon={<CodeIcon />} onClick={onPreview}>
+          <Button variant="contained" startIcon={<Code />} onClick={onPreview}>
             Preview Improved Design
           </Button>
         </Box>
@@ -61,7 +61,7 @@ const ImprovementSuggestionsSection: React.FC<ImprovementSuggestionsSectionProps
         Top Improvement Suggestions
       </Typography>
 
-      {allSuggestions.map((sugg, idx) => (
+      {suggestions.map((suggestion, idx) => (
         <Paper
           key={idx}
           elevation={0}
@@ -73,9 +73,8 @@ const ImprovementSuggestionsSection: React.FC<ImprovementSuggestionsSectionProps
             border: "1px solid rgba(0,0,0,0.05)",
           }}
         >
-
           <Chip
-            label={sugg.category}
+            label={suggestion.category}
             size="small"
             sx={{
               fontWeight: 500,
@@ -86,7 +85,7 @@ const ImprovementSuggestionsSection: React.FC<ImprovementSuggestionsSectionProps
           />
 
           <Typography variant="subtitle1" fontWeight={600} gutterBottom>
-            {sugg.improvement}
+            {suggestion.improvement}
           </Typography>
 
           <Divider sx={{ my: 2 }} />
@@ -94,7 +93,7 @@ const ImprovementSuggestionsSection: React.FC<ImprovementSuggestionsSectionProps
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
               <Typography variant="caption" color="text.secondary" display="block" mb={0.5}>
-                Importance: {sugg.importance}/10
+                Importance: {suggestion.importance}/10
               </Typography>
               <Box
                 sx={{
@@ -107,7 +106,7 @@ const ImprovementSuggestionsSection: React.FC<ImprovementSuggestionsSectionProps
               >
                 <Box
                   sx={{
-                    width: `${sugg.importance * 10}%`,
+                    width: `${suggestion.importance * 10}%`,
                     height: "100%",
                     bgcolor: theme.palette.primary.main,
                     borderRadius: 1,
@@ -117,7 +116,7 @@ const ImprovementSuggestionsSection: React.FC<ImprovementSuggestionsSectionProps
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography variant="caption" color="text.secondary" display="block" mb={0.5}>
-                Expected Improvement: {sugg.expected_improvement}/10
+                Expected Improvement: {suggestion.expected_improvement}/10
               </Typography>
               <Box
                 sx={{
@@ -130,7 +129,7 @@ const ImprovementSuggestionsSection: React.FC<ImprovementSuggestionsSectionProps
               >
                 <Box
                   sx={{
-                    width: `${sugg.expected_improvement * 10}%`,
+                    width: `${suggestion.expected_improvement * 10}%`,
                     height: "100%",
                     bgcolor: theme.palette.success.main,
                     borderRadius: 1,
