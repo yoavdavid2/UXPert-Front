@@ -18,7 +18,7 @@ import { TransitionProps } from "@mui/material/transitions";
 import { useNavigate } from "react-router";
 import { useAuth } from "../utils/AuthContext";
 
-const Transition = React.forwardRef(function Transition(
+export const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement;
   },

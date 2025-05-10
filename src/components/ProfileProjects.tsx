@@ -10,12 +10,16 @@ import {
   Dialog,
 } from "@mui/material";
 import ProjectCard from "../components/ProjectCard";
-import { IProfileProjectsSectionProps } from "../utils/types";
+import {
+  IProfileProjectsSectionProps,
+  userRequirmentsSummeryDto,
+} from "../utils/types";
 import { Project, mockProjects } from "../types/Project";
 import { projectService } from "../services/projectService";
 import "./components.css";
 import StepperCard from "./stepper/StepperCard";
 import { useNavigate } from "react-router-dom";
+import { Transition } from "../pages/HomePage";
 
 const ProfileProjects = ({
   userId,
@@ -82,10 +86,6 @@ const ProfileProjects = ({
   };
 
   const handleCreateProject = () => {
-    console.log("Create new project clicked");
-  };
-
-  const handleOpenCard = () => {
     setOpenNewProjectDialog(true);
   };
 
