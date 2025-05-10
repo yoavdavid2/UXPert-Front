@@ -128,6 +128,14 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
     return result;
   };
 
+  function finishTheProcess() {
+    const summary = buildSummery();
+    // TODO: send the summary to the backend and create new project
+    // For now, just log it to the console
+    console.log("Final Summary:", summary);
+    onClose(summary);
+  }
+
   return (
     <Card
       sx={{
@@ -199,7 +207,7 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
               onClick={
                 activeStep < 2
                   ? () => handlePageChange(activeStep + 1)
-                  : () => onClose(buildSummery())
+                  : () => finishTheProcess()
               }
               disabled={isTransitioning}
               sx={{ borderRadius: 28, px: 3 }}

@@ -22,12 +22,17 @@ const ResultsPage = () => {
   const [searchParams] = useSearchParams();
 
   const [isLoading, setIsLoading] = useState(true);
-  const [currentLoadingText, setCurrentLoadingText] = useState("Analyzing your website...");
-  const [analystResult, setAnalystResult] = useState<OverallEvaluation | undefined>(undefined);
+  const [currentLoadingText, setCurrentLoadingText] = useState(
+    "Analyzing your website..."
+  );
+  const [analystResult, setAnalystResult] = useState<
+    OverallEvaluation | undefined
+  >(undefined);
   const [tabValue, setTabValue] = useState(0);
   const [showPreviewDialog, setShowPreviewDialog] = useState(false);
 
-  const state = (location.state as { summery?: userRequirmentsSummeryDto }) || {};
+  const state =
+    (location.state as { summery?: userRequirmentsSummeryDto }) || {};
   const decodedCustomerUrl = searchParams.get("link") || "";
   const reportId = searchParams.get("reportId");
 
@@ -74,10 +79,7 @@ const ResultsPage = () => {
 
     // Case 2: Creating a new analysis
     if (!decodedCustomerUrl) {
-      showErrorAndRedirect(
-        "Missing URL",
-        "No website URL provided."
-      );
+      showErrorAndRedirect("Missing URL", "No website URL provided.");
       return;
     }
 
@@ -136,11 +138,11 @@ const ResultsPage = () => {
   // Implementation for downloading results as PDF - still in progress***
   const handleDownloadReport = () => {
     Swal.fire({
-      icon: 'info',
-      title: 'Preparing Download',
-      text: 'Your report is being prepared for download...',
+      icon: "info",
+      title: "Preparing Download",
+      text: "Your report is being prepared for download...",
       timer: 2000,
-      showConfirmButton: false
+      showConfirmButton: false,
     });
   };
 
@@ -157,7 +159,7 @@ const ResultsPage = () => {
           justifyContent: "center",
           alignItems: "center",
           height: "100vh",
-          width: "100%"
+          width: "100%",
         }}
       >
         <AnimatedModal currentText={currentLoadingText}></AnimatedModal>
@@ -165,10 +167,11 @@ const ResultsPage = () => {
     );
   }
 
-  const averageScore = analystResult.category_ratings.reduce(
-    (sum, item) => sum + item.numeric_rating, 0
-  ) / analystResult.category_ratings.length;
-
+  const averageScore =
+    analystResult.category_ratings.reduce(
+      (sum, item) => sum + item.numeric_rating,
+      0
+    ) / analystResult.category_ratings.length;
 
   return (
     <motion.div
@@ -179,7 +182,7 @@ const ResultsPage = () => {
         display: "flex",
         flexDirection: "column",
         height: "100vh",
-        overflow: "hidden"
+        overflow: "hidden",
       }}
     >
       <Box
@@ -199,7 +202,7 @@ const ResultsPage = () => {
             boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
             mb: 4,
             display: "flex",
-            alignItems: "center"
+            alignItems: "center",
           }}
         >
           <IconButton
@@ -242,7 +245,7 @@ const ResultsPage = () => {
         />
       </Box>
 
-      { analystResult.suggested_mew_html && (
+      {analystResult.suggested_mew_html && (
         <DynamicIframeModal
           code={analystResult.suggested_mew_html}
           open={showPreviewDialog}
