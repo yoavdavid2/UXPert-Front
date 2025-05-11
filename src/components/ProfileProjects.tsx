@@ -12,6 +12,7 @@ import {
 import ProjectCard from "../components/ProjectCard";
 import {
   IProfileProjectsSectionProps,
+  ProjectDto,
   userRequirmentsSummeryDto,
 } from "../utils/types";
 import { Project, mockProjects } from "../types/Project";
@@ -89,9 +90,9 @@ const ProfileProjects = ({
     setOpenNewProjectDialog(true);
   };
 
-  const handleCloseCard = (summary: userRequirmentsSummeryDto) => {
+  const handleCloseCard = (summary: userRequirmentsSummeryDto | ProjectDto) => {
     setOpenNewProjectDialog(false);
-    console.log(summary);
+    console.log({ "handleCloseCard func": summary });
     navigate(`/results?link=${summary.url}`, { state: { summery: summary } });
   };
 

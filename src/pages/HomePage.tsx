@@ -10,7 +10,11 @@ import {
   Dialog,
   Slide,
 } from "@mui/material";
-import { IFeatureCardProps, userRequirmentsSummeryDto } from "../utils/types";
+import {
+  IFeatureCardProps,
+  ProjectDto,
+  userRequirmentsSummeryDto,
+} from "../utils/types";
 import FeatureCard from "../components/FeatureCard";
 import { EnhanceIcon, StreamlineIcon } from "../components/Icons";
 import StepperCard from "../components/stepper/StepperCard";
@@ -54,9 +58,9 @@ const HomePage = () => {
     setOpenCard(true);
   };
 
-  const handleCloseCard = (summary: userRequirmentsSummeryDto) => {
+  const handleCloseCard = (summary: userRequirmentsSummeryDto | ProjectDto) => {
     setOpenCard(false);
-    console.log(summary);
+    console.log({ home: summary });
     navigate(`/results?link=${summary.url}`, { state: { summery: summary } });
   };
 

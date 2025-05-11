@@ -94,6 +94,7 @@ const ResultsPage = () => {
     const timeoutId = setTimeout(() => {
       api
         .post(BACKEND_URL + "/api/website/analyze", {
+          projectId: state.summery?.projectId,
           url: decodedCustomerUrl,
           name: decodedCustomerUrl.split("/")[2],
           categories: state.summery?.categories,
@@ -103,7 +104,7 @@ const ResultsPage = () => {
           includeScreenshots: false,
           deepAnalysis: false,
         })
-        .then((response) => {
+        .then((response: any) => {
           if (!response.data) {
             showErrorAndRedirect(
               "Error parsing response",

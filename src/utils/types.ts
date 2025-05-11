@@ -54,7 +54,7 @@ export interface IChipGroupProps {
 }
 
 export interface IStepperCardProps {
-  onClose: (summery: userRequirmentsSummeryDto) => void;
+  onClose: (summery: userRequirmentsSummeryDto | ProjectDto) => void;
   onSubmit?: (formData: FormData) => void;
 }
 
@@ -147,12 +147,30 @@ export interface IProjectCardProps {
 }
 
 export type userRequirmentsSummeryDto = {
+  projectId?: string; 
+  userId: string;
+  email: string;
+  name: string;
   categories: string[];
   audience: string[];
   emotions: string[];
   purpose: string;
   url: string;
 };
+
+// ProjectDto from the backend
+export type ProjectDto = {
+  projectId?: string; 
+  userId: string;
+  email: string;
+  // name: string;
+  categories: string[];
+  audience: string[];
+  emotions: string[];
+  purpose: string;
+  url: string;
+};
+
 
 export interface IAnimatedModal {
   currentText: string;
