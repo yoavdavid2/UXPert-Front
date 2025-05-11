@@ -1,6 +1,7 @@
 import { PropsWithChildren } from "react";
 import { UserProfile } from "../types/UserProfile";
 import { Project } from "../types/Project";
+import { Report } from "../types/Report";
 
 export interface IAppbarProps {
   handleProfileClick: () => void;
@@ -102,7 +103,13 @@ export interface IProfileProjectsSectionProps {
 }
 
 export interface IProjectCardProps {
-  project: Project;
+  project: ProjectDto;
+  onDelete: () => void;
+  onClickProject: () => void;
+}
+
+export interface IProjectResultCardProps {
+  report: Report;
   onDelete: () => void;
 }
 

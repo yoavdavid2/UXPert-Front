@@ -16,7 +16,7 @@ import {
 } from "@mui/material";
 import { MoreVert, Delete, Edit } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
-import { IProjectCardProps } from "../utils/types";
+import { IProjectCardProps, IProjectResultCardProps } from "../utils/types";
 
 import "./components.css";
 
@@ -29,7 +29,7 @@ const AnimatedCard = styled(Card)(({ theme }) => ({
   },
 }));
 
-const ProjectResultCard = ({ project, onDelete }: IProjectCardProps) => {
+const ProjectResultCard = ({ report, onDelete }: IProjectResultCardProps) => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -45,7 +45,7 @@ const ProjectResultCard = ({ project, onDelete }: IProjectCardProps) => {
 
   const handleEdit = () => {
     handleMenuClose();
-    console.log("Edit project", project.id);
+    console.log("Edit project", report.url);
   };
 
   const handleDeleteClick = () => {
@@ -64,9 +64,7 @@ const ProjectResultCard = ({ project, onDelete }: IProjectCardProps) => {
 
   const handleViewDetails = () => {
     navigate(
-      `/results?reportId=${project.id}&link=${encodeURIComponent(
-        project.title
-      )}`
+      `/results?reportId=${report.id}&link=${encodeURIComponent(report.url)}`
     );
   };
 
@@ -84,7 +82,7 @@ const ProjectResultCard = ({ project, onDelete }: IProjectCardProps) => {
         <CardContent>
           <div className="project-card-header">
             <Typography variant="h6" component="h3" className="project-title">
-              {project.title}
+              {report.url}
             </Typography>
             <IconButton
               aria-label="Project options"
@@ -101,30 +99,12 @@ const ProjectResultCard = ({ project, onDelete }: IProjectCardProps) => {
           </div>
 
           <Typography
-            variant="body2"
-            color="text.secondary"
-            className="project-description"
-          >
-            {project.description}
-          </Typography>
-
-          <Typography
             variant="caption"
             display="block"
             className="project-date"
           >
-            Created: {new Date(project.createdAt).toLocaleDateString()}
+            Created: {new Date(report.createdAt).toLocaleDateString()}
           </Typography>
-
-          {project.tags && project.tags.length > 0 && (
-            <div className="project-tags">
-              {project.tags.map((tag, index) => (
-                <span key={index} className="project-tag">
-                  {tag}
-                </span>
-              ))}
-            </div>
-          )}
         </CardContent>
 
         <CardActions className="project-card-actions">
@@ -173,8 +153,8 @@ const ProjectResultCard = ({ project, onDelete }: IProjectCardProps) => {
         <DialogTitle id="delete-dialog-title">Delete Project</DialogTitle>
         <DialogContent>
           <Typography>
-            Are you sure you want to delete "{project.title}"? This action
-            cannot be undone.
+            Are you sure you want to delete "{report.id}"? This action cannot be
+            undone.
           </Typography>
         </DialogContent>
         <DialogActions>

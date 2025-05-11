@@ -15,19 +15,22 @@ import {
   ProjectDto,
   userRequirmentsSummeryDto,
 } from "../utils/types";
-import { Project, mockProjects } from "../types/Project";
 import { projectService } from "../services/projectService";
 import "./components.css";
 import StepperCard from "./stepper/StepperCard";
 import { useNavigate } from "react-router-dom";
 import { Transition } from "../pages/HomePage";
+import ProjectResultCard from "./ProjectResultCard";
+import { Report } from "../types/Report";
 
 const ProfileProjects = ({
   userId,
   setGlobalError,
 }: IProfileProjectsSectionProps) => {
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [selectedProject, setSelectedProject] = useState<Project>();
+  const [projects, setProjects] = useState<ProjectDto[]>([]);
+  const [selectedProject, setSelectedProject] = useState<ProjectDto>();
+  const [selectedProjectReports, setSelectedProjectReports] =
+    useState<Report[]>();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [page, setPage] = useState(1);
@@ -39,9 +42,35 @@ const ProfileProjects = ({
   const limit = 10;
 
   useEffect(() => {
+    if (selectedProject) {
+      fetchProjectResults();
+    }
+  }, [selectedProject]);
+
+  useEffect(() => {
     fetchProjects();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, userId]);
+
+  const fetchProjectResults = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const result = await projectService.getProjectsReports(
+        selectedProject?.projectId || ""
+      );
+      console.log(result);
+      setSelectedProjectReports(result.reports);
+    } catch (err) {
+      console.error("Failed to fetch project reports:", err);
+      const errorMessage = "Failed to load projects. Please try again later.";
+      setError(errorMessage);
+      setGlobalError(errorMessage);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const fetchProjects = async () => {
     try {
@@ -54,8 +83,7 @@ const ProfileProjects = ({
       //   sort: "desc",
       // });
 
-      const result = await projectService.getProjects();
-      console.log(result);
+      const result = await projectService.getUserProjects(userId);
 
       setProjects(result.projects);
       setTotalProjects(result.total);
@@ -65,10 +93,6 @@ const ProfileProjects = ({
       const errorMessage = "Failed to load projects. Please try again later.";
       setError(errorMessage);
       setGlobalError(errorMessage);
-
-      if (process.env.NODE_ENV !== "production") {
-        setProjects(mockProjects);
-      }
     } finally {
       setLoading(false);
     }
@@ -108,14 +132,14 @@ const ProfileProjects = ({
       <div className="projects-section">
         <div className="projects-header">
           <Breadcrumbs aria-label="breadcrumb">
-            <Button>
+            <Button onClick={() => setSelectedProject(undefined)}>
               <Typography variant="h5" component="h2" className="section-title">
                 My Projects
               </Typography>
             </Button>
             {selectedProject && (
               <Typography variant="h6" sx={{ color: "text.primary" }}>
-                {selectedProject.title}
+                {selectedProject.url}
               </Typography>
             )}
           </Breadcrumbs>
@@ -159,38 +183,92 @@ const ProfileProjects = ({
           </div>
         )}
 
-        {!loading && projects.length > 0 && (
+        {!loading && (
           <>
-            <Grid container spacing={6} className="projects-grid">
-              {projects.map((project) => (
-                <Grid item xs={12} sm={6} key={project.id}>
-                  <ProjectCard
-                    project={project}
-                    onDelete={() => handleDeleteProject(project.id)}
-                  />
-                </Grid>
-              ))}
-            </Grid>
+            {selectedProject ? (
+              <>
+                {selectedProjectReports && selectedProjectReports.length > 0 ? (
+                  <Grid
+                    container
+                    spacing={6}
+                    className="projects-reports-grid"
+                    mb={2}
+                  >
+                    {selectedProjectReports.map(
+                      (selectedProjectReport: Report) => (
+                        <Grid
+                          item
+                          xs={12}
+                          sm={6}
+                          key={selectedProjectReport.projectId}
+                        >
+                          <ProjectResultCard
+                            report={selectedProjectReport}
+                            onDelete={() =>
+                              selectedProjectReport.projectId
+                                ? handleDeleteProject(
+                                    selectedProjectReport.projectId
+                                  )
+                                : null
+                            }
+                          />
+                        </Grid>
+                      )
+                    )}
+                  </Grid>
+                ) : (
+                  <div className="empty-projects">
+                    <Typography variant="body1" color="text.secondary">
+                      No reports available for this project.
+                    </Typography>
+                  </div>
+                )}
+              </>
+            ) : (
+              <>
+                {projects.length > 0 && (
+                  <>
+                    <Grid container spacing={6} className="projects-grid">
+                      {projects.map((project) => (
+                        <Grid item xs={12} sm={6} key={project.projectId}>
+                          <ProjectCard
+                            project={project}
+                            onClickProject={() => {
+                              setSelectedProject(project);
+                            }}
+                            onDelete={() =>
+                              project.projectId
+                                ? handleDeleteProject(project.projectId)
+                                : null
+                            }
+                          />
+                        </Grid>
+                      ))}
+                    </Grid>
 
-            {totalPages > 1 && (
-              <div
-                className="pagination-container"
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  marginTop: "20px",
-                }}
-              >
-                <Pagination
-                  count={totalPages}
-                  page={page}
-                  onChange={handlePageChange}
-                  color="primary"
-                />
-                <Typography variant="body2" sx={{ mt: 1 }}>
-                  Showing {projects.length} of {totalProjects} projects
-                </Typography>
-              </div>
+                    {totalPages > 1 && (
+                      <div
+                        className="pagination-container"
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          marginTop: "20px",
+                        }}
+                      >
+                        <Pagination
+                          count={totalPages}
+                          page={page}
+                          onChange={handlePageChange}
+                          color="primary"
+                        />
+                        <Typography variant="body2" sx={{ mt: 1 }}>
+                          Showing {projects.length} of {totalProjects} projects
+                        </Typography>
+                      </div>
+                    )}
+                  </>
+                )}
+              </>
             )}
           </>
         )}
