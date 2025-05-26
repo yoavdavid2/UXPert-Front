@@ -1,22 +1,27 @@
-import React from "react";
-import {Box, Typography, Paper, Grid, IconButton, Button, useTheme, alpha, Modal} from "@mui/material";
-import { Close, Lightbulb } from "@mui/icons-material";
-import { WebsiteEvaluation } from "../types/Report";
 import { motion } from "framer-motion";
+import {
+  Box,
+  Typography,
+  Paper,
+  Grid,
+  IconButton,
+  Button,
+  useTheme,
+  alpha,
+  Modal,
+} from "@mui/material";
+import { Close, Lightbulb } from "@mui/icons-material";
 
-interface ResultsModalProps extends WebsiteEvaluation {
-  open: boolean;
-  onClose: () => void;
-}
+import { IResultsModalProps } from "../../utils/types";
 
-const ResultsModal: React.FC<ResultsModalProps> = ({
+const ResultsModal = ({
   numeric_rating,
   category,
   text_rating,
   improvement_suggestions,
   open,
-  onClose
-}) => {
+  onClose,
+}: IResultsModalProps) => {
   const theme = useTheme();
 
   const { color: scoreColor } = (() => {
@@ -45,11 +50,19 @@ const ResultsModal: React.FC<ResultsModalProps> = ({
           boxShadow: 24,
           overflow: "auto",
           display: "flex",
-          flexDirection: "column"
+          flexDirection: "column",
         }}
       >
-        {/* Header */}
-        <Box sx={{ p: 3, bgcolor: scoreColor.main, color: "white", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <Box
+          sx={{
+            p: 3,
+            bgcolor: scoreColor.main,
+            color: "white",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
           <Typography variant="h5" id="results-modal-title" fontWeight="bold">
             {category} ({numeric_rating}/10)
           </Typography>
@@ -58,9 +71,17 @@ const ResultsModal: React.FC<ResultsModalProps> = ({
           </IconButton>
         </Box>
 
-        {/* Scrollable Content */}
         <Box sx={{ p: 3, overflowY: "auto", flexGrow: 1 }}>
-          <Paper elevation={0} sx={{ p: 3, mb: 3, bgcolor: alpha(scoreColor.main, 0.05), border: `1px solid ${alpha(scoreColor.main, 0.2)}`, borderRadius: 2 }}>
+          <Paper
+            elevation={0}
+            sx={{
+              p: 3,
+              mb: 3,
+              bgcolor: alpha(scoreColor.main, 0.05),
+              border: `1px solid ${alpha(scoreColor.main, 0.2)}`,
+              borderRadius: 2,
+            }}
+          >
             <Typography variant="h6" gutterBottom sx={{ fontWeight: 600 }}>
               Overall Rating
             </Typography>
@@ -74,21 +95,34 @@ const ResultsModal: React.FC<ResultsModalProps> = ({
               </Typography>
 
               {improvement_suggestions.map((suggestion, index) => (
-                <Paper key={index} elevation={0} sx={{ p: 3, mb: 2, border: `1px solid ${theme.palette.divider}`, borderRadius: 2, borderLeft: `4px solid ${scoreColor.main}` }}>
-                  <Box sx={{ display: "flex", alignItems: "flex-start", mb: 2 }}>
-                    <Lightbulb sx={{ color: scoreColor.main, mr: 1.5, mt: 0.2 }} />
-                    <Typography variant="subtitle1" fontWeight="medium" sx={{ flex: 1 }}>
+                <Paper
+                  key={index}
+                  elevation={0}
+                  sx={{
+                    p: 3,
+                    mb: 2,
+                    border: `1px solid ${theme.palette.divider}`,
+                    borderRadius: 2,
+                    borderLeft: `4px solid ${scoreColor.main}`,
+                  }}
+                >
+                  <Box
+                    sx={{ display: "flex", alignItems: "flex-start", mb: 2 }}
+                  >
+                    <Lightbulb
+                      sx={{ color: scoreColor.main, mr: 1.5, mt: 0.2 }}
+                    />
+                    <Typography
+                      variant="subtitle1"
+                      fontWeight="medium"
+                      sx={{ flex: 1 }}
+                    >
                       {suggestion.improvement}
                     </Typography>
                   </Box>
-                  {/* Importance & Expected Improvement */}
                   <Grid container spacing={3}>
-                    <Grid item xs={12} md={6}>
-                      {/* render bars */}
-                    </Grid>
-                    <Grid item xs={12} md={6}>
-                      {/* render bars */}
-                    </Grid>
+                    <Grid item xs={12} md={6}></Grid>
+                    <Grid item xs={12} md={6}></Grid>
                   </Grid>
                 </Paper>
               ))}
@@ -96,9 +130,22 @@ const ResultsModal: React.FC<ResultsModalProps> = ({
           )}
         </Box>
 
-        {/* Footer */}
-        <Box sx={{ p: 2, borderTop: `1px solid ${theme.palette.divider}`, display: "flex", justifyContent: "flex-end" }}>
-          <Button variant="contained" onClick={onClose} sx={{ bgcolor: scoreColor.main, '&:hover': { bgcolor: alpha(scoreColor.main, 0.8) } }}>
+        <Box
+          sx={{
+            p: 2,
+            borderTop: `1px solid ${theme.palette.divider}`,
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
+          <Button
+            variant="contained"
+            onClick={onClose}
+            sx={{
+              bgcolor: scoreColor.main,
+              "&:hover": { bgcolor: alpha(scoreColor.main, 0.8) },
+            }}
+          >
             Close
           </Button>
         </Box>

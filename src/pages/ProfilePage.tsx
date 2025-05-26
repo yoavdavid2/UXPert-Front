@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { CircularProgress, Container, Typography } from "@mui/material";
 
-import ProfileHeader from "../components/ProfileHeader";
-import ProfileProjects from "../components/ProfileProjects";
+import ProfileHeader from "../components/profile/ProfileHeader";
+import ProfileProjects from "../components/profile/ProfileProjects";
 import { UserProfile, getUserProfile } from "../types/UserProfile";
 
 import "./pages.css";

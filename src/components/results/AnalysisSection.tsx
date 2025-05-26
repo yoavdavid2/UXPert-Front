@@ -1,15 +1,25 @@
 //this component is used to display the analysis results of a website
 //use for Results page
 import React from "react";
-import { Box, Button, Container, Grid, Paper, Tab, Tabs, Typography} from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  Paper,
+  Tab,
+  Tabs,
+  Typography,
+} from "@mui/material";
+import { Code } from "@mui/icons-material";
 import { motion } from "framer-motion";
-import CodeIcon from "@mui/icons-material/Code";
-import ResultsCard from "./ResultsCard";
-import { OverallEvaluation } from "../types/Report";
+
+import ResultsCard from "../layout/ResultsCard";
 import OverallScoreCard from "./OverallScoreCard";
 import DetailedAnalysisSection from "./DetailedAnalysisSection";
 import ImprovementSuggestionsSection from "./ImprovementSuggestionsSection";
 
+import { OverallEvaluation } from "../../types/Report";
 
 interface AnalysisSectionProps {
   decodedCustomerUrl: string;
@@ -21,15 +31,15 @@ interface AnalysisSectionProps {
   handleTabChange: (event: React.SyntheticEvent, newValue: number) => void;
 }
 
-const AnalysisSection: React.FC<AnalysisSectionProps> = ({
+const AnalysisSection = ({
   decodedCustomerUrl,
   handleDownloadReport,
   handlePreviewSuggestions,
   averageScore,
   analystResult,
   tabValue,
-  handleTabChange
-}) => {
+  handleTabChange,
+}: AnalysisSectionProps) => {
   return (
     <Container maxWidth="lg" sx={{ pb: 8 }}>
       {/* Website info and actions */}
@@ -45,7 +55,7 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({
             mb: 3,
             borderRadius: 2,
             boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
-            border: "1px solid rgba(0,0,0,0.05)"
+            border: "1px solid rgba(0,0,0,0.05)",
           }}
         >
           <Box
@@ -53,7 +63,7 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({
               display: "flex",
               justifyContent: "space-between",
               alignItems: "flex-start",
-              flexWrap: "wrap"
+              flexWrap: "wrap",
             }}
           >
             <Box>
@@ -69,13 +79,15 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({
                   maxWidth: { xs: "100%", sm: "500px" },
                   overflow: "hidden",
                   textOverflow: "ellipsis",
-                  whiteSpace: "nowrap"
+                  whiteSpace: "nowrap",
                 }}
               >
                 {decodedCustomerUrl}
               </Typography>
             </Box>
-            <Box sx={{ display: "flex", mt: { xs: 2, sm: 0 }, flexWrap: "wrap" }}>
+            <Box
+              sx={{ display: "flex", mt: { xs: 2, sm: 0 }, flexWrap: "wrap" }}
+            >
               <Button
                 variant="outlined"
                 size="small"
@@ -87,7 +99,7 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({
               <Button
                 variant="contained"
                 size="small"
-                startIcon={<CodeIcon />}
+                startIcon={<Code />}
                 onClick={handlePreviewSuggestions}
                 sx={{ borderRadius: 1.5, mb: { xs: 1, sm: 0 } }}
               >
@@ -118,7 +130,7 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({
             borderRadius: 2,
             overflow: "hidden",
             boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
-            border: "1px solid rgba(0,0,0,0.05)"
+            border: "1px solid rgba(0,0,0,0.05)",
           }}
         >
           <Tabs
@@ -131,12 +143,12 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({
                 py: 2,
                 fontWeight: 600,
                 color: "text.secondary",
-                "&.Mui-selected": { color: "primary.main" }
+                "&.Mui-selected": { color: "primary.main" },
               },
               "& .MuiTabs-indicator": {
                 height: 3,
-                borderRadius: "3px 3px 0 0"
-              }
+                borderRadius: "3px 3px 0 0",
+              },
             }}
           >
             <Tab label="Overview" />
@@ -150,8 +162,17 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({
       <Box sx={{ mt: 3, maxHeight: "70vh", overflowY: "auto", pr: 1, mb: 6 }}>
         {/* Overview */}
         {tabValue === 0 && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-            <Typography variant="h6" fontWeight={600} mb={3} color="text.primary">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Typography
+              variant="h6"
+              fontWeight={600}
+              mb={3}
+              color="text.primary"
+            >
               Category Scores
             </Typography>
             <Grid container spacing={3}>
@@ -166,15 +187,17 @@ const AnalysisSection: React.FC<AnalysisSectionProps> = ({
 
         {/* Detailed Analysis */}
         {tabValue === 1 && (
-          <DetailedAnalysisSection categoryRatings={analystResult.category_ratings} />
+          <DetailedAnalysisSection
+            categoryRatings={analystResult.category_ratings}
+          />
         )}
 
         {/* Improvement Suggestions */}
         {tabValue === 2 && (
           <ImprovementSuggestionsSection
-          categoryRatings={analystResult.category_ratings}
-          onPreview={handlePreviewSuggestions}
-        />
+            categoryRatings={analystResult.category_ratings}
+            onPreview={handlePreviewSuggestions}
+          />
         )}
       </Box>
     </Container>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Card,
@@ -7,18 +7,12 @@ import {
   Typography,
   Button,
   IconButton,
-  Menu,
-  MenuItem,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
 } from "@mui/material";
-import { MoreVert, Delete, Edit } from "@mui/icons-material";
+import { MoreVert } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
-import { IProjectCardProps } from "../utils/types";
+import { IProjectCardProps } from "../../utils/types";
 
-import "./components.css";
+import "../components.css";
 
 const AnimatedCard = styled(Card)(({ theme }) => ({
   borderRadius: 10,
@@ -79,8 +73,10 @@ const ProjectCard = ({
               aria-controls="project-menu"
               aria-haspopup="true"
               onClick={(e) => {
-                e.stopPropagation(); // Prevent card click when clicking menu
-                onClickProject();
+                e.preventDefault();
+                e.stopPropagation();
+                console.log("@#@#");
+                // onClickProject();
               }}
               size="small"
             >
@@ -132,11 +128,11 @@ const ProjectCard = ({
             size="small"
             color="primary"
             onClick={(e) => {
-              e.stopPropagation(); // Prevent card click
+              e.preventDefault();
               onClickProject();
             }}
           >
-            View analyze history results
+            View analysis history results
           </Button>
         </CardActions>
       </AnimatedCard>

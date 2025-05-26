@@ -8,9 +8,9 @@ import Swal from "sweetalert2";
 import { BACKEND_URL } from "../config";
 import { userRequirmentsSummeryDto } from "../utils/types";
 import { OverallEvaluation } from "../types/Report";
-import AnimatedModal from "../components/animatedModal";
-import DynamicIframeModal from "../components/DynamicIframeModal";
-import AnalysisSection from "../components/AnalysisSection";
+import AnimatedModal from "../components/layout/animatedModal";
+import DynamicIframeModal from "../components/layout/DynamicIframeModal";
+import AnalysisSection from "../components/results/AnalysisSection";
 import api from "../services/requestsWrapper";
 import { reportService } from "../services/reportService";
 import { loadingTexts } from "../constants/loadingTexts";
@@ -207,7 +207,7 @@ const ResultsPage = () => {
           }}
         >
           <IconButton
-            onClick={() => navigate("/")}
+            onClick={() => navigate(-1)}
             sx={{ mr: 2, color: theme.palette.primary.main }}
           >
             <ArrowBack />

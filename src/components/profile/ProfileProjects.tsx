@@ -1,27 +1,28 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Typography,
   Grid,
   CircularProgress,
   Pagination,
   Breadcrumbs,
-  Link,
   Button,
   Dialog,
 } from "@mui/material";
-import ProjectCard from "../components/ProjectCard";
+
+import ProjectCard from "./ProjectCard";
+import ProjectResultCard from "./ProjectResultCard";
+import StepperCard from "../stepper/StepperCard";
+import { Transition } from "../../pages/HomePage";
+import { projectService } from "../../services/projectService";
 import {
   IProfileProjectsSectionProps,
   ProjectDto,
   userRequirmentsSummeryDto,
-} from "../utils/types";
-import { projectService } from "../services/projectService";
-import "./components.css";
-import StepperCard from "./stepper/StepperCard";
-import { useNavigate } from "react-router-dom";
-import { Transition } from "../pages/HomePage";
-import ProjectResultCard from "./ProjectResultCard";
-import { Report } from "../types/Report";
+} from "../../utils/types";
+import { Report } from "../../types/Report";
+
+import "../components.css";
 
 const ProfileProjects = ({
   userId,
@@ -200,7 +201,7 @@ const ProfileProjects = ({
                           item
                           xs={12}
                           sm={6}
-                          key={selectedProjectReport.projectId}
+                          key={selectedProjectReport._id}
                         >
                           <ProjectResultCard
                             report={selectedProjectReport}

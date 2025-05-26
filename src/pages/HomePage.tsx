@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 import {
   Box,
   Button,
@@ -10,16 +11,16 @@ import {
   Dialog,
   Slide,
 } from "@mui/material";
+import { TransitionProps } from "@mui/material/transitions";
+
 import {
   IFeatureCardProps,
   ProjectDto,
   userRequirmentsSummeryDto,
 } from "../utils/types";
-import FeatureCard from "../components/FeatureCard";
-import { EnhanceIcon, StreamlineIcon } from "../components/Icons";
+import FeatureCard from "../components/layout/FeatureCard";
 import StepperCard from "../components/stepper/StepperCard";
-import { TransitionProps } from "@mui/material/transitions";
-import { useNavigate } from "react-router";
+import { EnhanceIcon, StreamlineIcon } from "../components/layout/Icons";
 import { useAuth } from "../utils/AuthContext";
 
 export const Transition = React.forwardRef(function Transition(

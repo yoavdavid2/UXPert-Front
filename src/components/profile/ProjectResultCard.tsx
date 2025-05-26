@@ -16,9 +16,9 @@ import {
 } from "@mui/material";
 import { MoreVert, Delete, Edit } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
-import { IProjectCardProps, IProjectResultCardProps } from "../utils/types";
+import { IProjectResultCardProps } from "../../utils/types";
 
-import "./components.css";
+import "../components.css";
 
 const AnimatedCard = styled(Card)(({ theme }) => ({
   borderRadius: 10,
@@ -64,7 +64,7 @@ const ProjectResultCard = ({ report, onDelete }: IProjectResultCardProps) => {
 
   const handleViewDetails = () => {
     navigate(
-      `/results?reportId=${report.id}&link=${encodeURIComponent(report.url)}`
+      `/results?reportId=${report._id}&link=${encodeURIComponent(report.url)}`
     );
   };
 
@@ -89,7 +89,8 @@ const ProjectResultCard = ({ report, onDelete }: IProjectResultCardProps) => {
               aria-controls="project-menu"
               aria-haspopup="true"
               onClick={(e) => {
-                e.stopPropagation(); // Prevent card click when clicking menu
+                e.preventDefault();
+                console.log("prevented");
                 handleMenuClick(e);
               }}
               size="small"
@@ -153,8 +154,8 @@ const ProjectResultCard = ({ report, onDelete }: IProjectResultCardProps) => {
         <DialogTitle id="delete-dialog-title">Delete Project</DialogTitle>
         <DialogContent>
           <Typography>
-            Are you sure you want to delete "{report.id}"? This action cannot be
-            undone.
+            Are you sure you want to delete "{report._id}"? This action cannot
+            be undone.
           </Typography>
         </DialogContent>
         <DialogActions>

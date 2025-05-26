@@ -1,7 +1,7 @@
 import { AppBar, Toolbar, Box } from "@mui/material";
 import IconChip from "./IconChip";
 
-import Logo from "../assets/logo.svg";
+import Logo from "../../assets/logo.svg";
 import { useNavigate } from "react-router";
 
 const Appbar = () => {

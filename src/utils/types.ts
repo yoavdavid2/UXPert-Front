@@ -1,7 +1,6 @@
 import { PropsWithChildren } from "react";
 import { UserProfile } from "../types/UserProfile";
-import { Project } from "../types/Project";
-import { Report } from "../types/Report";
+import { Report, WebsiteEvaluation } from "../types/Report";
 
 export interface IAppbarProps {
   handleProfileClick: () => void;
@@ -94,7 +93,6 @@ export interface ISignupFormProps {
 
 export interface IProfileHeaderProps {
   userProfile: UserProfile;
-  onEditProfile: () => void;
 }
 
 export interface IProfileProjectsSectionProps {
@@ -149,12 +147,12 @@ export interface IProfileProjectsSectionProps {
 }
 
 export interface IProjectCardProps {
-  project: Project;
+  project: ProjectDto;
   onDelete: () => void;
 }
 
 export type userRequirmentsSummeryDto = {
-  projectId?: string; 
+  projectId?: string;
   userId: string;
   email: string;
   name: string;
@@ -167,7 +165,7 @@ export type userRequirmentsSummeryDto = {
 
 // ProjectDto from the backend
 export type ProjectDto = {
-  projectId?: string; 
+  projectId?: string;
   userId: string;
   email: string;
   // name: string;
@@ -178,7 +176,11 @@ export type ProjectDto = {
   url: string;
 };
 
-
 export interface IAnimatedModal {
   currentText: string;
+}
+
+export interface IResultsModalProps extends WebsiteEvaluation {
+  open: boolean;
+  onClose: () => void;
 }

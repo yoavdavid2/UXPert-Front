@@ -244,7 +244,7 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
                 disabled={isTransitioning}
                 sx={{ borderRadius: 28, px: 3 }}
               >
-                New analyze
+                New analysis
               </Button>
             ) : (
               <Button

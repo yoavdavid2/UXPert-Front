@@ -1,7 +1,15 @@
 import React, { useState } from "react";
-import { Card, CardContent, Box, Typography, Chip, alpha, useTheme } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  Box,
+  Typography,
+  Chip,
+  alpha,
+  useTheme,
+} from "@mui/material";
 import { Theme } from "@mui/material/styles";
-import { WebsiteEvaluation } from "../types/Report";
+import { WebsiteEvaluation } from "../../types/Report";
 import ResultsModal from "./ResultsModal";
 
 const getScoreData = (score: number, theme: Theme) => {
@@ -15,7 +23,7 @@ const ResultsCard: React.FC<WebsiteEvaluation> = ({
   numeric_rating,
   category,
   text_rating,
-  improvement_suggestions
+  improvement_suggestions,
 }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
@@ -23,7 +31,10 @@ const ResultsCard: React.FC<WebsiteEvaluation> = ({
   const handleClose = () => setOpen(false);
 
   // Get score color and label
-  const { color: scoreColor, label: scoreLabel } = getScoreData(numeric_rating, theme as Theme);
+  const { color: scoreColor, label: scoreLabel } = getScoreData(
+    numeric_rating,
+    theme as Theme
+  );
 
   return (
     <>
@@ -45,12 +56,20 @@ const ResultsCard: React.FC<WebsiteEvaluation> = ({
           transition: "transform 0.3s ease, box-shadow 0.3s ease",
           "&:hover": {
             transform: "translateY(-5px)",
-            boxShadow: `0 8px 25px ${alpha(scoreColor.main, 0.25)}`
-          }
+            boxShadow: `0 8px 25px ${alpha(scoreColor.main, 0.25)}`,
+          },
         }}
       >
         {/* Score Circle */}
-        <Box sx={{ display: "flex", justifyContent: "center", alignItems: "center", pt: 3, pb: 1 }}>
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            pt: 3,
+            pb: 1,
+          }}
+        >
           <Box
             sx={{
               width: 70,
@@ -61,7 +80,7 @@ const ResultsCard: React.FC<WebsiteEvaluation> = ({
               alignItems: "center",
               backgroundColor: alpha(scoreColor.main, 0.15),
               border: `3px solid ${scoreColor.main}`,
-              color: scoreColor.main
+              color: scoreColor.main,
             }}
           >
             <Typography variant="h4" fontWeight="bold">
@@ -72,7 +91,12 @@ const ResultsCard: React.FC<WebsiteEvaluation> = ({
 
         {/* Category and Rating */}
         <CardContent sx={{ textAlign: "center", flexGrow: 1, pt: 0 }}>
-          <Typography variant="h6" fontWeight="500" noWrap sx={{ mb: 1, overflow: "hidden", textOverflow: "ellipsis" }}>
+          <Typography
+            variant="h6"
+            fontWeight="500"
+            noWrap
+            sx={{ mb: 1, overflow: "hidden", textOverflow: "ellipsis" }}
+          >
             {category}
           </Typography>
           <Chip
@@ -82,15 +106,25 @@ const ResultsCard: React.FC<WebsiteEvaluation> = ({
               bgcolor: alpha(scoreColor.main, 0.1),
               color: scoreColor.main,
               borderColor: scoreColor.main,
-              fontWeight: "medium"
+              fontWeight: "medium",
             }}
             variant="outlined"
           />
         </CardContent>
 
         {/* View details indicator */}
-        <Box sx={{ backgroundColor: alpha(scoreColor.main, 0.1), p: 1, textAlign: "center", borderTop: `1px solid ${alpha(scoreColor.main, 0.2)}` }}>
-          <Typography variant="caption" sx={{ fontWeight: 500, color: scoreColor.main }}>
+        <Box
+          sx={{
+            backgroundColor: alpha(scoreColor.main, 0.1),
+            p: 1,
+            textAlign: "center",
+            borderTop: `1px solid ${alpha(scoreColor.main, 0.2)}`,
+          }}
+        >
+          <Typography
+            variant="caption"
+            sx={{ fontWeight: 500, color: scoreColor.main }}
+          >
             View Details
           </Typography>
         </Box>
