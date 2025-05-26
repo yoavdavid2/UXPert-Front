@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Card,
@@ -7,18 +7,12 @@ import {
   Typography,
   Button,
   IconButton,
-  Menu,
-  MenuItem,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
 } from "@mui/material";
-import { MoreVert, Delete, Edit } from "@mui/icons-material";
+import { MoreVert } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
-import { IProjectCardProps } from "../utils/types";
+import { IProjectCardProps } from "../../utils/types";
 
-import "./components.css";
+import "../components.css";
 
 const AnimatedCard = styled(Card)(({ theme }) => ({
   borderRadius: 10,
@@ -29,15 +23,15 @@ const AnimatedCard = styled(Card)(({ theme }) => ({
   },
 }));
 
-const ProjectCard = ({ project, onDelete }: IProjectCardProps) => {
+const ProjectCard = ({
+  project,
+  onDelete,
+  onClickProject,
+}: IProjectCardProps) => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
-
-  const handleMenuClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
 
   const handleMenuClose = () => {
     setAnchorEl(null);
@@ -45,7 +39,7 @@ const ProjectCard = ({ project, onDelete }: IProjectCardProps) => {
 
   const handleEdit = () => {
     handleMenuClose();
-    console.log("Edit project", project.id);
+    console.log("Edit project", project.projectId);
   };
 
   const handleDeleteClick = () => {
@@ -62,29 +56,27 @@ const ProjectCard = ({ project, onDelete }: IProjectCardProps) => {
     setDeleteDialogOpen(false);
   };
 
-  const handleViewDetails = () => {
-    navigate(`/results?reportId=${project.id}&link=${encodeURIComponent(project.title)}`);
-  };
-
-  const handleCardClick = () => {
-    handleViewDetails();
-  };
-
   return (
     <>
-      <AnimatedCard className="project-card" onClick={handleCardClick} sx={{cursor: 'pointer'}}>
+      <AnimatedCard
+        className="project-card"
+        onClick={onClickProject}
+        sx={{ cursor: "pointer" }}
+      >
         <CardContent>
           <div className="project-card-header">
             <Typography variant="h6" component="h3" className="project-title">
-              {project.title}
+              {project.url}
             </Typography>
             <IconButton
               aria-label="Project options"
               aria-controls="project-menu"
               aria-haspopup="true"
               onClick={(e) => {
-                e.stopPropagation(); // Prevent card click when clicking menu
-                handleMenuClick(e);
+                e.preventDefault();
+                e.stopPropagation();
+                console.log("@#@#");
+                // onClickProject();
               }}
               size="small"
             >
@@ -97,20 +89,32 @@ const ProjectCard = ({ project, onDelete }: IProjectCardProps) => {
             color="text.secondary"
             className="project-description"
           >
-            {project.description}
+            {project.purpose}
           </Typography>
 
-          <Typography
-            variant="caption"
-            display="block"
-            className="project-date"
-          >
-            Created: {new Date(project.createdAt).toLocaleDateString()}
-          </Typography>
+          {project.audience && project.audience.length > 0 && (
+            <div className="project-audience">
+              {project.audience.map((tag, index) => (
+                <span key={index} className="project-tag">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
 
-          {project.tags && project.tags.length > 0 && (
-            <div className="project-tags">
-              {project.tags.map((tag, index) => (
+          {project.categories && project.categories.length > 0 && (
+            <div className="project-audience">
+              {project.categories.map((tag, index) => (
+                <span key={index} className="project-tag">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {project.emotions && project.emotions.length > 0 && (
+            <div className="project-audience">
+              {project.emotions.map((tag, index) => (
                 <span key={index} className="project-tag">
                   {tag}
                 </span>
@@ -120,16 +124,20 @@ const ProjectCard = ({ project, onDelete }: IProjectCardProps) => {
         </CardContent>
 
         <CardActions className="project-card-actions">
-          <Button size="small" color="primary" onClick={(e) => {
-              e.stopPropagation(); // Prevent card click
-              handleViewDetails();
-            }}>
-            View Details
+          <Button
+            size="small"
+            color="primary"
+            onClick={(e) => {
+              e.preventDefault();
+              onClickProject();
+            }}
+          >
+            View analysis history results
           </Button>
         </CardActions>
       </AnimatedCard>
 
-      <Menu
+      {/* <Menu
         id="project-menu"
         anchorEl={anchorEl}
         open={open}
@@ -151,7 +159,7 @@ const ProjectCard = ({ project, onDelete }: IProjectCardProps) => {
           <Delete fontSize="small" style={{ marginRight: 8 }} />
           Delete
         </MenuItem>
-      </Menu>
+      </Menu> 
 
       <Dialog
         open={deleteDialogOpen}
@@ -173,7 +181,7 @@ const ProjectCard = ({ project, onDelete }: IProjectCardProps) => {
             Delete
           </Button>
         </DialogActions>
-      </Dialog>
+      </Dialog>*/}
     </>
   );
 };

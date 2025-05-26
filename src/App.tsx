@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -10,11 +10,17 @@ import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Auth from "./pages/Auth";
 import ProfilePage from "./pages/ProfilePage";
-import Appbar from "./components/Appbar";
-import BackgroundWrapper from "./components/BackgroundWrapper";
+import Appbar from "./components/layout/Appbar";
+import BackgroundWrapper from "./components/layout/BackgroundWrapper";
 import ProtectedRoute from "./components/ProtectedRoute";
 
-import { AuthProvider, decodeUserCookie, getCookie, mapToUserProfile, useAuth } from "./utils/AuthContext";
+import {
+  AuthProvider,
+  decodeUserCookie,
+  getCookie,
+  mapToUserProfile,
+  useAuth,
+} from "./utils/AuthContext";
 
 import "./App.css";
 import ResultsPage from "./pages/Results";
@@ -22,15 +28,14 @@ import ResultsPage from "./pages/Results";
 const AppRouter = () => {
   const { isAuthenticated, isLoading, login } = useAuth();
 
-
   useEffect(() => {
     try {
-      const decoded = decodeUserCookie()
-      login(getCookie("access_token") as string, mapToUserProfile(decoded))
+      const decoded = decodeUserCookie();
+      login(getCookie("access_token") as string, mapToUserProfile(decoded));
     } catch (exception) {
-      console.log("local user")
+      console.log("local user");
     }
-  }, [])
+  }, []);
 
   // if (isLoading) {
   //   return <div>Loading...</div>;
@@ -61,7 +66,6 @@ const AppRouter = () => {
 };
 
 const App = () => {
-
   return (
     <AuthProvider>
       <Router>

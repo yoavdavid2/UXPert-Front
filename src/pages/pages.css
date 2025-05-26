@@ -221,7 +221,7 @@
 }
 
 .new-project-button {
-  background: linear-gradient(45deg, #92a0bb 30%, #aab4ca 90%) !important;
+  /* background: linear-gradient(45deg, #92a0bb 30%, #aab4ca 90%) !important; */
   color: white !important;
   font-weight: 500 !important;
   transition: all 0.3s ease !important;
@@ -229,7 +229,7 @@
 
 .new-project-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 10px rgba(146, 160, 187, 0.3) !important;
+  /* box-shadow: 0 4px 10px rgba(146, 160, 187, 0.3) !important; */
 }
 
 .project-card {

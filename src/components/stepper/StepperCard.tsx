@@ -13,15 +13,29 @@ import FinalDataStep from "./FinalDataStep";
 
 import {
   IStepperCardProps,
+  ProjectDto,
   userRequirmentsSummeryDto,
 } from "../../utils/types";
 
 import "../components.css";
+import ChooseProjectStep from "./ChooseProjectStep";
+import api from "../../services/requestsWrapper";
 
 const StepperCard = ({ onClose }: IStepperCardProps) => {
   const [activeStep, setActiveStep] = useState(0);
   const [animationClass, setAnimationClass] = useState("");
   const [isTransitioning, setIsTransitioning] = useState(false);
+
+  const [userProfile, setUserProfile] = useState(
+    localStorage.getItem("userProfile")
+      ? JSON.parse(localStorage.getItem("userProfile")!)
+      : null
+  );
+
+  // State for step 0
+  const [selectedProject, setSelectedProject] = useState<ProjectDto | null>(
+    null
+  );
 
   // State for step 1
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
@@ -88,6 +102,13 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
     switch (activeStep) {
       case 0:
         return (
+          <ChooseProjectStep
+            selectedProject={selectedProject}
+            setSelectedProject={setSelectedProject}
+          />
+        );
+      case 1:
+        return (
           <TargetsStep
             selectedCategories={selectedCategories}
             toggleCategory={toggleCategory}
@@ -95,14 +116,14 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
             toggleAudience={toggleAudience}
           />
         );
-      case 1:
+      case 2:
         return (
           <EmotionsStep
             selectedEmotions={selectedEmotions}
             toggleEmotion={toggleEmotion}
           />
         );
-      case 2:
+      case 3:
         return (
           <FinalDataStep
             websitePurpose={websitePurpose}
@@ -118,15 +139,34 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
 
   const buildSummery = (): userRequirmentsSummeryDto => {
     const result: userRequirmentsSummeryDto = {
-      audience: selectedAudience,
-      categories: selectedCategories,
-      emotions: selectedEmotions,
-      purpose: websiteUrl,
+      userId: userProfile ? userProfile.id : "0",
+      email: userProfile ? userProfile.email : "0",
       url: websiteUrl,
+      name: userProfile ? userProfile.websiteUrl : "0",
+      categories: selectedCategories,
+      audience: selectedAudience,
+      emotions: selectedEmotions,
+      purpose: websitePurpose,
     };
 
     return result;
   };
+
+  function finishTheProcess() {
+    const summary = buildSummery();
+    console.log("Final Summary:", summary);
+    // TODO: send the summary to the backend and create new project
+    // For now, just log it to the console
+    api
+      .post("/api/projects/new", summary)
+      .then((response: any) => {
+        console.log("Project created successfully:", response.data);
+        onClose(response.data);
+      })
+      .catch((error: any) => {
+        console.error("Error creating project:", error);
+      });
+  }
 
   return (
     <Card
@@ -165,7 +205,7 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
         >
           <Box sx={{ display: "flex", gap: 1 }}>
             <Breadcrumbs>
-              {[1, 2, 3].map((_, i) => (
+              {[1, 2, 3, 4].map((_, i) => (
                 <Button
                   key={i}
                   onClick={() => handlePageChange(i)}
@@ -193,19 +233,38 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
                 BACK
               </Button>
             )}
-            <Button
-              variant="contained"
-              color="secondary"
-              onClick={
-                activeStep < 2
-                  ? () => handlePageChange(activeStep + 1)
-                  : () => onClose(buildSummery())
-              }
-              disabled={isTransitioning}
-              sx={{ borderRadius: 28, px: 3 }}
-            >
-              {activeStep < 2 ? "NEXT" : "FINISH"}
-            </Button>
+            {selectedProject ? (
+              <Button
+                variant="outlined"
+                color="secondary"
+                onClick={() => {
+                  console.log({ selectedProject });
+                  onClose(selectedProject);
+                }}
+                disabled={isTransitioning}
+                sx={{ borderRadius: 28, px: 3 }}
+              >
+                New analysis
+              </Button>
+            ) : (
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={
+                  activeStep < 3
+                    ? () => handlePageChange(activeStep + 1)
+                    : () => finishTheProcess()
+                }
+                disabled={isTransitioning}
+                sx={{ borderRadius: 28, px: 3 }}
+              >
+                {activeStep == 0 ? (
+                  "New Project"
+                ) : (
+                  <>{activeStep < 3 ? "NEXT" : "FINISH"}</>
+                )}
+              </Button>
+            )}
           </Box>
         </Box>
       </CardContent>

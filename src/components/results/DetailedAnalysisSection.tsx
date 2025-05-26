@@ -1,8 +1,8 @@
 // This component is responsible for rendering the detailed analysis section of the report -Results->AnalysisSection
 import React from "react";
-import { Box, Paper, Typography, Divider, Grid, useTheme,} from "@mui/material";
+import { Box, Paper, Typography, Divider, Grid, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
-import { OverallEvaluation } from "../types/Report";
+import { OverallEvaluation } from "../../types/Report";
 
 interface DetailedAnalysisSectionProps {
   categoryRatings: OverallEvaluation["category_ratings"];

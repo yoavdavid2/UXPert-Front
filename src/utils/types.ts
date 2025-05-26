@@ -1,6 +1,6 @@
 import { PropsWithChildren } from "react";
 import { UserProfile } from "../types/UserProfile";
-import { Project } from "../types/Project";
+import { Report, WebsiteEvaluation } from "../types/Report";
 
 export interface IAppbarProps {
   handleProfileClick: () => void;
@@ -54,7 +54,7 @@ export interface IChipGroupProps {
 }
 
 export interface IStepperCardProps {
-  onClose: (summery: userRequirmentsSummeryDto) => void;
+  onClose: (summery: userRequirmentsSummeryDto | ProjectDto) => void;
   onSubmit?: (formData: FormData) => void;
 }
 
@@ -93,7 +93,6 @@ export interface ISignupFormProps {
 
 export interface IProfileHeaderProps {
   userProfile: UserProfile;
-  onEditProfile: () => void;
 }
 
 export interface IProfileProjectsSectionProps {
@@ -102,7 +101,13 @@ export interface IProfileProjectsSectionProps {
 }
 
 export interface IProjectCardProps {
-  project: Project;
+  project: ProjectDto;
+  onDelete: () => void;
+  onClickProject: () => void;
+}
+
+export interface IProjectResultCardProps {
+  report: Report;
   onDelete: () => void;
 }
 
@@ -142,11 +147,28 @@ export interface IProfileProjectsSectionProps {
 }
 
 export interface IProjectCardProps {
-  project: Project;
+  project: ProjectDto;
   onDelete: () => void;
 }
 
 export type userRequirmentsSummeryDto = {
+  projectId?: string;
+  userId: string;
+  email: string;
+  name: string;
+  categories: string[];
+  audience: string[];
+  emotions: string[];
+  purpose: string;
+  url: string;
+};
+
+// ProjectDto from the backend
+export type ProjectDto = {
+  projectId?: string;
+  userId: string;
+  email: string;
+  // name: string;
   categories: string[];
   audience: string[];
   emotions: string[];
@@ -156,4 +178,9 @@ export type userRequirmentsSummeryDto = {
 
 export interface IAnimatedModal {
   currentText: string;
+}
+
+export interface IResultsModalProps extends WebsiteEvaluation {
+  open: boolean;
+  onClose: () => void;
 }

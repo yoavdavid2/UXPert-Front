@@ -1,22 +1,30 @@
 // src/components/ImprovementSuggestionsSection.tsx
 // This component is responsible for rendering the improvement
 import React from "react";
-import { Box, Button, Chip, Divider, Grid, Paper, Typography, useTheme,} from "@mui/material";
+import {
+  Box,
+  Button,
+  Chip,
+  Divider,
+  Grid,
+  Paper,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { motion } from "framer-motion";
 import Code from "@mui/icons-material/Code";
-import { OverallEvaluation } from "../types/Report";
+import { OverallEvaluation } from "../../types/Report";
 
 interface ImprovementSuggestionsSectionProps {
   categoryRatings: OverallEvaluation["category_ratings"];
   onPreview: () => void;
 }
 
-const ImprovementSuggestionsSection: React.FC<ImprovementSuggestionsSectionProps> = ({
-  categoryRatings,
-  onPreview,
-}) => {
+const ImprovementSuggestionsSection: React.FC<
+  ImprovementSuggestionsSectionProps
+> = ({ categoryRatings, onPreview }) => {
   const theme = useTheme();
-  
+
   const suggestions = categoryRatings
     .flatMap((category) =>
       category.improvement_suggestions.map((improvement) => ({
@@ -31,7 +39,11 @@ const ImprovementSuggestionsSection: React.FC<ImprovementSuggestionsSectionProps
     );
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
       {/* Preview header */}
       <Paper
         elevation={0}
@@ -43,7 +55,12 @@ const ImprovementSuggestionsSection: React.FC<ImprovementSuggestionsSectionProps
           border: "1px solid rgba(0,0,0,0.05)",
         }}
       >
-        <Box display="flex" justifyContent="space-between" alignItems="center" mb={3}>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          mb={3}
+        >
           <Typography variant="h6" fontWeight={600}>
             HTML Preview and Suggestions
           </Typography>
@@ -53,12 +70,19 @@ const ImprovementSuggestionsSection: React.FC<ImprovementSuggestionsSectionProps
         </Box>
         <Divider sx={{ mb: 3 }} />
         <Typography variant="body2" paragraph>
-          We've analyzed your website and generated an improved HTML version with better UX practices applied.
-          Click the button above to preview the suggested improvements.
+          We've analyzed your website and generated an improved HTML version
+          with better UX practices applied. Click the button above to preview
+          the suggested improvements.
         </Typography>
       </Paper>
 
-      <Typography variant="h6" fontWeight={600} mb={2} mt={4} color="text.primary">
+      <Typography
+        variant="h6"
+        fontWeight={600}
+        mb={2}
+        mt={4}
+        color="text.primary"
+      >
         Top Improvement Suggestions
       </Typography>
 
@@ -93,7 +117,12 @@ const ImprovementSuggestionsSection: React.FC<ImprovementSuggestionsSectionProps
 
           <Grid container spacing={2}>
             <Grid item xs={12} sm={6}>
-              <Typography variant="caption" color="text.secondary" display="block" mb={0.5}>
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                display="block"
+                mb={0.5}
+              >
                 Importance: {suggestion.importance}/10
               </Typography>
               <Box
@@ -116,7 +145,12 @@ const ImprovementSuggestionsSection: React.FC<ImprovementSuggestionsSectionProps
               </Box>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Typography variant="caption" color="text.secondary" display="block" mb={0.5}>
+              <Typography
+                variant="caption"
+                color="text.secondary"
+                display="block"
+                mb={0.5}
+              >
                 Expected Improvement: {suggestion.expected_improvement}/10
               </Typography>
               <Box

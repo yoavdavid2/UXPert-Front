@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 import {
   Box,
   Button,
@@ -10,15 +11,19 @@ import {
   Dialog,
   Slide,
 } from "@mui/material";
-import { IFeatureCardProps, userRequirmentsSummeryDto } from "../utils/types";
-import FeatureCard from "../components/FeatureCard";
-import { EnhanceIcon, StreamlineIcon } from "../components/Icons";
-import StepperCard from "../components/stepper/StepperCard";
 import { TransitionProps } from "@mui/material/transitions";
-import { useNavigate } from "react-router";
+
+import {
+  IFeatureCardProps,
+  ProjectDto,
+  userRequirmentsSummeryDto,
+} from "../utils/types";
+import FeatureCard from "../components/layout/FeatureCard";
+import StepperCard from "../components/stepper/StepperCard";
+import { EnhanceIcon, StreamlineIcon } from "../components/layout/Icons";
 import { useAuth } from "../utils/AuthContext";
 
-const Transition = React.forwardRef(function Transition(
+export const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement;
   },
@@ -54,9 +59,9 @@ const HomePage = () => {
     setOpenCard(true);
   };
 
-  const handleCloseCard = (summary: userRequirmentsSummeryDto) => {
+  const handleCloseCard = (summary: userRequirmentsSummeryDto | ProjectDto) => {
     setOpenCard(false);
-    console.log(summary);
+    console.log({ home: summary });
     navigate(`/results?link=${summary.url}`, { state: { summery: summary } });
   };
 

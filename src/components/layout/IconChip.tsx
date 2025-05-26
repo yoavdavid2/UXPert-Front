@@ -2,7 +2,7 @@ import React from "react";
 import { Box, Chip, Menu, MenuItem } from "@mui/material";
 import { AccountCircle, Menu as MenuIcon } from "@mui/icons-material";
 import { useNavigate } from "react-router";
-import { useAuth } from "../utils/AuthContext";
+import { useAuth } from "../../utils/AuthContext";
 
 const IconChip = () => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
