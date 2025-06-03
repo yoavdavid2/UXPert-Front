@@ -29,18 +29,21 @@ export const reportService = {
     query: ReportHistoryQuery = {}
   ): Promise<{ reports: Report[]; total: number }> {
     try {
-      const response = await api.get(`/api/reports/project/${projectId}`, {
+      const response = await api.get(`/api/reports/byProjectId/${projectId}`, {
         params: query,
       });
-      return {
-        reports: response.data.reports.map(mapApiReportToReport),
-        total: response.data.total,
-      };
-    } catch (error) {
-      console.error("Error fetching reports by project:", error);
-      throw error;
-    }
-  },
+
+      const rawReports = response.data || [];
+
+    return {
+      reports: rawReports.map(mapApiReportToReport),
+      total: rawReports.length,
+    };
+  } catch (error) {
+    console.error("Error fetching reports by project:", error);
+    throw error;
+  }
+},
 
   // Get specific report by ID
   async getReportById(id: string): Promise<Report> {

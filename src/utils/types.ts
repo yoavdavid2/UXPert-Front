@@ -168,7 +168,7 @@ export type ProjectDto = {
   projectId?: string;
   userId: string;
   email: string;
-  // name: string;
+  name: string;
   categories: string[];
   audience: string[];
   emotions: string[];

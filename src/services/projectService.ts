@@ -10,7 +10,7 @@ import { ProjectDto } from "../utils/types";
 // Convert backend response to frontend Project format
 const convertToProject = (projectData: ProjectResponse): Project => {
   return {
-    id: projectData._id,
+    projectId: projectData._id,
     title: projectData.name,
     description: projectData.description || "",
     tags: projectData.tags,
@@ -78,7 +78,7 @@ export const projectService = {
   // Get project by ID
   async getProjectById(id: string): Promise<Project> {
     try {
-      const response = await api.get(`/api/reports/${id}`);
+      const response = await api.get(`/reports/${id}`);
       return convertToProject(response.data);
     } catch (error) {
       console.error(`Error fetching project with ID ${id}:`, error);
@@ -103,7 +103,7 @@ export const projectService = {
   // Delete a project
   async deleteProject(id: string): Promise<void> {
     try {
-      await api.delete(`/projects/${id}`);
+      await api.delete(`/api/projects/${id}`);
     } catch (error) {
       console.error(`Error deleting project with ID ${id}:`, error);
       throw error;
