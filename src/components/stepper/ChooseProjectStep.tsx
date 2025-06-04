@@ -2,7 +2,6 @@ import { Box, Typography, Divider, CardContent } from "@mui/material";
 import { useEffect, useState } from "react";
 import api from "../../services/requestsWrapper";
 import Swal from "sweetalert2";
-import { Project } from "../../types/Project";
 import { ProjectDto } from "../../utils/types";
 
 const ProjectCard = ({
@@ -152,9 +151,8 @@ const ChooseProjectStep = ({
                 }}
               >
                 {projects.map((project: ProjectDto) => (
-                  <>
+                  <Box key={project.projectId}>
                     <ProjectCard
-                      key={project.projectId}
                       project={project}
                       selected={
                         selectedProject?.projectId === project.projectId
@@ -169,7 +167,7 @@ const ChooseProjectStep = ({
                       }}
                     />
                     <Divider sx={{ mb: 2 }} variant="fullWidth" />
-                  </>
+                  </Box>
                 ))}
               </Box>
             </>
