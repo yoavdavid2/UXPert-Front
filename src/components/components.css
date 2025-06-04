@@ -265,15 +265,24 @@
   }
 }
 
+/* ========== PROFILE DASHBOARD LAYOUT ========== */
+.profile-dashboard-layout {
+  display: flex;
+  height: 92vh;
+  width: 100%;
+  background-color: #FCFAFF;
+  overflow-y: auto;
+}
+
 /* profile dashboard */
 .dashboard-root {
   flex: 1;
   padding: 32px;
   background-color: #FCFAFF;
-  overflow: hidden;
+  overflow: auto;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .dashboard-header {
@@ -321,13 +330,6 @@
   border: 1px solid #E7E1F2;
 }
 
-.results-scroll-area {
-  flex: 1;
-  max-height: calc(100vh - 300px);
-  overflow-y: auto;
-  overflow-x: hidden;
-  background-color: #f7f9fc;
-}
 
 .empty-project-placeholder {
   flex: 1;
@@ -339,3 +341,38 @@
   border: 1px solid #E7E1F2;
 }
 
+.dashboard-root::-webkit-scrollbar,
+.results-scroll-area::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+
+.dashboard-root,
+.results-scroll-area {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.sidebar-scroll-container {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.sidebar-scroll-container:hover {
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+}
+
+.sidebar-scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-scroll-container::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 3px;
+}
+
+.sidebar-scroll-container:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
+}

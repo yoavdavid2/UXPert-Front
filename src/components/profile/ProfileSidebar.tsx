@@ -127,7 +127,7 @@ const ProfileSidebar: React.FC<ProfileSidebarProps> = ({
             <CircularProgress size={24} sx={{ color: "rgba(26, 35, 126, 1)" }} />
           </Box>
         ) : (
-          <List sx={{ flex: 1, overflow: "auto", py: 0 }}>
+          <List className="sidebar-scroll-container" sx={{ py: 0 }}>
             {projects.map((project) => (
               <ListItem key={project.projectId} disablePadding>
                 <ListItemButton

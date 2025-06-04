@@ -114,7 +114,7 @@ const ProfileDashboard: React.FC<ProfileDashboardProps> = ({
   };
 
   return (
-    <Box className="dashboard-root">
+    <Box className="dashboard-root" sx={{ overflowY: "auto" }}>
       <Box className="dashboard-header">
         <Box className="dashboard-header-inner">
           <Typography variant="h4" className="dashboard-title">

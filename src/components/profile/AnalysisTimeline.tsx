@@ -1,7 +1,9 @@
 import React from "react";
 import { Box, Typography, CircularProgress, Tooltip } from "@mui/material";
+import { motion } from "framer-motion";
 import { Report } from "../../types/Report";
 
+const MotionBox = motion(Box);
 
 interface AnalysisTimelineProps {
   reports: Report[];
@@ -94,7 +96,9 @@ const AnalysisTimeline: React.FC<AnalysisTimelineProps> = ({
       >
         {reports.map((report, index) => {
           const isSelected = selectedReport?._id === report._id;
-          const offset = index % 2 === 0 ? 0 : -8;
+          // Move every second circle up slightly for a wave effect
+          const isOdd = index % 2 !== 0;
+          const verticalOffset = isOdd ? -8 : 0;
           const size = isSelected ?  82 : 72;
           const dateInfo = formatDate(report.createdAt);
 
@@ -117,20 +121,18 @@ const AnalysisTimeline: React.FC<AnalysisTimelineProps> = ({
               arrow
               placement="top"
             >
-              <Box
+              <MotionBox
                 onClick={() => onSelectReport(report)}
+                animate={{ scale: isSelected ? 1.1 : 1 }}
+                whileHover={{ scale: isSelected ? 1.1 : 1.05 }}
+                transition={{ duration: 0.2 }}
                 sx={{
                   display: "flex",
                   flexDirection: "column",
                   alignItems: "center",
                   position: "relative",
                   cursor: "pointer",
-                  transition: "transform 0.2s ease",
-                  transform: isSelected ? "scale(1.1)" : "scale(1)",
-                  "&:hover": {
-                    transform: isSelected ? "scale(1.1)" : "scale(1.05)",
-                  },
-                  top: `${offset}px`,
+                  top: `${verticalOffset}px`,
                   minWidth: 150,
                 }}
               >
@@ -184,7 +186,7 @@ const AnalysisTimeline: React.FC<AnalysisTimelineProps> = ({
                     Selected
                   </Typography>
                 )}
-              </Box>
+              </MotionBox>
             </Tooltip>
           );
         })}

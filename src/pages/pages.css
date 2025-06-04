@@ -7,14 +7,10 @@
   align-items: center;
 }
 
-/* ========== PROFILE DASHBOARD LAYOUT ========== */
-.profile-dashboard-layout {
-  display: flex;
-  height: 100vh;
-  width: 100%;
-  background-color: #FCFAFF;
-  overflow: hidden;
-}
+
+
+
+
 
 /* ========== AUTH FORM COMPONENTS ========== */
 .auth-form-container {
