@@ -136,16 +136,27 @@ const ResultsPage = () => {
     setTabValue(newValue);
   };
 
-  // Implementation for downloading results as PDF - still in progress***
+  // Implementation for downloading HTML file
   const handleDownloadReport = () => {
+  if (analystResult?.suggested_mew_html) {
+    const blob = new Blob([analystResult.suggested_mew_html], { type: 'text/html' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'uxpert.html';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } else {
     Swal.fire({
-      icon: "info",
-      title: "Preparing Download",
-      text: "Your report is being prepared for download...",
-      timer: 2000,
-      showConfirmButton: false,
+      icon: "error",
+      title: "Download Failed",
+      text: "No analysis HTML found to download.",
     });
-  };
+  }
+};
+
 
   const handlePreviewSuggestions = () => {
     setShowPreviewDialog(true);
