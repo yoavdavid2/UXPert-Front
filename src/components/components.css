@@ -199,7 +199,6 @@
   text-decoration: underline;
 }
 
-/* Animation classes for StepperCard */
 .step-content {
   width: 100%;
   position: relative;
@@ -263,4 +262,113 @@
     transform: translateX(0);
     opacity: 1;
   }
+}
+
+/* ========== PROFILE DASHBOARD LAYOUT ========== */
+.profile-dashboard-layout {
+  display: flex;
+  height: 92vh;
+  width: 100%;
+  background-color: #fcfaff;
+  overflow-y: auto;
+}
+
+.dashboard-root {
+  flex: 1;
+  padding: 32px;
+  background-color: #fcfaff;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.dashboard-header {
+  margin-bottom: 8px;
+}
+
+.dashboard-header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.dashboard-title {
+  font-weight: 300;
+  color: rgba(26, 35, 126, 1);
+  font-family: "Poppins", sans-serif;
+}
+
+.dashboard-header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.new-analysis-button {
+  background-color: #1a237e;
+  color: white;
+  border-radius: 16px;
+  padding: 8px 24px;
+  text-transform: none;
+  box-shadow: 0 4px 12px rgba(156, 106, 222, 0.3);
+}
+
+.new-analysis-button:hover {
+  background-color: #7e69ac;
+  box-shadow: 0 6px 16px rgba(156, 106, 222, 0.4);
+}
+
+.analysis-wrapper {
+  padding: 24px;
+  margin-bottom: 24px;
+  border-radius: 16px;
+  background-color: rgba(255, 255, 255, 0.94);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e7e1f2;
+}
+
+.empty-project-placeholder {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 16px;
+  border: 1px solid #e7e1f2;
+}
+
+.dashboard-root::-webkit-scrollbar,
+.results-scroll-area::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+.dashboard-root,
+.results-scroll-area {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.sidebar-scroll-container {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.sidebar-scroll-container:hover {
+  scrollbar-color: rgba(0, 0, 0, 0.3) transparent;
+}
+
+.sidebar-scroll-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.sidebar-scroll-container::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 3px;
+}
+
+.sidebar-scroll-container:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.3);
 }

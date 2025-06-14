@@ -73,7 +73,7 @@ const BACKGROUND_CONFIG = {
   },
 };
 
-const BackgroundWrapper: React.FC<PropsWithChildren> = ({ children }) => {
+const BackgroundWrapper = ({ children }: PropsWithChildren) => {
   const location = useLocation();
   const [currentPath, setCurrentPath] = useState(location.pathname);
   const [morphing, setMorphing] = useState(false);

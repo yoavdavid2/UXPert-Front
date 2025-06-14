@@ -9,37 +9,21 @@ import {
   IconButton,
   Paper,
 } from "@mui/material";
-import SearchIcon from "@mui/icons-material/Search";
+import { Search } from "@mui/icons-material";
 import { motion } from "framer-motion";
+import { IChipItem, IChipGroupProps } from "../utils/types";
 
-interface ChipItem {
-  name: string;
-  icon: React.ReactNode;
-  description?: string;
-  category?: string;
-}
-
-interface ChipGroupProps {
-  items: ChipItem[];
-  selectedItems: string[];
-  toggleItem: (item: string) => void;
-  searchable?: boolean;
-  groupByCategory?: boolean;
-  maxHeight?: string | number;
-}
-
-const ChipGroup: React.FC<ChipGroupProps> = ({
+const ChipGroup = ({
   items,
   selectedItems,
   toggleItem,
   searchable = false,
   groupByCategory = false,
   maxHeight = 300,
-}) => {
+}: IChipGroupProps) => {
   const theme = useTheme();
   const [searchQuery, setSearchQuery] = React.useState("");
 
-  // Filter items based on search query
   const filteredItems = useMemo(() => {
     if (!searchQuery) return items;
     const lowerQuery = searchQuery.toLowerCase();
@@ -50,7 +34,6 @@ const ChipGroup: React.FC<ChipGroupProps> = ({
     );
   }, [items, searchQuery]);
 
-  // Group items by category if needed
   const groupedItems = useMemo(() => {
     if (!groupByCategory) return { "All Items": filteredItems };
 
@@ -61,7 +44,7 @@ const ChipGroup: React.FC<ChipGroupProps> = ({
       }
       acc[category].push(item);
       return acc;
-    }, {} as Record<string, ChipItem[]>);
+    }, {} as Record<string, IChipItem[]>);
   }, [filteredItems, groupByCategory]);
 
   return (
@@ -80,7 +63,7 @@ const ChipGroup: React.FC<ChipGroupProps> = ({
           variant="outlined"
         >
           <IconButton sx={{ p: "10px" }} aria-label="search">
-            <SearchIcon />
+            <Search />
           </IconButton>
           <InputBase
             sx={{ ml: 1, flex: 1 }}

@@ -1,16 +1,9 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 import { TOKEN_LS, USER_PROFILE_LS } from "../config";
-import { UserProfile } from "../types/UserProfile";
+import { UserProfile } from "./UserProfileUtils";
+import { IAuthContextType } from "./types";
 
-interface AuthContextType {
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  user: UserProfile | null;
-  login: (token: string, userData: UserProfile) => void;
-  logout: () => void;
-}
-
-const AuthContext = createContext<AuthContextType>({
+const AuthContext = createContext<IAuthContextType>({
   isAuthenticated: false,
   isLoading: true,
   user: null,
@@ -20,9 +13,7 @@ const AuthContext = createContext<AuthContextType>({
 
 export const useAuth = () => useContext(AuthContext);
 
-export const AuthProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useState<UserProfile | null>(null);

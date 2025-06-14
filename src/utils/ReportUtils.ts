@@ -111,5 +111,5 @@ export interface OverallEvaluation {
   final_score: number;
   best_thing: string;
   worst_thing: string;
-  suggested_mew_html: string;
+  suggested_new_html: string;
 }

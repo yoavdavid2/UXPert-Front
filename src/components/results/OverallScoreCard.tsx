@@ -1,19 +1,21 @@
 // components/OverallScoreCard.tsx
 import React from "react";
-import { Box, CircularProgress, Grid, Paper, Typography, useTheme,} from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Grid,
+  Paper,
+  Typography,
+  useTheme,
+} from "@mui/material";
 import { motion } from "framer-motion";
+import { IOverallScoreCardProps } from "../../utils/types";
 
-interface OverallScoreCardProps {
-  averageScore: number;
-  bestThing: string;
-  worstThing: string;
-}
-
-const OverallScoreCard: React.FC<OverallScoreCardProps> = ({
+const OverallScoreCard = ({
   averageScore,
   bestThing,
   worstThing,
-}) => {
+}: IOverallScoreCardProps) => {
   const theme = useTheme();
 
   return (
@@ -34,7 +36,6 @@ const OverallScoreCard: React.FC<OverallScoreCardProps> = ({
         }}
       >
         <Grid container spacing={3} alignItems="center">
-          {/* Score Dial */}
           <Grid item xs={12} md={4}>
             <Box
               sx={{
@@ -44,11 +45,7 @@ const OverallScoreCard: React.FC<OverallScoreCardProps> = ({
                 py: 1,
               }}
             >
-              <Typography
-                variant="h6"
-                color="text.secondary"
-                sx={{ mb: 1 }}
-              >
+              <Typography variant="h6" color="text.secondary" sx={{ mb: 1 }}>
                 Overall Score - Category Avg
               </Typography>
               <Box sx={{ position: "relative", display: "inline-flex" }}>
@@ -84,7 +81,6 @@ const OverallScoreCard: React.FC<OverallScoreCardProps> = ({
             </Box>
           </Grid>
 
-          {/* Best / Worst Highlights */}
           <Grid item xs={12} md={8}>
             <Box>
               <Box
