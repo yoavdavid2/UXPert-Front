@@ -1,19 +1,27 @@
 import React, { useState } from "react";
-import { Modal, Box, Button, IconButton, Typography, Tabs, Tab, Paper} from "@mui/material";
-import { Close, Refresh, Code, Visibility} from "@mui/icons-material";
-import { SandpackProvider, SandpackPreview, SandpackCodeEditor } from "@codesandbox/sandpack-react";
+import {
+  Modal,
+  Box,
+  Button,
+  IconButton,
+  Typography,
+  Tabs,
+  Tab,
+  Paper,
+} from "@mui/material";
+import { Close, Refresh, Code, Visibility } from "@mui/icons-material";
+import {
+  SandpackProvider,
+  SandpackPreview,
+  SandpackCodeEditor,
+} from "@codesandbox/sandpack-react";
+import { IDynamicIframeModalProps } from "../../utils/types";
 
-interface DynamicIframeModalProps {
-  code: string;
-  open: boolean;
-  onClose: () => void;
-}
-
-const DynamicIframeModal: React.FC<DynamicIframeModalProps> = ({ 
+const DynamicIframeModal = ({
   code,
   open,
-  onClose
-}) => {
+  onClose,
+}: IDynamicIframeModalProps) => {
   const [tabValue, setTabValue] = useState(0);
   const [iframeKey, setIframeKey] = useState(0);
 
@@ -22,15 +30,15 @@ const DynamicIframeModal: React.FC<DynamicIframeModalProps> = ({
   };
 
   const handleIframeReload = () => {
-    setIframeKey(prevKey => prevKey + 1);
+    setIframeKey((prevKey) => prevKey + 1);
   };
 
   const handleDownloadHTML = () => {
-    const blob = new Blob([code], { type: 'text/html' });
+    const blob = new Blob([code], { type: "text/html" });
     const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = 'improved-website.html';
+    a.download = "improved-website.html";
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -38,8 +46,8 @@ const DynamicIframeModal: React.FC<DynamicIframeModalProps> = ({
   };
 
   return (
-    <Modal 
-      open={open} 
+    <Modal
+      open={open}
       onClose={onClose}
       aria-labelledby="website-preview-modal"
     >
@@ -58,7 +66,6 @@ const DynamicIframeModal: React.FC<DynamicIframeModalProps> = ({
           flexDirection: "column",
         }}
       >
-        {/* Header */}
         <Box
           sx={{
             display: "flex",
@@ -66,7 +73,7 @@ const DynamicIframeModal: React.FC<DynamicIframeModalProps> = ({
             alignItems: "center",
             p: 2,
             borderBottom: 1,
-            borderColor: "divider"
+            borderColor: "divider",
           }}
         >
           <Typography variant="h6" component="h2" id="website-preview-modal">
@@ -77,48 +84,46 @@ const DynamicIframeModal: React.FC<DynamicIframeModalProps> = ({
           </IconButton>
         </Box>
 
-        {/* Tab Navigation */}
-        <Box sx={{ width: '100%', bgcolor: 'background.paper' }}>
+        <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
           <Tabs
             value={tabValue}
             onChange={handleTabChange}
             aria-label="preview tabs"
             sx={{
               borderBottom: 1,
-              borderColor: 'divider'
+              borderColor: "divider",
             }}
           >
-            <Tab 
-              icon={<Visibility />} 
-              iconPosition="start" 
-              label="Preview" 
+            <Tab
+              icon={<Visibility />}
+              iconPosition="start"
+              label="Preview"
               id="tab-0"
               aria-controls="tabpanel-0"
             />
-            <Tab 
-              icon={<Code />} 
-              iconPosition="start" 
-              label="HTML Code" 
+            <Tab
+              icon={<Code />}
+              iconPosition="start"
+              label="HTML Code"
               id="tab-1"
               aria-controls="tabpanel-1"
             />
           </Tabs>
         </Box>
 
-        {/* Preview Content */}
-        <Box 
+        <Box
           role="tabpanel"
           hidden={tabValue !== 0}
           id="tabpanel-0"
           aria-labelledby="tab-0"
-          sx={{ 
-            flexGrow: 1, 
-            overflow: 'hidden',
-            display: tabValue === 0 ? 'flex' : 'none',
-            flexDirection: 'column'
+          sx={{
+            flexGrow: 1,
+            overflow: "hidden",
+            display: tabValue === 0 ? "flex" : "none",
+            flexDirection: "column",
           }}
         >
-          <Box sx={{ p: 2, display: 'flex', justifyContent: 'flex-end' }}>
+          <Box sx={{ p: 2, display: "flex", justifyContent: "flex-end" }}>
             <Button
               variant="outlined"
               startIcon={<Refresh />}
@@ -129,19 +134,19 @@ const DynamicIframeModal: React.FC<DynamicIframeModalProps> = ({
             </Button>
           </Box>
 
-          <Box sx={{ flexGrow: 1, overflow: 'hidden', px: 2, pb: 2 }}>
-            <Paper 
-              elevation={3} 
-              sx={{ 
-                height: '100%',
-                overflow: 'hidden',
+          <Box sx={{ flexGrow: 1, overflow: "hidden", px: 2, pb: 2 }}>
+            <Paper
+              elevation={3}
+              sx={{
+                height: "100%",
+                overflow: "hidden",
 
-                borderRadius: 1
+                borderRadius: 1,
               }}
             >
               <SandpackProvider
                 template="static"
-                style={{ height: '100%' }}
+                style={{ height: "100%" }}
                 files={{
                   "/index.html": { code: code, active: true },
                 }}
@@ -151,8 +156,8 @@ const DynamicIframeModal: React.FC<DynamicIframeModalProps> = ({
                   showRefreshButton={false}
                   showOpenInCodeSandbox={false}
                   style={{
-                    height: '100%',
-                    borderRadius: '4px',
+                    height: "100%",
+                    borderRadius: "4px",
                   }}
                 />
               </SandpackProvider>
@@ -160,20 +165,21 @@ const DynamicIframeModal: React.FC<DynamicIframeModalProps> = ({
           </Box>
         </Box>
 
-        {/* Code Content */}
         <Box
           role="tabpanel"
           hidden={tabValue !== 1}
           id="tabpanel-1"
           aria-labelledby="tab-1"
-          sx={{ 
-            flexGrow: 1, 
-            overflow: 'hidden',
-            display: tabValue === 1 ? 'flex' : 'none',
-            flexDirection: 'column' 
+          sx={{
+            flexGrow: 1,
+            overflow: "hidden",
+            display: tabValue === 1 ? "flex" : "none",
+            flexDirection: "column",
           }}
         >
-          <Box sx={{ p: 2, display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
+          <Box
+            sx={{ p: 2, display: "flex", justifyContent: "flex-end", gap: 1 }}
+          >
             <Button
               variant="outlined"
               onClick={handleDownloadHTML}
@@ -183,13 +189,13 @@ const DynamicIframeModal: React.FC<DynamicIframeModalProps> = ({
             </Button>
           </Box>
 
-          <Box sx={{ flexGrow: 1, overflow: 'hidden', px: 2, pb: 2 }}>
-            <Paper 
-              elevation={3} 
-              sx={{ 
-                height: '100%',
-                overflow: 'hidden', 
-                borderRadius: 1
+          <Box sx={{ flexGrow: 1, overflow: "hidden", px: 2, pb: 2 }}>
+            <Paper
+              elevation={3}
+              sx={{
+                height: "100%",
+                overflow: "hidden",
+                borderRadius: 1,
               }}
             >
               <SandpackProvider
@@ -205,8 +211,8 @@ const DynamicIframeModal: React.FC<DynamicIframeModalProps> = ({
                   wrapContent
                   readOnly
                   style={{
-                    height: '100%',
-                    fontSize: '14px'
+                    height: "100%",
+                    fontSize: "14px",
                   }}
                 />
               </SandpackProvider>
@@ -214,14 +220,13 @@ const DynamicIframeModal: React.FC<DynamicIframeModalProps> = ({
           </Box>
         </Box>
 
-        {/* Footer */}
         <Box
           sx={{
             p: 2,
             borderTop: 1,
-            borderColor: 'divider',
-            display: 'flex',
-            justifyContent: 'space-between'
+            borderColor: "divider",
+            display: "flex",
+            justifyContent: "space-between",
           }}
         >
           <Typography variant="body2" color="text.secondary">

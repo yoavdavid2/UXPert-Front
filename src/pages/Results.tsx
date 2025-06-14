@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 
 import { BACKEND_URL } from "../config";
 import { userRequirmentsSummeryDto } from "../utils/types";
-import { OverallEvaluation } from "../types/Report";
+import { OverallEvaluation } from "../utils/ReportUtils";
 import AnimatedModal from "../components/layout/animatedModal";
 import DynamicIframeModal from "../components/layout/DynamicIframeModal";
 import AnalysisSection from "../components/results/AnalysisSection";
@@ -138,25 +138,26 @@ const ResultsPage = () => {
 
   // Implementation for downloading HTML file
   const handleDownloadReport = () => {
-  if (analystResult?.suggested_mew_html) {
-    const blob = new Blob([analystResult.suggested_mew_html], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'uxpert.html';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  } else {
-    Swal.fire({
-      icon: "error",
-      title: "Download Failed",
-      text: "No analysis HTML found to download.",
-    });
-  }
-};
-
+    if (analystResult?.suggested_new_html) {
+      const blob = new Blob([analystResult.suggested_new_html], {
+        type: "text/html",
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "uxpert.html";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Download Failed",
+        text: "No analysis HTML found to download.",
+      });
+    }
+  };
 
   const handlePreviewSuggestions = () => {
     setShowPreviewDialog(true);
@@ -257,9 +258,9 @@ const ResultsPage = () => {
         />
       </Box>
 
-      {analystResult.suggested_mew_html && (
+      {analystResult.suggested_new_html && (
         <DynamicIframeModal
-          code={analystResult.suggested_mew_html}
+          code={analystResult.suggested_new_html}
           open={showPreviewDialog}
           onClose={() => setShowPreviewDialog(false)}
         />

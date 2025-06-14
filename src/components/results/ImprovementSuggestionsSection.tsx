@@ -1,6 +1,3 @@
-// src/components/ImprovementSuggestionsSection.tsx
-// This component is responsible for rendering the improvement
-import React from "react";
 import {
   Box,
   Button,
@@ -11,18 +8,15 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { Code } from "@mui/icons-material";
 import { motion } from "framer-motion";
-import Code from "@mui/icons-material/Code";
-import { OverallEvaluation } from "../../types/Report";
 
-interface ImprovementSuggestionsSectionProps {
-  categoryRatings: OverallEvaluation["category_ratings"];
-  onPreview: () => void;
-}
+import { IImprovementSuggestionsSectionProps } from "../../utils/types";
 
-const ImprovementSuggestionsSection: React.FC<
-  ImprovementSuggestionsSectionProps
-> = ({ categoryRatings, onPreview }) => {
+const ImprovementSuggestionsSection = ({
+  categoryRatings,
+  onPreview,
+}: IImprovementSuggestionsSectionProps) => {
   const theme = useTheme();
 
   const suggestions = categoryRatings
@@ -44,7 +38,6 @@ const ImprovementSuggestionsSection: React.FC<
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
     >
-      {/* Preview header */}
       <Paper
         elevation={0}
         sx={{

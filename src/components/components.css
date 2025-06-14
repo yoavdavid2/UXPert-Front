@@ -199,7 +199,6 @@
   text-decoration: underline;
 }
 
-/* Animation classes for StepperCard */
 .step-content {
   width: 100%;
   position: relative;
@@ -270,15 +269,14 @@
   display: flex;
   height: 92vh;
   width: 100%;
-  background-color: #FCFAFF;
+  background-color: #fcfaff;
   overflow-y: auto;
 }
 
-/* profile dashboard */
 .dashboard-root {
   flex: 1;
   padding: 32px;
-  background-color: #FCFAFF;
+  background-color: #fcfaff;
   overflow: auto;
   display: flex;
   flex-direction: column;
@@ -317,7 +315,7 @@
 }
 
 .new-analysis-button:hover {
-  background-color: #7E69AC;
+  background-color: #7e69ac;
   box-shadow: 0 6px 16px rgba(156, 106, 222, 0.4);
 }
 
@@ -326,10 +324,9 @@
   margin-bottom: 24px;
   border-radius: 16px;
   background-color: rgba(255, 255, 255, 0.94);
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  border: 1px solid #E7E1F2;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e7e1f2;
 }
-
 
 .empty-project-placeholder {
   flex: 1;
@@ -338,7 +335,7 @@
   justify-content: center;
   background-color: white;
   border-radius: 16px;
-  border: 1px solid #E7E1F2;
+  border: 1px solid #e7e1f2;
 }
 
 .dashboard-root::-webkit-scrollbar,
@@ -347,11 +344,10 @@
   height: 0px;
 }
 
-
 .dashboard-root,
 .results-scroll-area {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
 }
 
 .sidebar-scroll-container {

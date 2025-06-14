@@ -9,7 +9,7 @@ import {
   useTheme,
 } from "@mui/material";
 import { Theme } from "@mui/material/styles";
-import { WebsiteEvaluation } from "../../types/Report";
+import { WebsiteEvaluation } from "../../utils/ReportUtils";
 import ResultsModal from "./ResultsModal";
 
 const getScoreData = (score: number, theme: Theme) => {
@@ -19,18 +19,17 @@ const getScoreData = (score: number, theme: Theme) => {
   return { color: theme.palette.error, label: "Needs Improvement" };
 };
 
-const ResultsCard: React.FC<WebsiteEvaluation> = ({
+const ResultsCard = ({
   numeric_rating,
   category,
   text_rating,
   improvement_suggestions,
-}) => {
+}: WebsiteEvaluation) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  // Get score color and label
   const { color: scoreColor, label: scoreLabel } = getScoreData(
     numeric_rating,
     theme as Theme
@@ -38,7 +37,6 @@ const ResultsCard: React.FC<WebsiteEvaluation> = ({
 
   return (
     <>
-      {/* Main Card */}
       <Card
         onClick={handleOpen}
         sx={{
@@ -60,7 +58,6 @@ const ResultsCard: React.FC<WebsiteEvaluation> = ({
           },
         }}
       >
-        {/* Score Circle */}
         <Box
           sx={{
             display: "flex",
@@ -89,7 +86,6 @@ const ResultsCard: React.FC<WebsiteEvaluation> = ({
           </Box>
         </Box>
 
-        {/* Category and Rating */}
         <CardContent sx={{ textAlign: "center", flexGrow: 1, pt: 0 }}>
           <Typography
             variant="h6"
@@ -112,7 +108,6 @@ const ResultsCard: React.FC<WebsiteEvaluation> = ({
           />
         </CardContent>
 
-        {/* View details indicator */}
         <Box
           sx={{
             backgroundColor: alpha(scoreColor.main, 0.1),
@@ -130,7 +125,6 @@ const ResultsCard: React.FC<WebsiteEvaluation> = ({
         </Box>
       </Card>
 
-      {/* Modal */}
       <ResultsModal
         numeric_rating={numeric_rating}
         category={category}

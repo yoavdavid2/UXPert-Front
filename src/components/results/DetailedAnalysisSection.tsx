@@ -1,16 +1,11 @@
-// This component is responsible for rendering the detailed analysis section of the report -Results->AnalysisSection
 import React from "react";
 import { Box, Paper, Typography, Divider, Grid, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
-import { OverallEvaluation } from "../../types/Report";
+import { IDetailedAnalysisSectionProps } from "../../utils/types";
 
-interface DetailedAnalysisSectionProps {
-  categoryRatings: OverallEvaluation["category_ratings"];
-}
-
-const DetailedAnalysisSection: React.FC<DetailedAnalysisSectionProps> = ({
+const DetailedAnalysisSection = ({
   categoryRatings,
-}) => {
+}: IDetailedAnalysisSectionProps) => {
   const theme = useTheme();
 
   return (
@@ -31,7 +26,6 @@ const DetailedAnalysisSection: React.FC<DetailedAnalysisSectionProps> = ({
             border: "1px solid rgba(0,0,0,0.05)",
           }}
         >
-          {/* Header: circle + title */}
           <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
             <Box
               sx={{

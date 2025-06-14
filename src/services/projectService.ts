@@ -1,14 +1,18 @@
 import api from "./requestsWrapper";
 import {
-  Project,
-  CreateProjectRequest,
-  ProjectResponse,
-} from "../types/Project";
-import { Report, ReportHistoryQuery, mapApiReportToReport } from "../types/Report";
+  IProject,
+  ICreateProjectRequest,
+  IProjectResponse,
+} from "../utils/types";
+import {
+  Report,
+  ReportHistoryQuery,
+  mapApiReportToReport,
+} from "../utils/ReportUtils";
 import { ProjectDto } from "../utils/types";
 
 // Convert backend response to frontend Project format
-const convertToProject = (projectData: ProjectResponse): Project => {
+const convertToProject = (projectData: IProjectResponse): IProject => {
   return {
     projectId: projectData._id,
     title: projectData.name,
@@ -52,10 +56,10 @@ export const projectService = {
   },
 
   // Get project/report history for a specific website
-  async getProjectHistory(websiteName: string): Promise<Project[]> {
+  async getProjectHistory(websiteName: string): Promise<IProject[]> {
     try {
       const response = await api.get(`/api/reports/history/${websiteName}`);
-      return Array.isArray(response.data) 
+      return Array.isArray(response.data)
         ? response.data.map(convertToProject)
         : [];
     } catch (error) {
@@ -65,7 +69,7 @@ export const projectService = {
   },
 
   // Create a new project
-  async createProject(projectData: CreateProjectRequest): Promise<Project> {
+  async createProject(projectData: ICreateProjectRequest): Promise<IProject> {
     try {
       const response = await api.post("/api/project", projectData);
       return convertToProject(response.data);
@@ -76,7 +80,7 @@ export const projectService = {
   },
 
   // Get project by ID
-  async getProjectById(id: string): Promise<Project> {
+  async getProjectById(id: string): Promise<IProject> {
     try {
       const response = await api.get(`/reports/${id}`);
       return convertToProject(response.data);
@@ -89,8 +93,8 @@ export const projectService = {
   // Update a project
   async updateProject(
     id: string,
-    projectData: Partial<CreateProjectRequest>
-  ): Promise<Project> {
+    projectData: Partial<ICreateProjectRequest>
+  ): Promise<IProject> {
     try {
       const response = await api.patch(`/projects/${id}`, projectData);
       return convertToProject(response.data);
@@ -110,20 +114,19 @@ export const projectService = {
     }
   },
 
-// Get reports history
-async getReportsHistory(
-  query: ReportHistoryQuery = {}
-): Promise<{ reports: Report[]; total: number }> {
-  try {
-    const response = await api.get("/api/reports", { params: query });
-    return {
-      reports: response.data.reports.map(mapApiReportToReport),
-      total: response.data.total,
-    };
-  } catch (error) {
-    console.error("Error fetching reports history:", error);
-    throw error;
-  }
-},
-
+  // Get reports history
+  async getReportsHistory(
+    query: ReportHistoryQuery = {}
+  ): Promise<{ reports: Report[]; total: number }> {
+    try {
+      const response = await api.get("/api/reports", { params: query });
+      return {
+        reports: response.data.reports.map(mapApiReportToReport),
+        total: response.data.total,
+      };
+    } catch (error) {
+      console.error("Error fetching reports history:", error);
+      throw error;
+    }
+  },
 };

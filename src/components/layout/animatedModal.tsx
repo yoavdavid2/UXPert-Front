@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import LogoSvg from "../../assets/FullLogo.svg";
 import { IAnimatedModal } from "../../utils/types";
 
-const AnimatedModal: React.FC<IAnimatedModal> = ({ currentText }) => {
+const AnimatedModal = ({ currentText }: IAnimatedModal) => {
   return (
     <Box
       component={motion.div}

@@ -23,19 +23,14 @@ import {
   Close,
 } from "@mui/icons-material";
 
-interface FinalDataStepProps {
-  websitePurpose: string;
-  setWebsitePurpose: (purpose: string) => void;
-  websiteUrl: string;
-  setWebsiteUrl: (url: string) => void;
-}
+import { IFinalDataStepProps } from "../../utils/types";
 
-const FinalDataStep: React.FC<FinalDataStepProps> = ({
+const FinalDataStep = ({
   websitePurpose,
   setWebsitePurpose,
   websiteUrl,
   setWebsiteUrl,
-}) => {
+}: IFinalDataStepProps) => {
   const theme = useTheme();
   const [urlError, setUrlError] = useState<string | null>(null);
   const [purposeError, setPurposeError] = useState<string | null>(null);

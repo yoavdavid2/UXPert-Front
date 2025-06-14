@@ -3,16 +3,17 @@ import { CircularProgress, Container, Typography, Box } from "@mui/material";
 
 import ProfileSidebar from "../components/profile/ProfileSidebar";
 import ProfileDashboard from "../components/profile/ProfileDashboard";
-import { UserProfile, getUserProfile } from "../types/UserProfile";
+import { UserProfile, getUserProfile } from "../utils/UserProfileUtils";
 import { ProjectDto } from "../utils/types";
-
 
 import "./pages.css";
 
 const ProfilePage = () => {
   const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [isProfileLoading, setIsProfileLoading] = useState(true);
-  const [selectedProject, setSelectedProject] = useState<ProjectDto | null>(null);
+  const [selectedProject, setSelectedProject] = useState<ProjectDto | null>(
+    null
+  );
 
   const [error, setError] = useState<string | null>(null);
 
@@ -78,7 +79,7 @@ const ProfilePage = () => {
 
   return (
     <Box className="profile-dashboard-layout">
-      <ProfileSidebar 
+      <ProfileSidebar
         userProfile={userProfile}
         selectedProject={selectedProject}
         onProjectSelect={setSelectedProject}

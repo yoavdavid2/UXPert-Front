@@ -1,5 +1,5 @@
 import { Typography, Avatar } from "@mui/material";
-import { getFullName } from "../../types/UserProfile";
+import { getFullName } from "../../utils/UserProfileUtils";
 import { IProfileHeaderProps } from "../../utils/types";
 
 import "../components.css";

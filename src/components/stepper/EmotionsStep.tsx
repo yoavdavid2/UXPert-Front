@@ -27,16 +27,12 @@ import {
   alpha,
 } from "@mui/material";
 import ChipGroup from "../ChipGroup";
+import { IEmotionsStepProps } from "../../utils/types";
 
-interface EmotionsStepProps {
-  selectedEmotions: string[];
-  toggleEmotion: (emotion: string) => void;
-}
-
-const EmotionsStep: React.FC<EmotionsStepProps> = ({
+const EmotionsStep = ({
   selectedEmotions,
   toggleEmotion,
-}) => {
+}: IEmotionsStepProps) => {
   const theme = useTheme();
 
   // Emotions organized by category

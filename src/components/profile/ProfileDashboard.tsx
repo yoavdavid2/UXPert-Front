@@ -9,26 +9,27 @@ import {
   Container,
 } from "@mui/material";
 import { Add } from "@mui/icons-material";
-import { ProjectDto, userRequirmentsSummeryDto } from "../../utils/types";
-import { Report } from "../../types/Report";
-import { reportService } from "../../services/reportService";
-import StepperCard from "../stepper/StepperCard";
-import { Transition } from "../../pages/HomePage";
+
 import AnalysisTimeline from "./AnalysisTimeline";
+import StepperCard from "../stepper/StepperCard";
 import AnalysisSection from "../results/AnalysisSection";
-import { OverallEvaluation } from "../../types/Report";
 import DynamicIframeModal from "../layout/DynamicIframeModal";
+import { Transition } from "../../pages/HomePage";
+
+import {
+  IProfileDashboardProps,
+  ProjectDto,
+  userRequirmentsSummeryDto,
+} from "../../utils/types";
+import { Report, OverallEvaluation } from "../../utils/ReportUtils";
+
+import { reportService } from "../../services/reportService";
 import "../components.css";
 
-interface ProfileDashboardProps {
-  selectedProject: ProjectDto | null;
-  setGlobalError: (error: string | null) => void;
-}
-
-const ProfileDashboard: React.FC<ProfileDashboardProps> = ({
+const ProfileDashboard = ({
   selectedProject,
   setGlobalError,
-}) => {
+}: IProfileDashboardProps) => {
   const [projectReports, setProjectReports] = useState<Report[]>([]);
   const [selectedReport, setSelectedReport] = useState<Report | null>(null);
   const [loading, setLoading] = useState(false);
@@ -43,9 +44,12 @@ const ProfileDashboard: React.FC<ProfileDashboardProps> = ({
     try {
       setLoading(true);
       setSelectedReport(null);
-      const reports = await reportService.getReportsByProject(selectedProject.projectId);
-      const sortedReports = reports.reports.sort((a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      const reports = await reportService.getReportsByProject(
+        selectedProject.projectId
+      );
+      const sortedReports = reports.reports.sort(
+        (a, b) =>
+          new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       );
       setProjectReports(sortedReports);
       if (sortedReports.length > 0) {
@@ -84,12 +88,14 @@ const ProfileDashboard: React.FC<ProfileDashboardProps> = ({
   };
 
   const handleDownloadReport = () => {
-    if (selectedReport?.results?.suggested_mew_html) {
-      const blob = new Blob([selectedReport.results.suggested_mew_html], { type: 'text/html' });
+    if (selectedReport?.results?.suggested_new_html) {
+      const blob = new Blob([selectedReport.results.suggested_new_html], {
+        type: "text/html",
+      });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
+      const a = document.createElement("a");
       a.href = url;
-      a.download = 'improved-website.html';
+      a.download = "improved-website.html";
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
@@ -98,7 +104,7 @@ const ProfileDashboard: React.FC<ProfileDashboardProps> = ({
   };
 
   const handlePreviewSuggestions = () => {
-    if (selectedReport?.results?.suggested_mew_html) {
+    if (selectedReport?.results?.suggested_new_html) {
       setShowPreviewDialog(true);
     }
   };
@@ -109,7 +115,7 @@ const ProfileDashboard: React.FC<ProfileDashboardProps> = ({
       final_score: results.final_score ?? 0,
       best_thing: results.best_thing ?? "N/A",
       worst_thing: results.worst_thing ?? "N/A",
-      suggested_mew_html: results.suggested_mew_html ?? "",
+      suggested_new_html: results.suggested_new_html ?? "",
     };
   };
 
@@ -165,11 +171,16 @@ const ProfileDashboard: React.FC<ProfileDashboardProps> = ({
                   handlePreviewSuggestions={handlePreviewSuggestions}
                   averageScore={
                     (selectedReport.results as any).category_ratings?.reduce(
-                      (sum: number, item: { numeric_rating: number }) => sum + item.numeric_rating,
+                      (sum: number, item: { numeric_rating: number }) =>
+                        sum + item.numeric_rating,
                       0
-                    ) / (selectedReport.results as any).category_ratings?.length || 0
+                    ) /
+                      (selectedReport.results as any).category_ratings
+                        ?.length || 0
                   }
-                  analystResult={convertToOverallEvaluation(selectedReport.results)}
+                  analystResult={convertToOverallEvaluation(
+                    selectedReport.results
+                  )}
                   tabValue={tabValue}
                   handleTabChange={handleTabChange}
                 />
@@ -201,9 +212,9 @@ const ProfileDashboard: React.FC<ProfileDashboardProps> = ({
         <StepperCard onClose={handleCloseCard} />
       </Dialog>
 
-      {selectedReport?.results?.suggested_mew_html && (
+      {selectedReport?.results?.suggested_new_html && (
         <DynamicIframeModal
-          code={selectedReport.results.suggested_mew_html}
+          code={selectedReport.results.suggested_new_html}
           open={showPreviewDialog}
           onClose={() => setShowPreviewDialog(false)}
         />

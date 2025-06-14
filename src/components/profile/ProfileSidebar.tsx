@@ -9,21 +9,16 @@ import {
   ListItemText,
   CircularProgress,
 } from "@mui/material";
-import { UserProfile, getFullName } from "../../types/UserProfile";
-import { ProjectDto } from "../../utils/types";
+
+import { getFullName } from "../../utils/UserProfileUtils";
+import { IProfileSidebarProps, ProjectDto } from "../../utils/types";
 import { projectService } from "../../services/projectService";
 
-interface ProfileSidebarProps {
-  userProfile: UserProfile;
-  selectedProject: ProjectDto | null;
-  onProjectSelect: (project: ProjectDto | null) => void;
-}
-
-const ProfileSidebar: React.FC<ProfileSidebarProps> = ({
+const ProfileSidebar = ({
   userProfile,
   selectedProject,
   onProjectSelect,
-}) => {
+}: IProfileSidebarProps) => {
   const [projects, setProjects] = useState<ProjectDto[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -35,12 +30,12 @@ const ProfileSidebar: React.FC<ProfileSidebarProps> = ({
     try {
       setLoading(true);
       console.log("Fetching projects for user:", userProfile.id);
-      
+
       const result = await projectService.getUserProjects(userProfile.id);
       console.log("Fetched projects:", result.projects);
-      
+
       setProjects(result.projects);
-      
+
       // Auto-select first project if none selected
       if (result.projects.length > 0 && !selectedProject) {
         console.log("Auto-selecting first project:", result.projects[0]);
@@ -68,7 +63,6 @@ const ProfileSidebar: React.FC<ProfileSidebarProps> = ({
         boxShadow: "2px 0 10px rgba(0,0,0,0.05)",
       }}
     >
-
       {/* User Profile */}
       <Box
         sx={{
@@ -102,12 +96,18 @@ const ProfileSidebar: React.FC<ProfileSidebarProps> = ({
           {getFullName(userProfile)}
         </Typography>
         <Typography variant="body2" sx={{ color: "rgba(26, 35, 126, 1)" }}>
-            {userProfile.email || "No email provided"}
+          {userProfile.email || "No email provided"}
         </Typography>
       </Box>
 
-      {/* Projects List */}
-      <Box sx={{ flex: 1, overflow: "hidden", display: "flex", flexDirection: "column" }}>
+      <Box
+        sx={{
+          flex: 1,
+          overflow: "hidden",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         <Typography
           variant="overline"
           sx={{
@@ -121,10 +121,13 @@ const ProfileSidebar: React.FC<ProfileSidebarProps> = ({
         >
           YOUR PROJECTS
         </Typography>
-        
+
         {loading ? (
           <Box sx={{ display: "flex", justifyContent: "center", p: 3 }}>
-            <CircularProgress size={24} sx={{ color: "rgba(26, 35, 126, 1)" }} />
+            <CircularProgress
+              size={24}
+              sx={{ color: "rgba(26, 35, 126, 1)" }}
+            />
           </Box>
         ) : (
           <List className="sidebar-scroll-container" sx={{ py: 0 }}>
@@ -152,8 +155,14 @@ const ProfileSidebar: React.FC<ProfileSidebarProps> = ({
                     primary={project.url || project.name || "Unnamed Project"}
                     primaryTypographyProps={{
                       sx: {
-                        fontWeight: selectedProject?.projectId === project.projectId ? 600 : 400,
-                        color: selectedProject?.projectId === project.projectId ? "rgba(26, 35, 126, 1)" : "rgba(26, 35, 126, 0.8)",
+                        fontWeight:
+                          selectedProject?.projectId === project.projectId
+                            ? 600
+                            : 400,
+                        color:
+                          selectedProject?.projectId === project.projectId
+                            ? "rgba(26, 35, 126, 1)"
+                            : "rgba(26, 35, 126, 0.8)",
                         overflow: "hidden",
                         textOverflow: "ellipsis",
                         whiteSpace: "nowrap",

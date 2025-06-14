@@ -1,23 +1,15 @@
-import React from "react";
 import { Box, Typography, CircularProgress, Tooltip } from "@mui/material";
 import { motion } from "framer-motion";
-import { Report } from "../../types/Report";
+import { IAnalysisTimelineProps } from "../../utils/types";
 
 const MotionBox = motion(Box);
 
-interface AnalysisTimelineProps {
-  reports: Report[];
-  selectedReport: Report | null;
-  onSelectReport: (report: Report) => void;
-  loading: boolean;
-}
-
-const AnalysisTimeline: React.FC<AnalysisTimelineProps> = ({
+const AnalysisTimeline = ({
   reports,
   selectedReport,
   onSelectReport,
   loading,
-}) => {
+}: IAnalysisTimelineProps) => {
   if (loading) {
     return (
       <Box sx={{ display: "flex", justifyContent: "center", py: 5 }}>
@@ -28,7 +20,10 @@ const AnalysisTimeline: React.FC<AnalysisTimelineProps> = ({
 
   if (reports.length === 0) {
     return (
-      <Typography variant="body2" sx={{ color: "#7E69AC", textAlign: "center", py: 4 }}>
+      <Typography
+        variant="body2"
+        sx={{ color: "#7E69AC", textAlign: "center", py: 4 }}
+      >
         No analyses yet for this project. Click "New Analysis" to start.
       </Typography>
     );
@@ -36,23 +31,23 @@ const AnalysisTimeline: React.FC<AnalysisTimelineProps> = ({
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    const hours = date.getHours().toString().padStart(2, "0");
+    const minutes = date.getMinutes().toString().padStart(2, "0");
 
     return {
       date: `${day}/${month}`,
       time: `${hours}:${minutes}`,
-      fullDate: date.toLocaleDateString('en-US', { 
-        year: 'numeric', 
-        month: 'long', 
-        day: 'numeric' 
+      fullDate: date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
       }),
-      fullTime: date.toLocaleTimeString('he-IL', { 
-        hour: '2-digit', 
-        minute: '2-digit' 
-      })
+      fullTime: date.toLocaleTimeString("he-IL", {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
     };
   };
 
@@ -99,7 +94,7 @@ const AnalysisTimeline: React.FC<AnalysisTimelineProps> = ({
           // Move every second circle up slightly for a wave effect
           const isOdd = index % 2 !== 0;
           const verticalOffset = isOdd ? -8 : 0;
-          const size = isSelected ?  82 : 72;
+          const size = isSelected ? 82 : 72;
           const dateInfo = formatDate(report.createdAt);
 
           return (
@@ -113,7 +108,11 @@ const AnalysisTimeline: React.FC<AnalysisTimelineProps> = ({
                   <Typography variant="caption" display="block">
                     {dateInfo.fullTime}
                   </Typography>
-                  <Typography variant="caption" display="block" sx={{ mt: 0.5 }}>
+                  <Typography
+                    variant="caption"
+                    display="block"
+                    sx={{ mt: 0.5 }}
+                  >
                     Status: {report.status}
                   </Typography>
                 </Box>
@@ -147,7 +146,11 @@ const AnalysisTimeline: React.FC<AnalysisTimelineProps> = ({
                     alignItems: "center",
                     transition: "all 0.2s ease",
                     bgcolor: isSelected ? "rgba(26, 35, 126, 0.95)" : "white",
-                    border: `3px solid ${isSelected ? "rgba(26, 35, 126, 1)" : "rgba(26, 35, 126, 0.7)"}`,
+                    border: `3px solid ${
+                      isSelected
+                        ? "rgba(26, 35, 126, 1)"
+                        : "rgba(26, 35, 126, 0.7)"
+                    }`,
                     boxShadow: isSelected
                       ? "0 0 15px rgba(87, 81, 167, 0.5)"
                       : "0 0 8px rgba(126, 105, 172, 0.2)",

@@ -1,6 +1,3 @@
-//this component is used to display the analysis results of a website
-//use for Results page
-import React from "react";
 import {
   Box,
   Button,
@@ -19,17 +16,7 @@ import OverallScoreCard from "./OverallScoreCard";
 import DetailedAnalysisSection from "./DetailedAnalysisSection";
 import ImprovementSuggestionsSection from "./ImprovementSuggestionsSection";
 
-import { OverallEvaluation } from "../../types/Report";
-
-interface AnalysisSectionProps {
-  decodedCustomerUrl: string;
-  handleDownloadReport: () => void;
-  handlePreviewSuggestions: () => void;
-  averageScore: number;
-  analystResult: OverallEvaluation;
-  tabValue: number;
-  handleTabChange: (event: React.SyntheticEvent, newValue: number) => void;
-}
+import { IAnalysisSectionProps } from "../../utils/types";
 
 const AnalysisSection = ({
   decodedCustomerUrl,
@@ -39,10 +26,9 @@ const AnalysisSection = ({
   analystResult,
   tabValue,
   handleTabChange,
-}: AnalysisSectionProps) => {
+}: IAnalysisSectionProps) => {
   return (
     <Container maxWidth="lg" sx={{ pb: 8 }}>
-      {/* Website info and actions */}
       <motion.div
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -110,14 +96,12 @@ const AnalysisSection = ({
         </Paper>
       </motion.div>
 
-      {/* Overall score card */}
       <OverallScoreCard
         averageScore={averageScore}
         bestThing={analystResult.best_thing}
         worstThing={analystResult.worst_thing}
       />
 
-      {/* Tab navigation */}
       <motion.div
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -158,9 +142,7 @@ const AnalysisSection = ({
         </Paper>
       </motion.div>
 
-      {/* Tab content */}
       <Box sx={{ mt: 3, maxHeight: "70vh", overflowY: "auto", pr: 1, mb: 6 }}>
-        {/* Overview */}
         {tabValue === 0 && (
           <motion.div
             initial={{ opacity: 0 }}
@@ -185,14 +167,12 @@ const AnalysisSection = ({
           </motion.div>
         )}
 
-        {/* Detailed Analysis */}
         {tabValue === 1 && (
           <DetailedAnalysisSection
             categoryRatings={analystResult.category_ratings}
           />
         )}
 
-        {/* Improvement Suggestions */}
         {tabValue === 2 && (
           <ImprovementSuggestionsSection
             categoryRatings={analystResult.category_ratings}

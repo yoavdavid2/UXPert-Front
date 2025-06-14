@@ -4,7 +4,7 @@ import {
   Report,
   ReportHistoryQuery,
   mapApiReportToReport,
-} from "../types/Report";
+} from "../utils/ReportUtils";
 
 export const reportService = {
   // Get reports history
@@ -35,15 +35,15 @@ export const reportService = {
 
       const rawReports = response.data || [];
 
-    return {
-      reports: rawReports.map(mapApiReportToReport),
-      total: rawReports.length,
-    };
-  } catch (error) {
-    console.error("Error fetching reports by project:", error);
-    throw error;
-  }
-},
+      return {
+        reports: rawReports.map(mapApiReportToReport),
+        total: rawReports.length,
+      };
+    } catch (error) {
+      console.error("Error fetching reports by project:", error);
+      throw error;
+    }
+  },
 
   // Get specific report by ID
   async getReportById(id: string): Promise<Report> {
@@ -56,10 +56,8 @@ export const reportService = {
     }
   },
 
-   // Get report history by website name
-   async getReportHistoryByName(
-    websiteName: string
-  ): Promise<Report[]> {
+  // Get report history by website name
+  async getReportHistoryByName(websiteName: string): Promise<Report[]> {
     try {
       const response = await api.get(`/api/reports/history/${websiteName}`);
       return response.data.map(mapApiReportToReport);

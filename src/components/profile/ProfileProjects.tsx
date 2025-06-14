@@ -20,7 +20,7 @@ import {
   ProjectDto,
   userRequirmentsSummeryDto,
 } from "../../utils/types";
-import { Report } from "../../types/Report";
+import { Report } from "../../utils/ReportUtils";
 
 import "../components.css";
 
@@ -77,12 +77,6 @@ const ProfileProjects = ({
     try {
       setLoading(true);
       setError(null);
-
-      // const result = await projectService.getProjects({
-      //   page,
-      //   limit,
-      //   sort: "desc",
-      // });
 
       const result = await projectService.getUserProjects(userId);
 
@@ -146,7 +140,6 @@ const ProfileProjects = ({
           </Breadcrumbs>
           <Button
             sx={{
-              // mt: { xs: 2, sm: 4 },
               bgcolor: "#1a237e",
               color: "white",
               borderRadius: 2,
