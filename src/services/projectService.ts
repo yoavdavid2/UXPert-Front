@@ -44,7 +44,6 @@ export const projectService = {
   ): Promise<{ reports: Report[]; total: number }> {
     try {
       const response = await api.get(`/api/reports/byProjectId/${projectId}`);
-      console.log(response);
       return {
         reports: response.data,
         total: response.data.total,

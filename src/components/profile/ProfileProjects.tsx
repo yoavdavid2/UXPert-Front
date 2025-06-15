@@ -61,7 +61,6 @@ const ProfileProjects = ({
       const result = await projectService.getProjectsReports(
         selectedProject?.projectId || ""
       );
-      console.log(result);
       setSelectedProjectReports(result.reports);
     } catch (err) {
       console.error("Failed to fetch project reports:", err);
@@ -111,7 +110,6 @@ const ProfileProjects = ({
 
   const handleCloseCard = (summary: userRequirmentsSummeryDto | ProjectDto) => {
     setOpenNewProjectDialog(false);
-    console.log({ "handleCloseCard func": summary });
     navigate(`/results?link=${summary.url}`, { state: { summery: summary } });
   };
 

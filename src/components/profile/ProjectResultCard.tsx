@@ -45,7 +45,6 @@ const ProjectResultCard = ({ report, onDelete }: IProjectResultCardProps) => {
 
   const handleEdit = () => {
     handleMenuClose();
-    console.log("Edit project", report.url);
   };
 
   const handleDeleteClick = () => {
@@ -90,7 +89,6 @@ const ProjectResultCard = ({ report, onDelete }: IProjectResultCardProps) => {
               aria-haspopup="true"
               onClick={(e) => {
                 e.preventDefault();
-                console.log("prevented");
                 handleMenuClick(e);
               }}
               size="small"

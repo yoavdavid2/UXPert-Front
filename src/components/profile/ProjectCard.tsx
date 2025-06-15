@@ -39,7 +39,6 @@ const ProjectCard = ({
 
   const handleEdit = () => {
     handleMenuClose();
-    console.log("Edit project", project.projectId);
   };
 
   const handleDeleteClick = () => {
@@ -75,7 +74,6 @@ const ProjectCard = ({
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                console.log("@#@#");
                 // onClickProject();
               }}
               size="small"

@@ -154,13 +154,11 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
 
   function finishTheProcess() {
     const summary = buildSummery();
-    console.log("Final Summary:", summary);
     // TODO: send the summary to the backend and create new project
     // For now, just log it to the console
     api
       .post("/api/projects/new", summary)
       .then((response: any) => {
-        console.log("Project created successfully:", response.data);
         onClose(response.data);
       })
       .catch((error: any) => {
@@ -238,7 +236,6 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
                 variant="outlined"
                 color="secondary"
                 onClick={() => {
-                  console.log({ selectedProject });
                   onClose(selectedProject);
                 }}
                 disabled={isTransitioning}

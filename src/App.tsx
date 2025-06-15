@@ -33,13 +33,9 @@ const AppRouter = () => {
       const decoded = decodeUserCookie();
       login(getCookie("access_token") as string, mapToUserProfile(decoded));
     } catch (exception) {
-      console.log("local user");
+      console.log("No user cookie found or invalid cookie", exception);
     }
   }, []);
-
-  // if (isLoading) {
-  //   return <div>Loading...</div>;
-  // }
 
   return (
     <BackgroundWrapper>

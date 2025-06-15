@@ -61,7 +61,6 @@ const HomePage = () => {
 
   const handleCloseCard = (summary: userRequirmentsSummeryDto | ProjectDto) => {
     setOpenCard(false);
-    console.log({ home: summary });
     navigate(`/results?link=${summary.url}`, { state: { summery: summary } });
   };
 

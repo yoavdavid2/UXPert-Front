@@ -29,16 +29,11 @@ const ProfileSidebar = ({
   const fetchProjects = async () => {
     try {
       setLoading(true);
-      console.log("Fetching projects for user:", userProfile.id);
 
       const result = await projectService.getUserProjects(userProfile.id);
-      console.log("Fetched projects:", result.projects);
-
       setProjects(result.projects);
 
-      // Auto-select first project if none selected
       if (result.projects.length > 0 && !selectedProject) {
-        console.log("Auto-selecting first project:", result.projects[0]);
         onProjectSelect(result.projects[0]);
       }
     } catch (err) {

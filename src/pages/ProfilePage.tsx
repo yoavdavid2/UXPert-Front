@@ -48,10 +48,6 @@ const ProfilePage = () => {
     loadUserProfile();
   }, []);
 
-  //const handleEditProfile = () => {
-  //  console.log("Edit profile clicked");
-  //};
-
   if (isProfileLoading) {
     return (
       <Box className="profile-dashboard-layout">
