@@ -2,6 +2,9 @@ import React, { useState, useEffect, PropsWithChildren } from "react";
 import { useLocation } from "react-router-dom";
 import { motion } from "framer-motion";
 
+import homepageSvg from "../../assets/images/homepage.svg";
+import signupSvg from "../../assets/images/signup.svg";
+
 const BACKGROUND_CONFIG = {
   "/": {
     primaryPath:
@@ -11,7 +14,7 @@ const BACKGROUND_CONFIG = {
     primaryColor: "#aab4ca",
     secondaryColor: "#f4f6f8",
     bgColor: "rgba(207, 213, 225, 1)",
-    cornerImage: "src/assets/images/homepage.svg",
+    cornerImage: homepageSvg,
     hasCornerImage: true,
     cornerStyles: {
       width: "30%",
@@ -40,7 +43,7 @@ const BACKGROUND_CONFIG = {
     primaryColor: "#a7b2c8",
     secondaryColor: "#f7f8fa",
     bgColor: "rgba(207, 213, 225, 1)",
-    cornerImage: "src/assets/images/signup.svg",
+    cornerImage: signupSvg,
     hasCornerImage: true,
     cornerStyles: {
       width: "30%",
