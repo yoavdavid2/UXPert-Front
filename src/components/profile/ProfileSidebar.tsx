@@ -8,7 +8,14 @@ import {
   ListItemButton,
   ListItemText,
   CircularProgress,
+  IconButton,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Button,
 } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 import { getFullName } from "../../utils/UserProfileUtils";
 import { IProfileSidebarProps, ProjectDto } from "../../utils/types";
@@ -21,6 +28,8 @@ const ProfileSidebar = ({
 }: IProfileSidebarProps) => {
   const [projects, setProjects] = useState<ProjectDto[]>([]);
   const [loading, setLoading] = useState(true);
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  const [projectToDelete, setProjectToDelete] = useState<ProjectDto | null>(null);
 
   useEffect(() => {
     fetchProjects();
@@ -41,6 +50,48 @@ const ProfileSidebar = ({
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleDeleteClick = (event: React.MouseEvent, project: ProjectDto) => {
+    event.stopPropagation(); // Prevent project selection
+    setProjectToDelete(project);
+    setDeleteDialogOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    if (!projectToDelete) return;
+
+    console.log('Deleting project with ID:', projectToDelete._id);
+    try {
+      if (typeof projectToDelete._id === 'string') {
+        await projectService.deleteProject(projectToDelete._id);
+      } else {
+        throw new Error('Invalid _id');
+      }
+      // Remove the deleted project from the list
+      setProjects(projects.filter(p => p._id !== projectToDelete._id));
+      
+      // If the deleted project was selected, select the first available project
+      if (selectedProject?._id === projectToDelete._id) {
+        const remainingProjects = projects.filter(p => p._id !== projectToDelete._id);
+        if (remainingProjects.length > 0) {
+          onProjectSelect(remainingProjects[0]);
+        } else {
+          onProjectSelect(null);
+        }
+      }
+    } catch (error) {
+      console.error("Failed to delete project:", error);
+      // You might want to show an error message to the user here
+    } finally {
+      setDeleteDialogOpen(false);
+      setProjectToDelete(null);
+    }
+  };
+
+  const handleDeleteCancel = () => {
+    setDeleteDialogOpen(false);
+    setProjectToDelete(null);
   };
 
   return (
@@ -127,13 +178,32 @@ const ProfileSidebar = ({
         ) : (
           <List className="sidebar-scroll-container" sx={{ py: 0 }}>
             {projects.map((project) => (
-              <ListItem key={project.projectId} disablePadding>
+              <ListItem 
+                key={project._id} 
+                disablePadding
+                secondaryAction={
+                  <IconButton
+                    edge="end"
+                    aria-label="delete"
+                    onClick={(e) => handleDeleteClick(e, project)}
+                    sx={{
+                      color: "rgba(26, 35, 126, 0.6)",
+                      "&:hover": {
+                        color: "error.main",
+                      },
+                    }}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                }
+              >
                 <ListItemButton
-                  selected={selectedProject?.projectId === project.projectId}
+                  selected={selectedProject?._id === project._id}
                   onClick={() => onProjectSelect(project)}
                   sx={{
                     borderLeft: "4px solid transparent",
                     transition: "all 0.2s ease",
+                    pr: 6, // Add padding for the delete button
                     "&.Mui-selected": {
                       borderLeftColor: "rgba(26, 35, 126, 1)",
                       bgcolor: "rgba(26, 35, 126, 0.2)",
@@ -151,11 +221,11 @@ const ProfileSidebar = ({
                     primaryTypographyProps={{
                       sx: {
                         fontWeight:
-                          selectedProject?.projectId === project.projectId
+                          selectedProject?._id === project._id
                             ? 600
                             : 400,
                         color:
-                          selectedProject?.projectId === project.projectId
+                          selectedProject?._id === project._id
                             ? "rgba(26, 35, 126, 1)"
                             : "rgba(26, 35, 126, 0.8)",
                         overflow: "hidden",
@@ -170,6 +240,31 @@ const ProfileSidebar = ({
           </List>
         )}
       </Box>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog
+        open={deleteDialogOpen}
+        onClose={handleDeleteCancel}
+        aria-labelledby="delete-dialog-title"
+      >
+        <DialogTitle id="delete-dialog-title">
+          Delete Project
+        </DialogTitle>
+        <DialogContent>
+          <Typography>
+            Are you sure you want to delete "{projectToDelete?.url || projectToDelete?.name || "Unnamed Project"}"? 
+            This will permanently delete the project and all its analyses.
+          </Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDeleteCancel} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={handleDeleteConfirm} color="error" variant="contained">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Box>
   );
 };

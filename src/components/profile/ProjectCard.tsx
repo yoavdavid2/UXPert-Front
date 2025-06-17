@@ -1,33 +1,22 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import {
-  Card,
-  CardContent,
-  CardActions,
-  Typography,
-  Button,
-  IconButton,
-} from "@mui/material";
-import { MoreVert } from "@mui/icons-material";
-import { styled } from "@mui/material/styles";
-import { IProjectCardProps } from "../../utils/types";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Card, CardContent, CardActions, Typography, Button, IconButton } from '@mui/material';
+import { MoreVert } from '@mui/icons-material';
+import { styled } from '@mui/material/styles';
+import { IProjectCardProps } from '../../utils/types';
 
-import "../components.css";
+import '../components.css';
 
 const AnimatedCard = styled(Card)(({ theme }) => ({
   borderRadius: 10,
-  transition: "all 0.3s ease-in-out",
-  "&:hover": {
-    transform: "translateY(-8px)",
+  transition: 'all 0.3s ease-in-out',
+  '&:hover': {
+    transform: 'translateY(-8px)',
     boxShadow: theme.shadows[8],
   },
 }));
 
-const ProjectCard = ({
-  project,
-  onDelete,
-  onClickProject,
-}: IProjectCardProps) => {
+const ProjectCard = ({ project, onDelete, onClickProject }: IProjectCardProps) => {
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -57,11 +46,7 @@ const ProjectCard = ({
 
   return (
     <>
-      <AnimatedCard
-        className="project-card"
-        onClick={onClickProject}
-        sx={{ cursor: "pointer" }}
-      >
+      <AnimatedCard className="project-card" onClick={onClickProject} sx={{ cursor: 'pointer' }}>
         <CardContent>
           <div className="project-card-header">
             <Typography variant="h6" component="h3" className="project-title">
@@ -76,17 +61,12 @@ const ProjectCard = ({
                 e.stopPropagation();
                 // onClickProject();
               }}
-              size="small"
-            >
+              size="small">
               <MoreVert />
             </IconButton>
           </div>
 
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            className="project-description"
-          >
+          <Typography variant="body2" color="text.secondary" className="project-description">
             {project.purpose}
           </Typography>
 
@@ -128,8 +108,7 @@ const ProjectCard = ({
             onClick={(e) => {
               e.preventDefault();
               onClickProject();
-            }}
-          >
+            }}>
             View analysis history results
           </Button>
         </CardActions>

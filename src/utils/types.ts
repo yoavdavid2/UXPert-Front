@@ -173,6 +173,7 @@ export type userRequirmentsSummeryDto = {
 
 // ProjectDto from the backend
 export type ProjectDto = {
+  _id?: string;
   projectId?: string;
   userId: string;
   email: string;
@@ -288,6 +289,8 @@ export interface IProfileSidebarProps {
   userProfile: UserProfile;
   selectedProject: ProjectDto | null;
   onProjectSelect: (project: ProjectDto | null) => void;
+  projects: ProjectDto[];
+  setProjects: React.Dispatch<React.SetStateAction<ProjectDto[]>>;
 }
 
 export interface IFinalDataStepProps {
