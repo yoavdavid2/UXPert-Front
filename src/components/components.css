@@ -269,14 +269,15 @@
   display: flex;
   height: 92vh;
   width: 100%;
-  background-color: #fcfaff;
+  background-color: #fcfaff88;
   overflow-y: auto;
 }
 
 .dashboard-root {
   flex: 1;
   padding: 32px;
-  background-color: #fcfaff;
+  background-color: #e6e5e51f;
+
   overflow: auto;
   display: flex;
   flex-direction: column;

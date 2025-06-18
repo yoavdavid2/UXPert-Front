@@ -53,8 +53,8 @@ const AnalysisSection = ({
             }}
           >
             <Box>
-              <Typography variant="body2" color="text.secondary" mb={0.5}>
-                ANALYSIS RESULTS FOR:
+              <Typography variant="body1" color="text.secondary" mb={0.5}>
+                Analysis results for
               </Typography>
               <Typography
                 variant="h5"

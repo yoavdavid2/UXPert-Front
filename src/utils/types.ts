@@ -173,7 +173,7 @@ export type userRequirmentsSummeryDto = {
 
 // ProjectDto from the backend
 export type ProjectDto = {
-  projectId?: string;
+  _id: string;
   userId: string;
   email: string;
   name: string;
@@ -288,6 +288,8 @@ export interface IProfileSidebarProps {
   userProfile: UserProfile;
   selectedProject: ProjectDto | null;
   onProjectSelect: (project: ProjectDto | null) => void;
+  projects: ProjectDto[];
+  setProjects: React.Dispatch<React.SetStateAction<ProjectDto[]>>;
 }
 
 export interface IFinalDataStepProps {
@@ -312,4 +314,18 @@ export interface IDynamicIframeModalProps {
   code: string;
   open: boolean;
   onClose: () => void;
+}
+
+export interface ITimelineItemProps {
+  report: Report;
+  index: number;
+  isSelected: boolean;
+  onSelectReport: (report: Report) => void;
+}
+
+export interface DateInfo {
+  date: string;
+  time: string;
+  fullDate: string;
+  fullTime: string;
 }
