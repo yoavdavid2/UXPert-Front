@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Card, CardContent, CardActions, Typography, Button, IconButton } from '@mui/material';
 import { MoreVert } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
@@ -17,31 +16,10 @@ const AnimatedCard = styled(Card)(({ theme }) => ({
 }));
 
 const ProjectCard = ({ project, onDelete, onClickProject }: IProjectCardProps) => {
-  const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   const handleMenuClose = () => {
     setAnchorEl(null);
-  };
-
-  const handleEdit = () => {
-    handleMenuClose();
-  };
-
-  const handleDeleteClick = () => {
-    handleMenuClose();
-    setDeleteDialogOpen(true);
-  };
-
-  const handleConfirmDelete = () => {
-    setDeleteDialogOpen(false);
-    onDelete();
-  };
-
-  const handleCancelDelete = () => {
-    setDeleteDialogOpen(false);
   };
 
   return (
@@ -61,7 +39,8 @@ const ProjectCard = ({ project, onDelete, onClickProject }: IProjectCardProps) =
                 e.stopPropagation();
                 // onClickProject();
               }}
-              size="small">
+              size="small"
+            >
               <MoreVert />
             </IconButton>
           </div>
@@ -108,57 +87,12 @@ const ProjectCard = ({ project, onDelete, onClickProject }: IProjectCardProps) =
             onClick={(e) => {
               e.preventDefault();
               onClickProject();
-            }}>
+            }}
+          >
             View analysis history results
           </Button>
         </CardActions>
       </AnimatedCard>
-
-      {/* <Menu
-        id="project-menu"
-        anchorEl={anchorEl}
-        open={open}
-        onClose={handleMenuClose}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "right",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "right",
-        }}
-      >
-        <MenuItem onClick={handleEdit}>
-          <Edit fontSize="small" style={{ marginRight: 8 }} />
-          Edit
-        </MenuItem>
-        <MenuItem onClick={handleDeleteClick}>
-          <Delete fontSize="small" style={{ marginRight: 8 }} />
-          Delete
-        </MenuItem>
-      </Menu> 
-
-      <Dialog
-        open={deleteDialogOpen}
-        onClose={handleCancelDelete}
-        aria-labelledby="delete-dialog-title"
-      >
-        <DialogTitle id="delete-dialog-title">Delete Project</DialogTitle>
-        <DialogContent>
-          <Typography>
-            Are you sure you want to delete "{project.title}"? This action
-            cannot be undone.
-          </Typography>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleCancelDelete} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleConfirmDelete} color="error" autoFocus>
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>*/}
     </>
   );
 };

@@ -1,6 +1,6 @@
-import { PropsWithChildren } from "react";
-import { UserProfile } from "./UserProfileUtils";
-import { OverallEvaluation, Report, WebsiteEvaluation } from "./ReportUtils";
+import { PropsWithChildren } from 'react';
+import { UserProfile } from './UserProfileUtils';
+import { OverallEvaluation, Report, WebsiteEvaluation } from './ReportUtils';
 
 export interface IAppbarProps {
   handleProfileClick: () => void;
@@ -173,8 +173,7 @@ export type userRequirmentsSummeryDto = {
 
 // ProjectDto from the backend
 export type ProjectDto = {
-  _id?: string;
-  projectId?: string;
+  _id: string;
   userId: string;
   email: string;
   name: string;
@@ -265,12 +264,12 @@ export interface IReportCardProps {
 }
 
 export interface IImprovementSuggestionsSectionProps {
-  categoryRatings: OverallEvaluation["category_ratings"];
+  categoryRatings: OverallEvaluation['category_ratings'];
   onPreview: () => void;
 }
 
 export interface IDetailedAnalysisSectionProps {
-  categoryRatings: OverallEvaluation["category_ratings"];
+  categoryRatings: OverallEvaluation['category_ratings'];
 }
 
 export interface IAnalysisTimelineProps {
