@@ -1,6 +1,6 @@
-import { PropsWithChildren } from 'react';
-import { UserProfile } from './UserProfileUtils';
-import { OverallEvaluation, Report, WebsiteEvaluation } from './ReportUtils';
+import { PropsWithChildren } from "react";
+import { UserProfile } from "./UserProfileUtils";
+import { OverallEvaluation, Report, WebsiteEvaluation } from "./ReportUtils";
 
 export interface IAppbarProps {
   handleProfileClick: () => void;
@@ -264,12 +264,12 @@ export interface IReportCardProps {
 }
 
 export interface IImprovementSuggestionsSectionProps {
-  categoryRatings: OverallEvaluation['category_ratings'];
+  categoryRatings: OverallEvaluation["category_ratings"];
   onPreview: () => void;
 }
 
 export interface IDetailedAnalysisSectionProps {
-  categoryRatings: OverallEvaluation['category_ratings'];
+  categoryRatings: OverallEvaluation["category_ratings"];
 }
 
 export interface IAnalysisTimelineProps {
@@ -314,4 +314,18 @@ export interface IDynamicIframeModalProps {
   code: string;
   open: boolean;
   onClose: () => void;
+}
+
+export interface ITimelineItemProps {
+  report: Report;
+  index: number;
+  isSelected: boolean;
+  onSelectReport: (report: Report) => void;
+}
+
+export interface DateInfo {
+  date: string;
+  time: string;
+  fullDate: string;
+  fullTime: string;
 }

@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { Add } from "@mui/icons-material";
 
-import AnalysisTimeline from "./AnalysisTimeline";
+import AnalysisTimeline from "../timeline/AnalysisTimeline";
 import StepperCard from "../stepper/StepperCard";
 import AnalysisSection from "../results/AnalysisSection";
 import DynamicIframeModal from "../layout/DynamicIframeModal";
