@@ -92,7 +92,7 @@ export const decodeUserCookie = (): Record<string, any> | null => {
   if (!cookie) return null;
 
   try {
-    const encodedValue = cookie.split("=")[1];
+    const encodedValue = cookie.slice(5);
     const jsonString = decodeURIComponent(encodedValue);
     return JSON.parse(jsonString);
   } catch (error) {
