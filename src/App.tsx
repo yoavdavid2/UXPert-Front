@@ -13,6 +13,7 @@ import ProfilePage from "./pages/ProfilePage";
 import Appbar from "./components/layout/Appbar";
 import BackgroundWrapper from "./components/layout/BackgroundWrapper";
 import ProtectedRoute from "./components/ProtectedRoute";
+import Cookies from "js-cookie";
 
 import {
   AuthProvider,
@@ -30,8 +31,26 @@ const AppRouter = () => {
 
   useEffect(() => {
     try {
+      debugger;
+      const params = new URLSearchParams(window.location.search);
+      const accessToken = params.get("access_token");
+      const userParam = params.get("user");
+
+      if (accessToken) {
+        Cookies.set("access_token", accessToken, { expires: 7 }); // expires in 7 days
+      }
+
+      if (userParam) {
+        const userObj = JSON.parse(decodeURIComponent(userParam));
+        Cookies.set("user", JSON.stringify(userObj), { expires: 7 });
+      }
+      
+
+
       const decoded = decodeUserCookie();
       login(getCookie("access_token") as string, mapToUserProfile(decoded));
+
+      window.history.replaceState({}, document.title, window.location.pathname);
     } catch (exception) {
       console.log("No user cookie found or invalid cookie", exception);
     }
