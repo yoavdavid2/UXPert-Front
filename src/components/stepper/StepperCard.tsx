@@ -41,7 +41,7 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedAudience, setSelectedAudience] = useState<string[]>([]);
 
-  // State for step 2
+  // State for stepx 2
   const [selectedEmotions, setSelectedEmotions] = useState<string[]>([]);
 
   // State for step 3

@@ -32,16 +32,20 @@ const ResultsModal = ({
   })();
 
   return (
-    <Modal open={open} onClose={onClose} aria-labelledby="results-modal-title">
+    <Modal
+      open={open}
+      onClose={onClose}
+      aria-labelledby="results-modal-title"
+      sx={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+    >
       <Box
         component={motion.div}
         initial={{ opacity: 0, y: 50, scale: 0.9 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: 0.4 }}
+        transition={{ duration: 0.23, ease: "easeInOut" }}
         sx={{
           position: "fixed",
           top: "10vh",
-          left: "50%",
           transform: "translateX(-50%)",
           width: { xs: "90%", sm: "80%", md: 700 },
           maxHeight: "80vh",

@@ -72,6 +72,7 @@ const LoginForm = ({
   };
 
   const handleGoogleSignIn = () => {
+    setIsLoading(true);
     window.location.href = `${BACKEND_URL}/auth/google`;
   };
 

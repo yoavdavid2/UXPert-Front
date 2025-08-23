@@ -1,58 +1,9 @@
-import { Box, Typography, Divider, CardContent } from "@mui/material";
+import { Box, Typography, Divider } from "@mui/material";
 import { useEffect, useState } from "react";
 import api from "../../services/requestsWrapper";
 import Swal from "sweetalert2";
 import { ProjectDto } from "../../utils/types";
-
-const ProjectCard = ({
-  project,
-  selected,
-  onClick,
-}: {
-  project: ProjectDto;
-  selected: boolean;
-  onClick: () => void;
-}) => {
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        padding: 2,
-        backgroundColor: selected ? "#f0f0f0" : "#fff",
-        borderRadius: 1,
-        cursor: "pointer",
-        "&:hover": {
-          bgcolor: "#f0f0f8",
-        },
-      }}
-      onClick={onClick}
-    >
-      <CardContent>
-        <div>
-          <Typography
-            variant="h6"
-            component="h3"
-            className="project-title"
-            color="text.primary"
-          >
-            {project.url}
-          </Typography>
-        </div>
-
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          className="project-description"
-        >
-          {project.purpose}
-        </Typography>
-      </CardContent>
-    </Box>
-  );
-};
+import ProjectCard from "../profile/ProjectCard";
 
 const ChooseProjectStep = ({
   selectedProject,
@@ -62,12 +13,11 @@ const ChooseProjectStep = ({
   setSelectedProject: (project: ProjectDto | null) => void;
 }) => {
   const [projects, setProjects] = useState<ProjectDto[]>([]);
-  const [userProfile, setUserProfile] = useState(
-    localStorage.getItem("userProfile")
-      ? JSON.parse(localStorage.getItem("userProfile")!)
-      : null
-  );
   const [loading, setLoading] = useState(true);
+
+  const userProfile = localStorage.getItem("userProfile")
+    ? JSON.parse(localStorage.getItem("userProfile")!)
+    : null;
 
   useEffect(() => {
     setLoading(true);
@@ -158,6 +108,8 @@ const ChooseProjectStep = ({
                         selectedProject?.projectId === project.projectId
                       }
                       onClick={() => {
+                        console.log("Project clicked:", project);
+                        console.log("Selected project:", selectedProject);
                         if (selectedProject?.projectId === project.projectId) {
                           setSelectedProject(null);
                         } else {
