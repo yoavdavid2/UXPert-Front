@@ -3,6 +3,7 @@ import {
   Button,
   Container,
   Grid,
+  Link,
   Paper,
   Tab,
   Tabs,
@@ -26,6 +27,7 @@ const AnalysisSection = ({
   analystResult,
   tabValue,
   handleTabChange,
+  isChild = true,
 }: IAnalysisSectionProps) => {
   return (
     <Container maxWidth="lg" sx={{ pb: 8 }}>
@@ -42,6 +44,7 @@ const AnalysisSection = ({
             borderRadius: 2,
             boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
             border: "1px solid rgba(0,0,0,0.05)",
+            marginTop: isChild ? 0 : "3%",
           }}
         >
           <Box
@@ -68,7 +71,13 @@ const AnalysisSection = ({
                   whiteSpace: "nowrap",
                 }}
               >
-                {decodedCustomerUrl}
+                <Link
+                  href={decodedCustomerUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {decodedCustomerUrl}
+                </Link>
               </Typography>
             </Box>
             <Box

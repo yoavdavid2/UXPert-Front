@@ -267,7 +267,7 @@
 /* ========== PROFILE DASHBOARD LAYOUT ========== */
 .profile-dashboard-layout {
   display: flex;
-  height: 92vh;
+  height: 100%;
   width: 100%;
   background-color: #fcfaff88;
   overflow-y: auto;
@@ -281,7 +281,6 @@
   overflow: auto;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
 }
 
 .dashboard-header {

@@ -10,6 +10,7 @@ import HomePage from "./pages/HomePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Auth from "./pages/Auth";
 import ProfilePage from "./pages/ProfilePage";
+import ResultsPage from "./pages/ResultsPage";
 import Appbar from "./components/layout/Appbar";
 import BackgroundWrapper from "./components/layout/BackgroundWrapper";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -23,7 +24,6 @@ import {
 } from "./utils/AuthContext";
 
 import "./App.css";
-import ResultsPage from "./pages/Results";
 
 const AppRouter = () => {
   const { isAuthenticated, isLoading, login } = useAuth();
