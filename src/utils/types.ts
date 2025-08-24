@@ -75,27 +75,10 @@ export interface IFormData {
 }
 
 export interface ILoginFormProps {
-  email: string;
-  setEmail: (email: string) => void;
-  password: string;
-  setPassword: (password: string) => void;
-  error: string | null;
-  setError: (error: string | null) => void;
-  isLoading: boolean;
-  setIsLoading: (isLoading: boolean) => void;
   onSwitchToSignUp: () => void;
 }
 
 export interface ISignupFormProps {
-  email: string;
-  setEmail: (email: string) => void;
-  password: string;
-  setPassword: (password: string) => void;
-  error: string | null;
-  setError: (error: string | null) => void;
-  isLoading: boolean;
-  setIsLoading: (isLoading: boolean) => void;
-  onSignUpSuccess: () => void;
   onSwitchToSignIn: () => void;
 }
 
