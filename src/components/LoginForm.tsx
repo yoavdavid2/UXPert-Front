@@ -7,12 +7,9 @@ import {
   Link,
 } from "@mui/material";
 
+import { ILoginFormProps } from "../utils/types";
 import { BACKEND_URL } from "../config";
 import "./components.css";
-
-interface ILoginFormProps {
-  onSwitchToSignUp: () => void;
-}
 
 const LoginForm = ({ onSwitchToSignUp }: ILoginFormProps) => {
   const [isLoading, setIsLoading] = useState(false);

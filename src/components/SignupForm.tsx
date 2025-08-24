@@ -7,12 +7,11 @@ import {
   Link,
 } from "@mui/material";
 
+import { ISignupFormProps } from "../utils/types";
 import { BACKEND_URL } from "../config";
 import "./components.css";
 
-interface ISignupFormProps {
-  onSwitchToSignIn: () => void;
-}
+
 
 const SignupForm = ({ onSwitchToSignIn }: ISignupFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
