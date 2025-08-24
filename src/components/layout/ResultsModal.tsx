@@ -147,6 +147,8 @@ const ResultsModal = ({
             onClick={onClose}
             sx={{
               bgcolor: scoreColor.main,
+              textTransform: "capitalize",
+              fontSize: "0.925rem",
               "&:hover": { bgcolor: alpha(scoreColor.main, 0.8) },
             }}
           >

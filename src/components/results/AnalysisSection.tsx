@@ -147,6 +147,8 @@ const AnalysisSection = ({
                 py: 2,
                 fontWeight: 600,
                 color: "text.secondary",
+                fontSize: "1.025rem",
+                textTransform: "none",
                 "&.Mui-selected": { color: "primary.main" },
               },
               "& .MuiTabs-indicator": {
