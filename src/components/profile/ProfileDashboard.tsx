@@ -146,7 +146,8 @@ const ProfileDashboard = ({
                 borderRadius: 2,
                 px: 3,
                 py: 1,
-                textTransform: "none",
+                textTransform: "capitalize",
+                fontSize: "0.925rem",
                 boxShadow: "0 4px 12px rgba(156, 106, 222, 0.3)",
                 "&:hover": {
                   bgcolor: "#7E69AC",

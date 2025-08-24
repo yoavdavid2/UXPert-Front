@@ -87,7 +87,13 @@ const AnalysisSection = ({
                 variant="outlined"
                 size="small"
                 onClick={handleDownloadReport}
-                sx={{ mr: 1, mb: { xs: 1, sm: 0 }, borderRadius: 1.5 }}
+                sx={{
+                  mr: 1,
+                  mb: { xs: 1, sm: 0 },
+                  borderRadius: 1.5,
+                  textTransform: "capitalize",
+                  fontSize: "0.925rem",
+                }}
               >
                 Download
               </Button>
@@ -96,7 +102,12 @@ const AnalysisSection = ({
                 size="small"
                 startIcon={<Code />}
                 onClick={handlePreviewSuggestions}
-                sx={{ borderRadius: 1.5, mb: { xs: 1, sm: 0 } }}
+                sx={{
+                  borderRadius: 1.5,
+                  mb: { xs: 1, sm: 0 },
+                  textTransform: "capitalize",
+                  fontSize: "0.925rem",
+                }}
               >
                 Preview Suggestions
               </Button>
