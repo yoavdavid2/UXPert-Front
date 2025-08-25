@@ -41,7 +41,7 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedAudience, setSelectedAudience] = useState<string[]>([]);
 
-  // State for step 2
+  // State for stepx 2
   const [selectedEmotions, setSelectedEmotions] = useState<string[]>([]);
 
   // State for step 3
@@ -226,9 +226,14 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
                 color="secondary"
                 onClick={() => handlePageChange(activeStep - 1)}
                 disabled={isTransitioning}
-                sx={{ borderRadius: 28, px: 3 }}
+                sx={{
+                  borderRadius: 28,
+                  px: 3,
+                  textTransform: "capitalize",
+                  fontSize: "0.925rem",
+                }}
               >
-                BACK
+                Back
               </Button>
             )}
             {selectedProject ? (
@@ -239,7 +244,12 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
                   onClose(selectedProject);
                 }}
                 disabled={isTransitioning}
-                sx={{ borderRadius: 28, px: 3 }}
+                sx={{
+                  borderRadius: 28,
+                  px: 3,
+                  textTransform: "capitalize",
+                  fontSize: "0.925rem",
+                }}
               >
                 New analysis
               </Button>
@@ -253,12 +263,17 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
                     : () => finishTheProcess()
                 }
                 disabled={isTransitioning}
-                sx={{ borderRadius: 28, px: 3 }}
+                sx={{
+                  borderRadius: 28,
+                  px: 3,
+                  textTransform: "capitalize",
+                  fontSize: "0.925rem",
+                }}
               >
                 {activeStep == 0 ? (
                   "New Project"
                 ) : (
-                  <>{activeStep < 3 ? "NEXT" : "FINISH"}</>
+                  <>{activeStep < 3 ? "Next Step" : "Finish"}</>
                 )}
               </Button>
             )}

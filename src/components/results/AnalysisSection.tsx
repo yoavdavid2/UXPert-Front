@@ -3,6 +3,7 @@ import {
   Button,
   Container,
   Grid,
+  Link,
   Paper,
   Tab,
   Tabs,
@@ -26,6 +27,7 @@ const AnalysisSection = ({
   analystResult,
   tabValue,
   handleTabChange,
+  isChild = true,
 }: IAnalysisSectionProps) => {
   return (
     <Container maxWidth="lg" sx={{ pb: 8 }}>
@@ -42,6 +44,7 @@ const AnalysisSection = ({
             borderRadius: 2,
             boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
             border: "1px solid rgba(0,0,0,0.05)",
+            marginTop: isChild ? 0 : "3%",
           }}
         >
           <Box
@@ -68,7 +71,13 @@ const AnalysisSection = ({
                   whiteSpace: "nowrap",
                 }}
               >
-                {decodedCustomerUrl}
+                <Link
+                  href={decodedCustomerUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {decodedCustomerUrl}
+                </Link>
               </Typography>
             </Box>
             <Box
@@ -78,7 +87,13 @@ const AnalysisSection = ({
                 variant="outlined"
                 size="small"
                 onClick={handleDownloadReport}
-                sx={{ mr: 1, mb: { xs: 1, sm: 0 }, borderRadius: 1.5 }}
+                sx={{
+                  mr: 1,
+                  mb: { xs: 1, sm: 0 },
+                  borderRadius: 1.5,
+                  textTransform: "capitalize",
+                  fontSize: "0.925rem",
+                }}
               >
                 Download
               </Button>
@@ -87,7 +102,12 @@ const AnalysisSection = ({
                 size="small"
                 startIcon={<Code />}
                 onClick={handlePreviewSuggestions}
-                sx={{ borderRadius: 1.5, mb: { xs: 1, sm: 0 } }}
+                sx={{
+                  borderRadius: 1.5,
+                  mb: { xs: 1, sm: 0 },
+                  textTransform: "capitalize",
+                  fontSize: "0.925rem",
+                }}
               >
                 Preview Suggestions
               </Button>
@@ -127,6 +147,8 @@ const AnalysisSection = ({
                 py: 2,
                 fontWeight: 600,
                 color: "text.secondary",
+                fontSize: "1.025rem",
+                textTransform: "none",
                 "&.Mui-selected": { color: "primary.main" },
               },
               "& .MuiTabs-indicator": {

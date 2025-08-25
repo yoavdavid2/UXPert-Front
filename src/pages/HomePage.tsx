@@ -83,7 +83,7 @@ const HomePage = () => {
             item
             xs={12}
             md={6}
-            lg={5}
+            lg={7}
             sx={{
               display: "flex",
               flexDirection: "column",
@@ -100,6 +100,7 @@ const HomePage = () => {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
+                padding: { xs: "0 4%", sm: "0 8%", md: "0 8%" },
               }}
             >
               <Typography
@@ -113,7 +114,7 @@ const HomePage = () => {
                     xs: "1.75rem",
                     sm: "2.25rem",
                     md: "2.5rem",
-                    lg: "3rem",
+                    lg: "2.75rem",
                     [theme.breakpoints.between("sm", "lg")]: "2.25rem",
                   },
                   lineHeight: 1.2,
@@ -135,7 +136,7 @@ const HomePage = () => {
                   },
                   [theme.breakpoints.between("sm", "lg")]: {
                     fontSize: "1rem",
-                    marginBottom: "2rem",
+                    marginBottom: "1.75rem",
                   },
                 }}
               >
@@ -145,7 +146,7 @@ const HomePage = () => {
 
               <Box
                 sx={{
-                  mt: { xs: 3, sm: 4, md: 5 },
+                  mt: { xs: 3, sm: 4, md: 2 },
                   mb: { xs: 3, sm: 4 },
                 }}
               >
@@ -180,7 +181,7 @@ const HomePage = () => {
                 variant="contained"
                 size={isMobile ? "medium" : "large"}
                 sx={{
-                  mt: { xs: 2, sm: 4 },
+                  mt: { xs: 2, sm: 0, md: 2 },
                   bgcolor: "#1a237e",
                   color: "white",
                   borderRadius: 8,

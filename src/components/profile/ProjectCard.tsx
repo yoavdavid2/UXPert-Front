@@ -1,63 +1,42 @@
-import { useState } from "react";
-import {
-  Card,
-  CardContent,
-  CardActions,
-  Typography,
-  Button,
-  IconButton,
-} from "@mui/material";
-import { MoreVert } from "@mui/icons-material";
-import { styled } from "@mui/material/styles";
+import { Box, CardContent, Typography } from "@mui/material";
 
 import { IProjectCardProps } from "../../utils/types";
 
 import "../components.css";
 
-const AnimatedCard = styled(Card)(({ theme }) => ({
-  borderRadius: 10,
-  transition: "all 0.3s ease-in-out",
-  "&:hover": {
-    transform: "translateY(-8px)",
-    boxShadow: theme.shadows[8],
-  },
-}));
-
-const ProjectCard = ({
-  project,
-  onDelete,
-  onClickProject,
-}: IProjectCardProps) => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-  };
-
+const ProjectCard = ({ project, selected, onClick }: IProjectCardProps) => {
   return (
-    <AnimatedCard
-      className="project-card"
-      onClick={onClickProject}
-      sx={{ cursor: "pointer" }}
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: 2,
+        backgroundColor: "#fff",
+        borderLeft: selected ? "4px solid #1976d2" : "4px solid transparent",
+        boxShadow: selected
+          ? `
+            inset 20px 0 40px -20px rgba(25, 118, 210, 0.15),
+            0 2px 8px rgba(0, 0, 0, 0.1)
+          `
+          : "0 2px 8px rgba(0, 0, 0, 0.1)",
+        cursor: "pointer",
+        borderRadius: 10,
+        transition: "all 0.3s ease-in-out",
+        ...(!selected && {
+          "&:hover": {
+            transform: "translateY(-8px)",
+          },
+        }),
+      }}
+      onClick={onClick}
     >
       <CardContent>
         <div className="project-card-header">
           <Typography variant="h6" component="h3" className="project-title">
             {project.url}
           </Typography>
-          <IconButton
-            aria-label="Project options"
-            aria-controls="project-menu"
-            aria-haspopup="true"
-            onClick={(e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              // onClickProject();
-            }}
-            size="small"
-          >
-            <MoreVert />
-          </IconButton>
         </div>
 
         <Typography
@@ -98,20 +77,7 @@ const ProjectCard = ({
           </div>
         )}
       </CardContent>
-
-      <CardActions className="project-card-actions">
-        <Button
-          size="small"
-          color="primary"
-          onClick={(e) => {
-            e.preventDefault();
-            onClickProject();
-          }}
-        >
-          View analysis history results
-        </Button>
-      </CardActions>
-    </AnimatedCard>
+    </Box>
   );
 };
 

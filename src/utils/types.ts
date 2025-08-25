@@ -75,27 +75,10 @@ export interface IFormData {
 }
 
 export interface ILoginFormProps {
-  email: string;
-  setEmail: (email: string) => void;
-  password: string;
-  setPassword: (password: string) => void;
-  error: string | null;
-  setError: (error: string | null) => void;
-  isLoading: boolean;
-  setIsLoading: (isLoading: boolean) => void;
   onSwitchToSignUp: () => void;
 }
 
 export interface ISignupFormProps {
-  email: string;
-  setEmail: (email: string) => void;
-  password: string;
-  setPassword: (password: string) => void;
-  error: string | null;
-  setError: (error: string | null) => void;
-  isLoading: boolean;
-  setIsLoading: (isLoading: boolean) => void;
-  onSignUpSuccess: () => void;
   onSwitchToSignIn: () => void;
 }
 
@@ -103,15 +86,10 @@ export interface IProfileHeaderProps {
   userProfile: UserProfile;
 }
 
-export interface IProfileProjectsSectionProps {
-  userId: string;
-  setGlobalError: (error: string | null) => void;
-}
-
 export interface IProjectCardProps {
   project: ProjectDto;
-  onDelete: () => void;
-  onClickProject: () => void;
+  selected: boolean;
+  onClick: () => void;
 }
 
 export interface IProjectResultCardProps {
@@ -144,21 +122,6 @@ export interface ISignupFormProps {
   onSwitchToSignIn: () => void;
 }
 
-export interface IProfileHeaderProps {
-  userProfile: UserProfile;
-  onEditProfile: () => void;
-}
-
-export interface IProfileProjectsSectionProps {
-  userId: string;
-  setGlobalError: (error: string | null) => void;
-}
-
-export interface IProjectCardProps {
-  project: ProjectDto;
-  onDelete: () => void;
-}
-
 export type userRequirmentsSummeryDto = {
   projectId?: string;
   userId: string;
@@ -173,7 +136,7 @@ export type userRequirmentsSummeryDto = {
 
 // ProjectDto from the backend
 export type ProjectDto = {
-  _id: string;
+  projectId: string;
   userId: string;
   email: string;
   name: string;
@@ -222,6 +185,7 @@ export interface IAnalysisSectionProps {
   analystResult: OverallEvaluation;
   tabValue: number;
   handleTabChange: (event: React.SyntheticEvent, newValue: number) => void;
+  isChild?: boolean;
 }
 
 export interface IProject {
@@ -290,6 +254,14 @@ export interface IProfileSidebarProps {
   onProjectSelect: (project: ProjectDto | null) => void;
   projects: ProjectDto[];
   setProjects: React.Dispatch<React.SetStateAction<ProjectDto[]>>;
+}
+
+export interface IProfileProjectsListProps {
+  projects: ProjectDto[];
+  selectedProject: ProjectDto | null;
+  loading: boolean;
+  onProjectSelect: (project: ProjectDto) => void;
+  handleDeleteClick: (event: React.MouseEvent, project: ProjectDto) => void;
 }
 
 export interface IFinalDataStepProps {

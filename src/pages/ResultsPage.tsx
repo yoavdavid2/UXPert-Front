@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSearchParams, useNavigate, useLocation } from "react-router-dom";
-import { Box, Link, useTheme, Button, IconButton } from "@mui/material";
-import { ArrowBack, OpenInNew } from "@mui/icons-material";
+import { Box, useTheme } from "@mui/material";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 
@@ -202,51 +201,11 @@ const ResultsPage = () => {
         sx={{
           width: "100%",
           minHeight: "100vh",
-          bgcolor: "#f7f9fc",
+          bgcolor: "#fcfaff88",
           pb: 6,
           overflowY: "auto",
         }}
       >
-        <Box
-          sx={{
-            py: 1.5,
-            px: 3,
-            bgcolor: "white",
-            boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
-            mb: 4,
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
-          <IconButton
-            onClick={() => navigate(-1)}
-            sx={{ mr: 2, color: theme.palette.primary.main }}
-          >
-            <ArrowBack />
-          </IconButton>
-
-          <Box
-            component="img"
-            src="/logo.svg"
-            alt="UXpert Logo"
-            sx={{ height: 40 }}
-          />
-
-          <Box sx={{ ml: "auto", display: "flex", alignItems: "center" }}>
-            <Button
-              component={Link}
-              href={decodedCustomerUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              startIcon={<OpenInNew />}
-              variant="text"
-              sx={{ mr: 1 }}
-            >
-              Visit site
-            </Button>
-          </Box>
-        </Box>
-
         <AnalysisSection
           decodedCustomerUrl={decodedCustomerUrl}
           handleDownloadReport={handleDownloadReport}
@@ -255,6 +214,7 @@ const ResultsPage = () => {
           analystResult={analystResult}
           tabValue={tabValue}
           handleTabChange={handleTabChange}
+          isChild={false}
         />
       </Box>
 

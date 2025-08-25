@@ -86,7 +86,7 @@ const OverallScoreCard = ({
               <Box
                 sx={{
                   display: "flex",
-                  alignItems: "flex-start",
+                  alignItems: "center",
                   mb: 3,
                   p: 2,
                   bgcolor: "rgba(76, 175, 80, 0.08)",
@@ -102,13 +102,15 @@ const OverallScoreCard = ({
                 >
                   Best Feature:
                 </Typography>
-                <Typography variant="body2">{bestThing}</Typography>
+                <Typography variant="body2" sx={{ mr: 2, mt: 0.5 }}>
+                  {bestThing}
+                </Typography>
               </Box>
 
               <Box
                 sx={{
                   display: "flex",
-                  alignItems: "flex-start",
+                  alignItems: "center",
                   p: 2,
                   bgcolor: "rgba(239, 83, 80, 0.08)",
                   borderRadius: 2,
@@ -123,7 +125,9 @@ const OverallScoreCard = ({
                 >
                   Area for Improvement:
                 </Typography>
-                <Typography variant="body2">{worstThing}</Typography>
+                <Typography variant="body2" sx={{ mr: 2, mt: 0.5 }}>
+                  {worstThing}
+                </Typography>
               </Box>
             </Box>
           </Grid>
