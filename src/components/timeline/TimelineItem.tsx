@@ -49,7 +49,6 @@ const TimelineItem = memo<ITimelineItemProps>(
       >
         <MotionBox
           onClick={() => {
-            console.log(report);
             onSelectReport(report);
           }}
           animate={{ scale: isSelected ? 1.1 : 1 }}

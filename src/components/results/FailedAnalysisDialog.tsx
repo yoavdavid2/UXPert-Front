@@ -11,14 +11,7 @@ import {
 } from "@mui/material";
 import { Close, Error, Delete } from "@mui/icons-material";
 import { formatDate } from "../../utils/DateFormatter";
-
-interface IFailedAnalysisDialogProps {
-  open: boolean;
-  onClose: () => void;
-  onDeleteRecord: () => void;
-  reportUrl?: string;
-  reportTime: string;
-}
+import { IFailedAnalysisDialogProps } from "../../utils/types";
 
 const FailedAnalysisDialog = ({
   open,

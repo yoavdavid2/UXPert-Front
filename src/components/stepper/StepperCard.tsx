@@ -121,6 +121,7 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
           <EmotionsStep
             selectedEmotions={selectedEmotions}
             toggleEmotion={toggleEmotion}
+            clearEmotions={() => setSelectedEmotions([])}
           />
         );
       case 3:
@@ -154,8 +155,6 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
 
   function finishTheProcess() {
     const summary = buildSummery();
-    // TODO: send the summary to the backend and create new project
-    // For now, just log it to the console
     api
       .post("/api/projects/new", summary)
       .then((response: any) => {
@@ -172,12 +171,11 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
         borderRadius: 4,
         boxShadow: 3,
         overflow: "visible",
-        mt: 2,
       }}
     >
-      <CardContent sx={{ p: 4, pt: 6 }}>
+      <CardContent sx={{ p: 2 }}>
         <Typography variant="h5" component="div" gutterBottom>
-          Let's start!
+          {!activeStep ? "Let's start!" : "Keep on going"}
         </Typography>
 
         <Box
@@ -198,7 +196,7 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            mt: 6,
+            mt: 1,
           }}
         >
           <Box sx={{ display: "flex", gap: 1 }}>
@@ -236,7 +234,7 @@ const StepperCard = ({ onClose }: IStepperCardProps) => {
                 Back
               </Button>
             )}
-            {selectedProject ? (
+            {selectedProject && !activeStep ? (
               <Button
                 variant="outlined"
                 color="secondary"

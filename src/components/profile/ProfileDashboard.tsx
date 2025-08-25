@@ -26,6 +26,7 @@ import { Report, OverallEvaluation } from "../../utils/ReportUtils";
 
 import { reportService } from "../../services/reportService";
 import "../components.css";
+import api from "../../services/requestsWrapper";
 
 const ProfileDashboard = ({
   selectedProject,
@@ -202,7 +203,13 @@ const ProfileDashboard = ({
             <FailedAnalysisDialog
               open={showFailedAnalysisDialog}
               onClose={() => setShowFailedAnalysisDialog(false)}
-              onDeleteRecord={() => console.log("Remove report")}
+              onDeleteRecord={() => {
+                api
+                  .delete("/api/projects/" + selectedProject?.projectId)
+                  .then(() => {
+                    setShowFailedAnalysisDialog(false);
+                  });
+              }}
               reportUrl={selectedReport.url}
               reportTime={selectedReport.createdAt}
             />

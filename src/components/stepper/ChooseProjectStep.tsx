@@ -108,8 +108,6 @@ const ChooseProjectStep = ({
                         selectedProject?.projectId === project.projectId
                       }
                       onClick={() => {
-                        console.log("Project clicked:", project);
-                        console.log("Selected project:", selectedProject);
                         if (selectedProject?.projectId === project.projectId) {
                           setSelectedProject(null);
                         } else {

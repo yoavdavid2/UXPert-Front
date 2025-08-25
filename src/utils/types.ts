@@ -274,6 +274,15 @@ export interface IFinalDataStepProps {
 export interface IEmotionsStepProps {
   selectedEmotions: string[];
   toggleEmotion: (emotion: string) => void;
+  clearEmotions: () => void;
+}
+
+export interface IFailedAnalysisDialogProps {
+  open: boolean;
+  onClose: () => void;
+  onDeleteRecord: () => void;
+  reportUrl?: string;
+  reportTime: string;
 }
 
 export interface IOverallScoreCardProps {

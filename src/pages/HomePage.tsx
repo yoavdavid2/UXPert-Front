@@ -216,7 +216,6 @@ const HomePage = () => {
         PaperProps={{
           sx: {
             borderRadius: 4,
-            m: 2,
             maxHeight: "calc(100% - 64px)",
             overflow: "hidden",
           },

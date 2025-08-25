@@ -338,6 +338,11 @@
   border: 1px solid #e7e1f2;
 }
 
+.emotions-box {
+  display: flex;
+  justify-content: space-between;
+}
+
 .dashboard-root::-webkit-scrollbar,
 .results-scroll-area::-webkit-scrollbar {
   width: 0px;
