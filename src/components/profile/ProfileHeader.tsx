@@ -1,33 +1,43 @@
-import { Typography, Avatar } from "@mui/material";
+import { Typography, Avatar, Box } from "@mui/material";
 import { getFullName } from "../../utils/UserProfileUtils";
 import { IProfileHeaderProps } from "../../utils/types";
 
-import "../components.css";
-
 const ProfileHeader = ({ userProfile }: IProfileHeaderProps) => (
-  <div className="profile-header">
-    <div className="profile-header-content">
-      <Avatar
-        src={userProfile.profileImage || undefined}
-        alt={getFullName(userProfile)}
-        className="profile-avatar"
-      />
-      <div className="profile-info">
-        <Typography variant="h4" component="h1" className="profile-name">
-          {getFullName(userProfile)}
-        </Typography>
-        <Typography variant="body1" className="profile-email">
-          {userProfile.email}
-        </Typography>
-        <Typography variant="body2" className="profile-member-since">
-          Member since
-          {userProfile.createdAt
-            ? new Date(userProfile.createdAt).toLocaleDateString()
-            : " Unknown date"}
-        </Typography>
-      </div>
-    </div>
-  </div>
+  <Box
+    sx={{
+      py: 4,
+      px: 3,
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      borderBottom: "1px solid #E7E1F2",
+    }}
+  >
+    <Avatar
+      src={userProfile.profileImage || undefined}
+      alt={getFullName(userProfile)}
+      sx={{
+        width: 80,
+        height: 80,
+        bgcolor: "rgba(26, 35, 126, 0.8)",
+        fontSize: "2rem",
+        fontWeight: "light",
+        mb: 2,
+        boxShadow: "0 4px 12px rgba(165, 148, 195, 0.3)",
+      }}
+    >
+      {getFullName(userProfile).charAt(0)}
+    </Avatar>
+    <Typography
+      variant="h6"
+      sx={{ fontWeight: 500, color: "rgba(26, 35, 126, 1)", mb: 0.5 }}
+    >
+      {getFullName(userProfile)}
+    </Typography>
+    <Typography variant="body2" sx={{ color: "rgba(26, 35, 126, 1)" }}>
+      {userProfile.email || "No email provided"}
+    </Typography>
+  </Box>
 );
 
 export default ProfileHeader;

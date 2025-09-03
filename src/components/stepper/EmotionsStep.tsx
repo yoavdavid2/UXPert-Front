@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 import {
   Work,
   SentimentSatisfiedAlt,
@@ -16,15 +16,16 @@ import {
   Explore,
   Psychology,
   FavoriteBorder,
+  Delete,
 } from "@mui/icons-material";
 import {
   Box,
   Typography,
   Divider,
-  Grid,
   Chip,
   useTheme,
   alpha,
+  Button,
 } from "@mui/material";
 import ChipGroup from "../ChipGroup";
 import { IEmotionsStepProps } from "../../utils/types";
@@ -32,10 +33,10 @@ import { IEmotionsStepProps } from "../../utils/types";
 const EmotionsStep = ({
   selectedEmotions,
   toggleEmotion,
+  clearEmotions,
 }: IEmotionsStepProps) => {
   const theme = useTheme();
 
-  // Emotions organized by category
   const emotionsByCategory = useMemo(
     () => [
       {
@@ -202,12 +203,10 @@ const EmotionsStep = ({
     []
   );
 
-  // Flatten emotions for the ChipGroup
   const allEmotions = useMemo(() => {
     return emotionsByCategory.flatMap((category) => category.emotions);
   }, [emotionsByCategory]);
 
-  // Create a color map for emotion categories
   const getCategoryColor = (category: string) => {
     const categoryColors: Record<string, string> = {
       "Trust & Security": theme.palette.info.main,
@@ -239,7 +238,6 @@ const EmotionsStep = ({
 
       <Divider sx={{ mb: 3 }} />
 
-      {/* Emotion mood board - visualization of selected emotions */}
       {selectedEmotions.length > 0 && (
         <Box
           sx={{
@@ -251,9 +249,27 @@ const EmotionsStep = ({
             border: `1px solid ${alpha(theme.palette.divider, 0.1)}`,
           }}
         >
-          <Typography variant="subtitle1" gutterBottom>
-            Your Emotion Palette
-          </Typography>
+          <div className="emotions-box">
+            <Typography variant="subtitle1" gutterBottom>
+              Your Emotion Palette
+            </Typography>
+            <Button
+              variant="outlined"
+              color="secondary"
+              startIcon={<Delete />}
+              onClick={() => {
+                clearEmotions();
+              }}
+              sx={{
+                borderRadius: 28,
+                px: 3,
+                textTransform: "capitalize",
+                fontSize: "0.925rem",
+              }}
+            >
+              Clear All
+            </Button>
+          </div>
           <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1 }}>
             {selectedEmotions.map((emotion) => {
               const emotionData = allEmotions.find((e) => e.name === emotion);

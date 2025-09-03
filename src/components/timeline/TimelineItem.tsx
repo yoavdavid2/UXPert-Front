@@ -48,7 +48,9 @@ const TimelineItem = memo<ITimelineItemProps>(
         placement="top"
       >
         <MotionBox
-          onClick={() => onSelectReport(report)}
+          onClick={() => {
+            onSelectReport(report);
+          }}
           animate={{ scale: isSelected ? 1.1 : 1 }}
           whileHover={{ scale: isSelected ? 1.1 : 1.05 }}
           whileTap={{ scale: 0.6 }}

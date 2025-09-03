@@ -13,6 +13,7 @@ import { Add } from "@mui/icons-material";
 import AnalysisTimeline from "../timeline/AnalysisTimeline";
 import StepperCard from "../stepper/StepperCard";
 import AnalysisSection from "../results/AnalysisSection";
+import FailedAnalysisDialog from "../results/FailedAnalysisDialog";
 import DynamicIframeModal from "../layout/DynamicIframeModal";
 import { Transition } from "../../pages/HomePage";
 
@@ -25,6 +26,7 @@ import { Report, OverallEvaluation } from "../../utils/ReportUtils";
 
 import { reportService } from "../../services/reportService";
 import "../components.css";
+import api from "../../services/requestsWrapper";
 
 const ProfileDashboard = ({
   selectedProject,
@@ -36,6 +38,8 @@ const ProfileDashboard = ({
   const [openNewProjectDialog, setOpenNewProjectDialog] = useState(false);
   const [tabValue, setTabValue] = useState(0);
   const [showPreviewDialog, setShowPreviewDialog] = useState(false);
+  const [showFailedAnalysisDialog, setShowFailedAnalysisDialog] =
+    useState(false);
   const navigate = useNavigate();
 
   const fetchProjectReports = useCallback(async () => {
@@ -72,6 +76,12 @@ const ProfileDashboard = ({
       setSelectedReport(null);
     }
   }, [selectedProject, fetchProjectReports]);
+
+  useEffect(() => {
+    if (selectedReport?.status === "failed") {
+      setShowFailedAnalysisDialog(true);
+    }
+  }, [selectedReport]);
 
   const handleCreateProject = () => {
     setOpenNewProjectDialog(true);
@@ -137,7 +147,8 @@ const ProfileDashboard = ({
                 borderRadius: 2,
                 px: 3,
                 py: 1,
-                textTransform: "none",
+                textTransform: "capitalize",
+                fontSize: "0.925rem",
                 boxShadow: "0 4px 12px rgba(156, 106, 222, 0.3)",
                 "&:hover": {
                   bgcolor: "#7E69AC",
@@ -187,9 +198,25 @@ const ProfileDashboard = ({
               </Container>
             </Box>
           )}
+
+          {selectedReport?.status === "failed" && (
+            <FailedAnalysisDialog
+              open={showFailedAnalysisDialog}
+              onClose={() => setShowFailedAnalysisDialog(false)}
+              onDeleteRecord={() => {
+                api
+                  .delete("/api/projects/" + selectedProject?.projectId)
+                  .then(() => {
+                    setShowFailedAnalysisDialog(false);
+                  });
+              }}
+              reportUrl={selectedReport.url}
+              reportTime={selectedReport.createdAt}
+            />
+          )}
         </>
       ) : (
-        <Box className="empty-project-placeholder"></Box>
+        <Box className="empty-project-placeholder" />
       )}
 
       <Dialog

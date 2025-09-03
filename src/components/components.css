@@ -174,7 +174,7 @@
 }
 
 .auth-social-button:hover {
-  background-color: #f1f3f4;
+  background-color: #868fa1;
 }
 
 .auth-social-icon {
@@ -267,7 +267,7 @@
 /* ========== PROFILE DASHBOARD LAYOUT ========== */
 .profile-dashboard-layout {
   display: flex;
-  height: 92vh;
+  height: 100%;
   width: 100%;
   background-color: #fcfaff88;
   overflow-y: auto;
@@ -281,7 +281,6 @@
   overflow: auto;
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
 }
 
 .dashboard-header {
@@ -337,6 +336,11 @@
   background-color: white;
   border-radius: 16px;
   border: 1px solid #e7e1f2;
+}
+
+.emotions-box {
+  display: flex;
+  justify-content: space-between;
 }
 
 .dashboard-root::-webkit-scrollbar,
