@@ -51,13 +51,26 @@ const OverallScoreCard = ({
               <Box sx={{ position: "relative", display: "inline-flex" }}>
                 <CircularProgress
                   variant="determinate"
-                  value={averageScore}
+                  value={averageScore * 10}
                   size={120}
-                  thickness={5}
+                  thickness={3}
                   sx={{
                     color: theme.palette.primary.main,
                     "& .MuiCircularProgress-circle": {
                       strokeLinecap: "round",
+                    },
+                    "&::before": {
+                      content: '""',
+                      position: "absolute",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "50%",
+                      border: `5px solid ${theme.palette.primary.main}`,
+                      opacity: 0.3,
+                      filter: "blur(2px)",
+                      boxSizing: "border-box",
                     },
                   }}
                 />
