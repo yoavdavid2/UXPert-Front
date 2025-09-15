@@ -42,6 +42,7 @@ const IconChip = () => {
         navigate("/profile");
         break;
       case "Logout":
+        navigate("/");
         logout();
         break;
       default:
